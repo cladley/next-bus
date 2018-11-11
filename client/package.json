@@ -26,6 +26,7 @@
   ],
   "devDependencies": {
     "enzyme": "^3.7.0",
+    "enzyme-adapter-react-16": "^1.7.0",
     "redux-devtools-extension": "^2.13.5",
     "redux-immutable-state-invariant": "^2.1.0"
   }
