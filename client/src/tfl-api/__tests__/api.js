@@ -1,9 +1,17 @@
-import { getStopsByLatLonUrl } from "../index";
+import { getStopsByLatLonUrl, getArrivalPredictionForStopUrl } from "../index";
 
-describe("Tfl Api - getStopsByLatLonUrl()", () => {
+describe("Tfl Api -  getStopsByLatLonUrl()", () => {
   it("should return the correct url", () => {
     const expectedUrl =
       "https://api.tfl.gov.uk/Stoppoint?app_id=6434337f&app_key=ddf7e98f6e48334e7efd30c2cbd9c483&lat=51.560556&lon=-0.12123&stoptypes=NaptanPublicBusCoachTram&radius=300";
     expect(getStopsByLatLonUrl(51.560556, -0.12123)).toEqual(expectedUrl);
+  });
+});
+
+describe("Tfl Api -  getArrivalPredictionForStopUrl()", () => {
+  it("should return the correct url", () => {
+    const expectedUrl =
+      "https://api.tfl.gov.uk/StopPoint/12345/Arrivals?app_id=6434337f&app_key=ddf7e98f6e48334e7efd30c2cbd9c483";
+    expect(getArrivalPredictionForStopUrl(12345)).toEqual(expectedUrl);
   });
 });
