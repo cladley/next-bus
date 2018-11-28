@@ -1,8 +1,8 @@
-import { STOPS_BY_LAT_LON, ARRIVAL_PREDICTIONS_FOR_STOP } from "./urls";
+import * as urls from "./urls";
 import { appId, appKey } from "../config";
 
 export const getStopsByLatLonUrl = (lat, lon, radius = 300) => {
-  return STOPS_BY_LAT_LON.replace("{{APP_ID}}", appId)
+  return urls.STOPS_BY_LAT_LON.replace("{{APP_ID}}", appId)
     .replace("{{APP_KEY}}", appKey)
     .replace("{{LAT}}", lat)
     .replace("{{LON}}", lon)
@@ -10,7 +10,7 @@ export const getStopsByLatLonUrl = (lat, lon, radius = 300) => {
 };
 
 export const getArrivalPredictionForStopUrl = stopId => {
-  return ARRIVAL_PREDICTIONS_FOR_STOP.replace("{{APP_ID}}", appId)
+  return urls.ARRIVAL_PREDICTIONS_FOR_STOP.replace("{{APP_ID}}", appId)
     .replace("{{APP_KEY}}", appKey)
     .replace("{{STOP_ID}}", stopId);
 };

@@ -1,0 +1,22 @@
+.wrapper {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  background-color: #f5f5f5;
+}
+
+.wrapper ul {
+  margin: 0;
+  padding: 0;
+}
+
+.wrapper li {
+  display: inline-block;
+  margin-left: 20px;
+}
+
+.wrapper a {
+  text-decoration: none;
+  font-size: 20px;
+  color: #333;
+}
