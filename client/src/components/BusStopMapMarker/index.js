@@ -3,8 +3,8 @@ import React from "react";
 function BusStopMapMarker() {
   const styles = {
     backgroundColor: "pink",
-    height: "30px",
-    width: "30px",
+    height: "6px",
+    width: "6px",
     borderRadius: "50%"
   };
 

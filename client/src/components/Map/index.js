@@ -7,15 +7,14 @@ import { fetchStopsByLocation } from "../../actions";
 class Map extends Component {
   static defaultProps = {
     center: {
-      lat: 51.509865,
-      lng: -0.118092
+      lat: 51.560913,
+      lng: -0.120881
     },
     zoom: 12
   };
 
   componentDidMount() {
-    this.props.dispatch(fetchStopsByLocation(51.509865, -0.118092));
-    console.log("Component did mount");
+    this.props.dispatch(fetchStopsByLocation(51.560913, -0.120881));
   }
 
   render() {
@@ -30,11 +29,20 @@ class Map extends Component {
           defaultZoom={this.props.zoom}
           onClick={onClick}
         >
-          <BusStopMapMarker lat={51.509865} lng={-0.118092} />
+          {this.props.stopMarkers.map(marker => {
+            console.log(marker);
+            return <BusStopMapMarker lat={marker.lat} lng={marker.lon} />;
+          })}
         </GoogleMapReact>
       </div>
     );
   }
 }
 
-export default connect(null)(Map);
+const mapStateToProps = ({ map }) => {
+  return {
+    stopMarkers: map.stopMarkers
+  };
+};
+
+export default connect(mapStateToProps)(Map);
