@@ -55,7 +55,7 @@ function Container({ location }) {
           classNames={"fade"}
         >
           <section className="route-section">
-            <Switch>
+            <Switch location={location}>
               <Route exact path="/" component={Home} />
               <Route path="/first" component={First} />
               <Route path="/second" component={Second} />

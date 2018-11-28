@@ -1,6 +1,8 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import GoogleMapReact from "google-map-react";
 import BusStopMapMarker from "../BusStopMapMarker";
+import { fetchStopsByLocation } from "../../actions";
 
 class Map extends Component {
   static defaultProps = {
@@ -10,6 +12,11 @@ class Map extends Component {
     },
     zoom: 12
   };
+
+  componentDidMount() {
+    this.props.dispatch(fetchStopsByLocation(51.509865, -0.118092));
+    console.log("Component did mount");
+  }
 
   render() {
     var onClick = ({ x, y, lat, lng, event }) => {
@@ -30,4 +37,4 @@ class Map extends Component {
   }
 }
 
-export default Map;
+export default connect(null)(Map);
