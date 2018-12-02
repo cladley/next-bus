@@ -1,7 +1,6 @@
 const apiMiddleware = ({ dispatch }) => next => action => {
   next(action);
 
-  console.log("Hit the api middleware");
   if (action.type !== "API") {
     return;
   }

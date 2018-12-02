@@ -1,14 +1,14 @@
 import React from "react";
 
-function BusStopMapMarker() {
+function BusStopMapMarker({ id, onSelected }) {
   const styles = {
     backgroundColor: "pink",
-    height: "6px",
-    width: "6px",
+    height: "10px",
+    width: "10px",
     borderRadius: "50%"
   };
 
-  return <div style={styles} className="test" onClick={() => alert("he")} />;
+  return <div style={styles} className="test" onClick={() => onSelected(id)} />;
 }
 
 export default BusStopMapMarker;

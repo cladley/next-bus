@@ -20,4 +20,13 @@ const setStopMarkers = data => {
   };
 };
 
-export { fetchStopsByLocation, setStopMarkers };
+const setStopSelected = stopId => {
+  return {
+    type: actionTypes.STOP_SELECTED,
+    payload: {
+      data: stopId
+    }
+  };
+};
+
+export { fetchStopsByLocation, setStopMarkers, setStopSelected };
