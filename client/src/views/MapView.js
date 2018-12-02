@@ -17,8 +17,6 @@ class MapView extends Component {
 }
 
 const getBusStopLines = ({ stops, selectedStopId }) => {
-  console.log(stops);
-
   if (!selectedStopId || stops.length === 0) return [];
 
   const selectedStopObject = stops.byId[selectedStopId];
