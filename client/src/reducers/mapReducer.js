@@ -5,7 +5,8 @@ const initialState = {
     byId: {},
     allIds: []
   },
-  selectedStopId: null
+  selectedStopId: null,
+  stopRouteDetails: []
 };
 
 // Normalize the stop data herer.
@@ -21,12 +22,29 @@ const createStopsObject = data => {
   return stopsObject;
 };
 
+const cleanUpStopRouteDetails = data => {
+  return data.map(route => {
+    return {
+      destination: route.destinationName,
+      direction: route.direction,
+      line: route.lineId,
+      routeSectionName: route.routeSectionName
+    };
+  });
+};
+
 export default function(state = initialState, action) {
   switch (action.type) {
     case actionTypes.SET_STOP_MARKERS:
       return { ...state, stops: createStopsObject(action.payload.data) };
     case actionTypes.STOP_SELECTED:
       return { ...state, selectedStopId: action.payload.data };
+    case actionTypes.SET_STOP_ROUTES:
+      console.log(action.payload.data);
+      return {
+        ...state,
+        stopRouteDetails: cleanUpStopRouteDetails(action.payload.data)
+      };
     default:
       return state;
   }

@@ -1,5 +1,5 @@
 import * as actionTypes from "./actionTypes";
-import { getStopsByLatLonUrl } from "../tfl-api";
+import { getStopsByLatLonUrl, getRouteDetailsForStopUrl } from "../tfl-api";
 
 const fetchStopsByLocation = (lat, lon) => {
   return {
@@ -7,6 +7,25 @@ const fetchStopsByLocation = (lat, lon) => {
     payload: {
       url: getStopsByLatLonUrl(lat, lon),
       onSuccess: setStopMarkers
+    }
+  };
+};
+
+const fetchRouteDetailsByStop = naptanId => {
+  return {
+    type: actionTypes.API,
+    payload: {
+      url: getRouteDetailsForStopUrl(naptanId),
+      onSuccess: setStopRoutes
+    }
+  };
+};
+
+const setStopRoutes = data => {
+  return {
+    type: actionTypes.SET_STOP_ROUTES,
+    payload: {
+      data: data
     }
   };
 };
@@ -29,4 +48,9 @@ const setStopSelected = stopId => {
   };
 };
 
-export { fetchStopsByLocation, setStopMarkers, setStopSelected };
+export {
+  fetchStopsByLocation,
+  setStopMarkers,
+  setStopSelected,
+  fetchRouteDetailsByStop
+};

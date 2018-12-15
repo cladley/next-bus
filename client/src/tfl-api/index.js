@@ -9,10 +9,16 @@ export const getStopsByLatLonUrl = (lat, lon, radius = 300) => {
     .replace("{{RADIUS}}", radius);
 };
 
-export const getArrivalPredictionForStopUrl = stopId => {
+export const getArrivalPredictionForStopUrl = naptanId => {
   return urls.ARRIVAL_PREDICTIONS_FOR_STOP.replace("{{APP_ID}}", appId)
     .replace("{{APP_KEY}}", appKey)
-    .replace("{{STOP_ID}}", stopId);
+    .replace("{{NAPTAN_ID}}", naptanId);
+};
+
+export const getRouteDetailsForStopUrl = naptanId => {
+  return urls.ROUTE_DETAILS_FOR_STOP.replace("{{APP_ID}}", appId)
+    .replace("{{APP_KEY}}", appKey)
+    .replace("{{NAPTAN_ID}}", naptanId);
 };
 
 export const getStopByLatLon = async (lat, lon, radius = 300) => {
@@ -25,12 +31,22 @@ export const getStopByLatLon = async (lat, lon, radius = 300) => {
   }
 };
 
-export const getArrivalPredictionForStop = async stopId => {
+export const getArrivalPredictionForStop = async naptanId => {
   try {
-    const response = await fetch(getArrivalPredictionForStopUrl(stopId));
+    const response = await fetch(getArrivalPredictionForStopUrl(naptanId));
     const data = await response.json();
     return data;
   } catch (error) {
     console.log(`Error fetching predictions: ${error}`);
+  }
+};
+
+export const getRouteDetailsForStop = async naptanId => {
+  try {
+    const response = await fetch(getRouteDetailsForStopUrl(naptanId));
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(`Error fetching route details for stop: ${error}`);
   }
 };

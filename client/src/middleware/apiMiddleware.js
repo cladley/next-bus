@@ -6,6 +6,7 @@ const apiMiddleware = ({ dispatch }) => next => action => {
   }
 
   const { url, onSuccess } = action.payload;
+  console.log(url);
   fetch(url)
     .then(response => {
       return response.json();

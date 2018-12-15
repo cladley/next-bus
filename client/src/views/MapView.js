@@ -1,32 +1,45 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import classNames from "classnames";
 import Map from "../components/Map";
-import StopDetails from "../components/BusStopDetails";
+import Drawer from "../components/Drawer";
+import BusStopRoutesContainer from "../components/BusStopRoutesContainer";
+import styles from "./mapview.module.css";
 
 class MapView extends Component {
+  state = {
+    isDrawerOpen: false
+  };
+
+  closeDrawer = () => {
+    console.log("close drawer clicked");
+  };
+
   render() {
+    const { showDrawer, isStopSelected, naptanId } = this.props;
+
+    let MapContainerClassNames = classNames(styles["map-container"], {
+      [styles.active]: showDrawer
+    });
+
     return (
-      <div>
-        <Map />
-        {this.props.isStopDetailsShowing ? (
-          <StopDetails lines={this.props.lines} />
-        ) : null}
-      </div>
+      <React.Fragment>
+        <div className={MapContainerClassNames}>
+          <Map />
+        </div>
+        <Drawer isOpen={this.props.showDrawer} closeDrawer={this.closeDrawer}>
+          {isStopSelected && <BusStopRoutesContainer naptanId={naptanId} />}
+        </Drawer>
+      </React.Fragment>
     );
   }
 }
 
-const getBusStopLines = ({ stops, selectedStopId }) => {
-  if (!selectedStopId || stops.length === 0) return [];
-
-  const selectedStopObject = stops.byId[selectedStopId];
-  return selectedStopObject.lines;
-};
-
 const mapStateToProps = ({ map }) => {
   return {
-    isStopDetailsShowing: !!map.selectedStopId,
-    lines: getBusStopLines(map)
+    showDrawer: !!map.selectedStopId,
+    isStopSelected: !!map.selectedStopId,
+    naptanId: map.selectedStopId
   };
 };
 

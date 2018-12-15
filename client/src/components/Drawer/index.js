@@ -1,11 +1,13 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import styles from "./drawer.module.css";
 import classNames from "classnames";
+import Container from "../Layout/Container";
+import styles from "./drawer.module.css";
 
 class Drawer extends Component {
   static defaultProps = {
     isOpen: false,
+    hasBackdrop: false,
     closeOnBackdropClick: false
   };
 
@@ -14,7 +16,7 @@ class Drawer extends Component {
   };
 
   render() {
-    const { isOpen, closeOnBackdropClick } = this.props;
+    const { isOpen, closeOnBackdropClick, hasBackdrop } = this.props;
 
     let drawerClassNames = classNames(styles.drawer, {
       [styles.active]: isOpen
@@ -22,11 +24,15 @@ class Drawer extends Component {
 
     return (
       <div className={drawerClassNames}>
-        <div
-          className={styles.backdrop}
-          onClick={closeOnBackdropClick ? this.handleClickOnBackdrop : null}
-        />
-        <div className={styles["component-panel"]}>{this.props.children}</div>
+        {hasBackdrop && (
+          <div
+            className={styles.backdrop}
+            onClick={closeOnBackdropClick ? this.handleClickOnBackdrop : null}
+          />
+        )}
+        <div className={styles["component-panel"]}>
+          <Container>{this.props.children}</Container>
+        </div>
       </div>
     );
   }
@@ -34,7 +40,8 @@ class Drawer extends Component {
 
 Drawer.propTypes = {
   isOpen: PropTypes.bool.isRequired,
-  closeOnBackdropClick: PropTypes.bool
+  closeOnBackdropClick: PropTypes.bool,
+  hasBackdrop: PropTypes.bool
 };
 
 export default Drawer;

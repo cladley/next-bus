@@ -5,6 +5,13 @@ import BusStopMapMarker from "../BusStopMapMarker";
 import { fetchStopsByLocation, setStopSelected } from "../../actions";
 
 class Map extends Component {
+  state = {
+    center: {
+      lat: 51.560913,
+      lng: -0.120881
+    }
+  };
+
   static defaultProps = {
     center: {
       lat: 51.560913,
@@ -18,8 +25,19 @@ class Map extends Component {
   }
 
   render() {
+    const options = {
+      zoomControl: false,
+      fullscreenControl: false
+    };
+
     var onClick = ({ x, y, lat, lng, event }) => {
       console.log(lat, lng);
+      this.setState({
+        center: {
+          lat: lat,
+          lng: lng
+        }
+      });
     };
 
     var handleOnSelected = stopId => {
@@ -29,9 +47,11 @@ class Map extends Component {
     };
 
     return (
-      <div style={{ height: "100vh", width: "100%" }}>
+      <div style={{ height: "100%", width: "100%" }}>
         <GoogleMapReact
+          options={options}
           defaultCenter={this.props.center}
+          center={this.state.center}
           defaultZoom={this.props.zoom}
           onClick={onClick}
         >

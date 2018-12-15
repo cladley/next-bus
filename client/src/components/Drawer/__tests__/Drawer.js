@@ -19,6 +19,18 @@ describe("<Drawer/>", () => {
     expect(drawerDiv.hasClass("active")).toBe(true);
   });
 
+  it("should not display a backdrop when hasBackdrop is false", () => {
+    const wrapper = shallow(<Drawer hasBackdrop={false} />);
+    const backdropDiv = wrapper.find(".backdrop");
+    expect(backdropDiv.length).toBe(0);
+  });
+
+  it("should display a backdrop when hasBackdrop is true", () => {
+    const wrapper = shallow(<Drawer hasBackdrop={true} />);
+    const backdropDiv = wrapper.find(".backdrop");
+    expect(backdropDiv.length).toBe(1);
+  });
+
   describe("when user clicks the backdrop when prop closeOnBackdropClick is true", () => {
     it("should call the closeDrawer() prop", () => {
       const closeDrawerCallback = jest.fn();
@@ -27,6 +39,7 @@ describe("<Drawer/>", () => {
           isOpen={true}
           closeDrawer={closeDrawerCallback}
           closeOnBackdropClick={true}
+          hasBackdrop={true}
         />
       );
 
@@ -44,6 +57,7 @@ describe("<Drawer/>", () => {
           isOpen={true}
           closeDrawer={closeDrawerCallback}
           closeOnBackdropClick={false}
+          hasBackdrop={true}
         />
       );
 
