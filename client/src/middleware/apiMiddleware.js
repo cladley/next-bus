@@ -1,7 +1,9 @@
+import { API } from "../actions/actionTypes";
+
 const apiMiddleware = ({ dispatch }) => next => action => {
   next(action);
 
-  if (action.type !== "API") {
+  if (action.type !== API) {
     return;
   }
 

@@ -40,7 +40,6 @@ export default function(state = initialState, action) {
     case actionTypes.STOP_SELECTED:
       return { ...state, selectedStopId: action.payload.data };
     case actionTypes.SET_STOP_ROUTES:
-      console.log(action.payload.data);
       return {
         ...state,
         stopRouteDetails: cleanUpStopRouteDetails(action.payload.data)

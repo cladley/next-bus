@@ -16,7 +16,7 @@ class BusStopRoutes extends Component {
   }
 
   render() {
-    const { routes } = this.props;
+    const { routes, addRoute } = this.props;
     const dayTimeRoutes = this.getDayBusRoutes(routes);
     const nightTimeRoutes = this.getNightBusRoutes(routes);
 
@@ -25,7 +25,7 @@ class BusStopRoutes extends Component {
         <h4>Day Time Routes</h4>
         <ul>
           {dayTimeRoutes.map(route => (
-            <li key={route.line}>
+            <li key={route.line} onClick={() => addRoute(route)}>
               {route.line} : {route.destination}
             </li>
           ))}

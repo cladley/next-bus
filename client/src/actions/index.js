@@ -48,9 +48,42 @@ const setStopSelected = stopId => {
   };
 };
 
+const addRoute = (naptanId, route) => {
+  return {
+    type: actionTypes.ADD_ROUTE,
+    payload: {
+      data: {
+        naptanId,
+        route
+      }
+    }
+  };
+};
+
+const removeRoute = (naptanId, routeId) => {
+  return {
+    type: actionTypes.REMOVE_ROUTE,
+    payload: {
+      data: {
+        naptanId,
+        routeId
+      }
+    }
+  };
+};
+
+const loadUserRoutes = () => {
+  return {
+    type: actionTypes.LOAD_USER_ROUTES
+  };
+};
+
 export {
   fetchStopsByLocation,
   setStopMarkers,
   setStopSelected,
-  fetchRouteDetailsByStop
+  fetchRouteDetailsByStop,
+  addRoute,
+  removeRoute,
+  loadUserRoutes
 };
