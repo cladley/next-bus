@@ -2,6 +2,7 @@ import * as actionTypes from "../actions/actionTypes";
 
 const initialState = {
   routes: {
+    // This is the stop Id
     byNaptanId: {},
     allIds: []
   }
@@ -38,6 +39,7 @@ export default function(state = initialState, action) {
       // return {...state, createRoutesObject(action.payload.data)}
       return state;
     case actionTypes.ADD_ROUTE:
+      console.log("HERER");
       return { ...state, routes: addRoute(state.routes, action.payload.data) };
     default:
       return state;

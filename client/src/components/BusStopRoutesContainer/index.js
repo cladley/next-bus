@@ -15,6 +15,7 @@ class BusStopRoutesContainer extends Component {
 
   handleAddRoute(route) {
     const { naptanId } = this.props;
+    console.log(naptanId);
     this.props.dispatch(addRoute(naptanId, route));
   }
 

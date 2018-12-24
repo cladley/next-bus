@@ -72,13 +72,15 @@ class Map extends Component {
   }
 }
 
-const getStopsAsArray = ({ stops }) => {
-  return Object.entries(stops.byId).map(s => s[1]);
+const getViewableStopsAsArray = (stops, viewableStops) => {
+  return viewableStops.map(naptanId => {
+    return stops[naptanId];
+  });
 };
 
-const mapStateToProps = ({ map }) => {
+const mapStateToProps = ({ stops, map }) => {
   return {
-    stopMarkers: getStopsAsArray(map)
+    stopMarkers: getViewableStopsAsArray(stops.byNaptanId, map.viewableStops)
   };
 };
 

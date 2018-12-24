@@ -1,23 +1,21 @@
 import * as actionTypes from "../actions/actionTypes";
 
 const initialState = {
-  stops: {
-    byId: {},
-    allIds: []
-  },
+  viewableStops: [],
   selectedStopId: null,
   stopRouteDetails: []
 };
 
 // Normalize the stop data herer.
 const createStopsObject = data => {
+  console.log(data);
   const stopsObject = {
-    byId: {},
+    byNaptanId: {},
     allIds: []
   };
   data.forEach(stop => {
-    stopsObject.byId[stop.id] = stop;
-    stopsObject.allIds.push(stop.id);
+    stopsObject.byNaptanId[stop.naptanId] = stop;
+    stopsObject.allIds.push(stop.naptanId);
   });
   return stopsObject;
 };
@@ -33,10 +31,20 @@ const cleanUpStopRouteDetails = data => {
   });
 };
 
+const createViewableStopsArray = data => {
+  return data.map(stop => {
+    return stop.naptanId;
+  });
+};
+
 export default function(state = initialState, action) {
   switch (action.type) {
     case actionTypes.SET_STOP_MARKERS:
-      return { ...state, stops: createStopsObject(action.payload.data) };
+      return {
+        ...state,
+        stops: createStopsObject(action.payload.data),
+        viewableStops: createViewableStopsArray(action.payload.data)
+      };
     case actionTypes.STOP_SELECTED:
       return { ...state, selectedStopId: action.payload.data };
     case actionTypes.SET_STOP_ROUTES:
