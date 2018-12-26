@@ -41,9 +41,30 @@ const getStopName = (stops, naptanId) => {
   return stops.byNaptanId[naptanId].commonName;
 };
 
-const mapStateToProps = ({ map, stops }, ownProps) => {
+const constructRoutes = (naptanId, stopRouteDetails, selectedUserRoutes) => {
+  const userSelectedRoutesAtStop = selectedUserRoutes[naptanId];
+  const routeDetails = [...stopRouteDetails];
+
+  if (userSelectedRoutesAtStop) {
+    routeDetails.forEach(route => {
+      userSelectedRoutesAtStop.routes.forEach(userRoute => {
+        if (route.line === userRoute.line) {
+          route.isSelectedByUser = true;
+        }
+      });
+    });
+  }
+
+  return routeDetails;
+};
+
+const mapStateToProps = ({ map, stops, user }, ownProps) => {
   return {
-    routes: map.stopRouteDetails,
+    routes: constructRoutes(
+      ownProps.naptanId,
+      map.stopRouteDetails,
+      user.routes.byNaptanId
+    ),
     stopName: getStopName(stops, ownProps.naptanId)
   };
 };
