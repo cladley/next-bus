@@ -14,29 +14,37 @@ class BusStopRoutesContainer extends Component {
   }
 
   handleAddRoute(route) {
-    const { naptanId } = this.props;
-    console.log(naptanId);
-    this.props.dispatch(addRoute(naptanId, route));
+    const { naptanId, stopName } = this.props;
+    this.props.dispatch(addRoute(naptanId, route, stopName));
   }
 
   render() {
-    const { routes, naptanId } = this.props;
+    const { routes, naptanId, stopName } = this.props;
 
     return (
       <React.Fragment>
         {routes.length === 0 ? (
           "loading"
         ) : (
-          <BusStopRoutes routes={routes} addRoute={this.handleAddRoute} />
+          <BusStopRoutes
+            stopName={stopName}
+            routes={routes}
+            addRoute={this.handleAddRoute}
+          />
         )}
       </React.Fragment>
     );
   }
 }
 
-const mapStateToProps = ({ map }) => {
+const getStopName = (stops, naptanId) => {
+  return stops.byNaptanId[naptanId].commonName;
+};
+
+const mapStateToProps = ({ map, stops }, ownProps) => {
   return {
-    routes: map.stopRouteDetails
+    routes: map.stopRouteDetails,
+    stopName: getStopName(stops, ownProps.naptanId)
   };
 };
 

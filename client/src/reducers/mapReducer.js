@@ -42,7 +42,6 @@ export default function(state = initialState, action) {
     case actionTypes.SET_STOP_MARKERS:
       return {
         ...state,
-        stops: createStopsObject(action.payload.data),
         viewableStops: createViewableStopsArray(action.payload.data)
       };
     case actionTypes.STOP_SELECTED:

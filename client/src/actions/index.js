@@ -48,13 +48,14 @@ const setStopSelected = stopId => {
   };
 };
 
-const addRoute = (naptanId, route) => {
+const addRoute = (naptanId, route, stopName) => {
   return {
     type: actionTypes.ADD_ROUTE,
     payload: {
       data: {
         naptanId,
-        route
+        route,
+        stopName
       }
     }
   };

@@ -22,6 +22,7 @@ class BusStopRoutes extends Component {
 
     return (
       <React.Fragment>
+        <h1>{this.props.stopName}</h1>
         <h4>Day Time Routes</h4>
         <ul>
           {dayTimeRoutes.map(route => (

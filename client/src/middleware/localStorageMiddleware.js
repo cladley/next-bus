@@ -14,8 +14,7 @@ const localStorageMiddleware = ({ dispatch }) => next => action => {
     let userRoutes = getLocalStorageValuesByKey("user_routes");
     let userRoutesObject = {
       routes: {
-        byNaptanId: {},
-        allIds: []
+        byNaptanId: {}
       }
     };
 
@@ -26,9 +25,11 @@ const localStorageMiddleware = ({ dispatch }) => next => action => {
       action.payload.data.naptanId
     ]
       ? userRoutes.routes.byNaptanId[action.payload.data.naptanId]
-      : [];
+      : { routes: [], stopName: "" };
 
-    stopRoutes.push(action.payload.data.route);
+    // stopRoutes.push(action.payload.data.route);
+    stopRoutes.stopName = action.payload.data.stopName;
+    stopRoutes.routes.push(action.payload.data.route);
     userRoutes.routes.byNaptanId[action.payload.data.naptanId] = stopRoutes;
 
     // save of to localstorage

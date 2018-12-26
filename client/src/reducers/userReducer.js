@@ -23,11 +23,14 @@ const createRoutesObject = data => {
 };
 
 const addRoute = (currentRoutes, data) => {
-  const { naptanId, route } = data;
+  const { naptanId, route, stopName } = data;
   // this is just for testing
   const routesObject = {
     byNaptanId: {
-      [naptanId]: [route]
+      [naptanId]: {
+        stopName: stopName,
+        route: [route]
+      }
     }
   };
   return routesObject;
