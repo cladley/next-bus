@@ -8,20 +8,6 @@ const initialState = {
   }
 };
 
-// Normalize the stop data herer.
-const createRoutesObject = data => {
-  const routesObject = {
-    byNaptanId: {},
-    allIds: []
-  };
-  data.forEach(route => {
-    routesObject.byNaptanId[route.id] = route;
-    routesObject.allIds.push(route.id);
-  });
-  return {};
-  // return routesObject;
-};
-
 const addRoute = (currentRoutes, data) => {
   const { naptanId, route, stopName } = data;
   // this is just for testing
@@ -39,10 +25,8 @@ const addRoute = (currentRoutes, data) => {
 export default function(state = initialState, action) {
   switch (action.type) {
     case actionTypes.LOAD_USER_ROUTES:
-      // return {...state, createRoutesObject(action.payload.data)}
-      return state;
+      return action.payload.data ? action.payload.data : initialState;
     case actionTypes.ADD_ROUTE:
-      console.log("HERER");
       return { ...state, routes: addRoute(state.routes, action.payload.data) };
     default:
       return state;

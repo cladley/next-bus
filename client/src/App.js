@@ -1,22 +1,24 @@
 import React, { Component } from "react";
-import { Provider } from "react-redux";
-import store from "./store";
 import { BrowserRouter as Router } from "react-router-dom";
+import { connect } from "react-redux";
+import { loadUserRoutes } from "./actions";
 import styles from "./app.module.css";
 import MapView from "./views/MapView";
 
 class App extends Component {
+  componentDidMount() {
+    this.props.dispatch(loadUserRoutes());
+  }
+
   render() {
     return (
-      <Provider store={store}>
-        <Router>
-          <div className={styles["main-container"]}>
-            <MapView />
-          </div>
-        </Router>
-      </Provider>
+      <Router>
+        <div className={styles["main-container"]}>
+          <MapView />
+        </div>
+      </Router>
     );
   }
 }
 
-export default App;
+export default connect(null)(App);
