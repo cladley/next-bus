@@ -61,13 +61,14 @@ const addRoute = (naptanId, route, stopName) => {
   };
 };
 
-const removeRoute = (naptanId, routeId) => {
+const removeRoute = (naptanId, route, stopName) => {
   return {
     type: actionTypes.REMOVE_ROUTE,
     payload: {
       data: {
         naptanId,
-        routeId
+        route,
+        stopName
       }
     }
   };

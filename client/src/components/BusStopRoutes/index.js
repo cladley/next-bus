@@ -16,11 +16,9 @@ class BusStopRoutes extends Component {
   }
 
   render() {
-    const { routes, addRoute } = this.props;
+    const { routes, toggleRoute } = this.props;
     const dayTimeRoutes = this.getDayBusRoutes(routes);
     const nightTimeRoutes = this.getNightBusRoutes(routes);
-
-    console.log(routes);
 
     return (
       <React.Fragment>
@@ -28,7 +26,10 @@ class BusStopRoutes extends Component {
         <h4>Day Time Routes</h4>
         <ul>
           {dayTimeRoutes.map(route => (
-            <li key={route.line} onClick={() => addRoute(route)}>
+            <li
+              key={route.line}
+              onClick={() => toggleRoute(route, route.isSelectedByUser)}
+            >
               {route.line} : {route.destination}{" "}
               {route.isSelectedByUser ? "SELECTED" : ""}
             </li>

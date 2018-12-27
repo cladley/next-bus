@@ -1,4 +1,9 @@
-import { LOAD_USER_ROUTES, ADD_ROUTE } from "../actions/actionTypes";
+import { remove } from "lodash";
+import {
+  LOAD_USER_ROUTES,
+  ADD_ROUTE,
+  REMOVE_ROUTE
+} from "../actions/actionTypes";
 import { getLocalStorageValuesByKey } from "../utilities/localStorage";
 
 const localStorageMiddleware = ({ dispatch }) => next => action => {
@@ -11,28 +16,38 @@ const localStorageMiddleware = ({ dispatch }) => next => action => {
 
     next(action);
   } else if (action.type === ADD_ROUTE) {
+    let { stopName, route, naptanId } = action.payload.data;
     let userRoutes = getLocalStorageValuesByKey("user_routes");
     let userRoutesObject = {
       routes: {
-        byNaptanId: {}
+        byNaptanId: {},
+        allIds: []
       }
     };
 
     if (!userRoutes) {
       userRoutes = userRoutesObject;
     }
-    const stopRoutes = userRoutes.routes.byNaptanId[
-      action.payload.data.naptanId
-    ]
-      ? userRoutes.routes.byNaptanId[action.payload.data.naptanId]
+    const stopRoutes = userRoutes.routes.byNaptanId[naptanId]
+      ? userRoutes.routes.byNaptanId[naptanId]
       : { routes: [], stopName: "" };
 
-    // stopRoutes.push(action.payload.data.route);
-    stopRoutes.stopName = action.payload.data.stopName;
-    stopRoutes.routes.push(action.payload.data.route);
-    userRoutes.routes.byNaptanId[action.payload.data.naptanId] = stopRoutes;
+    stopRoutes.stopName = stopName;
+    stopRoutes.routes.push(route);
+    userRoutes.routes.byNaptanId[naptanId] = stopRoutes;
 
     // save of to localstorage
+    localStorage.setItem("user_routes", JSON.stringify(userRoutes));
+
+    next(action);
+  } else if (action.type === REMOVE_ROUTE) {
+    let { route, naptanId } = action.payload.data;
+    let userRoutes = getLocalStorageValuesByKey("user_routes");
+
+    userRoutes.routes.byNaptanId[naptanId].routes = remove(
+      userRoutes.routes.byNaptanId[naptanId].routes,
+      r => r.line !== route.line
+    );
     localStorage.setItem("user_routes", JSON.stringify(userRoutes));
 
     next(action);

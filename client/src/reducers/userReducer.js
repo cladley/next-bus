@@ -1,25 +1,41 @@
 import * as actionTypes from "../actions/actionTypes";
+import { cloneDeep, remove } from "lodash";
 
 const initialState = {
   routes: {
     // This is the stop Id
-    byNaptanId: {},
-    allIds: []
+    byNaptanId: {}
   }
 };
 
+// TODO: Refactor and make nicer
 const addRoute = (currentRoutes, data) => {
   const { naptanId, route, stopName } = data;
-  // this is just for testing
-  const routesObject = {
-    byNaptanId: {
-      [naptanId]: {
-        stopName: stopName,
-        route: [route]
-      }
-    }
-  };
-  return routesObject;
+  const copyOfCurrentRoutes = cloneDeep(currentRoutes);
+
+  if (copyOfCurrentRoutes.byNaptanId[naptanId]) {
+    copyOfCurrentRoutes.byNaptanId[naptanId].routes.push(route);
+  } else {
+    copyOfCurrentRoutes.byNaptanId[naptanId] = {
+      stopName: stopName,
+      routes: [route]
+    };
+  }
+
+  return copyOfCurrentRoutes;
+};
+
+// TODO: Refactor and make nicer
+const removeRoute = (currentRoutes, data) => {
+  const { naptanId, route, stopName } = data;
+  const copyOfCurrentRoutes = cloneDeep(currentRoutes);
+
+  copyOfCurrentRoutes.byNaptanId[naptanId].routes = remove(
+    copyOfCurrentRoutes.byNaptanId[naptanId].routes,
+    r => r.line !== route.line
+  );
+
+  return copyOfCurrentRoutes;
 };
 
 export default function(state = initialState, action) {
@@ -28,6 +44,11 @@ export default function(state = initialState, action) {
       return action.payload.data ? action.payload.data : initialState;
     case actionTypes.ADD_ROUTE:
       return { ...state, routes: addRoute(state.routes, action.payload.data) };
+    case actionTypes.REMOVE_ROUTE:
+      return {
+        ...state,
+        routes: removeRoute(state.routes, action.payload.data)
+      };
     default:
       return state;
   }

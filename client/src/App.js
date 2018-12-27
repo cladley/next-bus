@@ -17,9 +17,11 @@ class App extends Component {
     return (
       <Router>
         <div className={styles["main-container"]}>
-          <Route exact path="/" component={HomeView} />
-          <Route path="/map" component={MapView} />
-          <Route path="/arrivals" component={ArrivalsView} />
+          <Switch>
+            <Route exact path="/" component={HomeView} />
+            <Route path="/map" component={MapView} />
+            <Route path="/arrivals" component={ArrivalsView} />
+          </Switch>
         </div>
       </Router>
     );
