@@ -22,8 +22,6 @@ class BusStopRoutesContainer extends Component {
     }
   };
 
-  handleToggleRoute(route) {}
-
   render() {
     const { routes, naptanId, stopName } = this.props;
 
@@ -49,11 +47,6 @@ const getStopName = (stops, naptanId) => {
 
 const constructRoutes = (naptanId, stopRouteDetails, selectedUserRoutes) => {
   const userSelectedRoutesAtStop = selectedUserRoutes[naptanId];
-  // DO a deep copy of array of objects
-  // const routeDetails = stopRouteDetails.map(r => {
-  //   return { ...r };
-  // });
-
   const routeDetails = cloneDeep(stopRouteDetails);
 
   if (userSelectedRoutesAtStop) {

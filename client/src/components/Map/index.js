@@ -31,13 +31,12 @@ class Map extends Component {
     };
 
     var onClick = ({ x, y, lat, lng, event }) => {
-      console.log(lat, lng);
-      this.setState({
-        center: {
-          lat: lat,
-          lng: lng
-        }
-      });
+      // this.setState({
+      //   center: {
+      //     lat: lat,
+      //     lng: lng
+      //   }
+      // });
     };
 
     var handleOnSelected = stopId => {

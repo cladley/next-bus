@@ -1,18 +1,15 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import classNames from "classnames";
+import { setStopSelected } from "../actions/index";
 import Map from "../components/Map";
 import Drawer from "../components/Drawer";
 import BusStopRoutesContainer from "../components/BusStopRoutesContainer";
 import styles from "./mapview.module.css";
 
 class MapView extends Component {
-  state = {
-    isDrawerOpen: false
-  };
-
-  closeDrawer = () => {
-    console.log("close drawer clicked");
+  handleClosedDrawer = () => {
+    this.props.dispatch(setStopSelected(null));
   };
 
   render() {
@@ -27,7 +24,10 @@ class MapView extends Component {
         <div className={MapContainerClassNames}>
           <Map />
         </div>
-        <Drawer isOpen={this.props.showDrawer} closeDrawer={this.closeDrawer}>
+        <Drawer
+          isOpen={this.props.showDrawer}
+          onDrawerClosed={this.handleClosedDrawer}
+        >
           {isStopSelected && <BusStopRoutesContainer naptanId={naptanId} />}
         </Drawer>
       </React.Fragment>

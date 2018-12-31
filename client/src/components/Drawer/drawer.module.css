@@ -7,13 +7,31 @@
   pointer-events: none;
 }
 
+.handle {
+  height: 30px;
+  position: relative;
+}
+
+.handle:before {
+  content: "";
+  width: 80px;
+  height: 6px;
+  border-radius: 5px;
+  background-color: #f3f2f2;
+  box-shadow: inset 1px 1px 6px #ececec;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
 .drawer.active {
   pointer-events: all;
 }
 
 .drawer.active .component-panel {
   transform: translate3d(0, 0, 0);
-  transition: transform 0.3s cubic-bezier(0, 0, 0.2, 1);
+  transition: transform 0.42s cubic-bezier(0.55, 0, 0.1, 1);
 }
 
 .drawer.active .backdrop {
