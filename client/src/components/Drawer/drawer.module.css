@@ -2,9 +2,12 @@
   height: 100px;
   width: 100%;
   position: fixed;
-  height: 100vh;
-  top: 0;
-  pointer-events: none;
+  height: 65vh;
+  top: 100vh;
+}
+
+.drawer.active {
+  top: 35vh;
 }
 
 .handle {
@@ -23,10 +26,6 @@
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-}
-
-.drawer.active {
-  pointer-events: all;
 }
 
 .drawer.active .component-panel {
