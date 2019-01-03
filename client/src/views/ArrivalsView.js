@@ -1,10 +1,22 @@
 import React from "react";
 import { connect } from "react-redux";
-import { fetchPredictionsForStop } from "../actions/index";
+import { fetchPredictionsForStops } from "../actions/index";
 
 class ArrivalsView extends React.Component {
-  componentDidMount() {
-    this.props.dispatch(fetchPredictionsForStop("490013836F"));
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    console.log("Update called");
+    this.fetchPredictions();
+    this.timerId = setInterval(this.fetchPredictions.bind(this), 10000);
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.timerId);
+  }
+
+  fetchPredictions() {
+    this.props.dispatch(
+      fetchPredictionsForStops(this.props.userRoutesByStopId)
+    );
   }
 
   render() {
@@ -12,4 +24,10 @@ class ArrivalsView extends React.Component {
   }
 }
 
-export default connect(null)(ArrivalsView);
+const mapStateToProps = ({ user }) => {
+  return {
+    userRoutesByStopId: user.routes.allIds
+  };
+};
+
+export default connect(mapStateToProps)(ArrivalsView);

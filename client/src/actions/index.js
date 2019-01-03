@@ -4,7 +4,10 @@ import {
   getRouteDetailsForStopUrl,
   getArrivalPredictionForStopUrl
 } from "../tfl-api";
-import { stopsByLocationTransform } from "../tfl-api/responseTransforms";
+import {
+  stopsByLocationTransform,
+  predictionsForStopTransform
+} from "../tfl-api/responseTransforms";
 
 const fetchStopsByLocation = (lat, lon) => {
   return {
@@ -32,7 +35,19 @@ const fetchPredictionsForStop = naptanId => {
     type: actionTypes.API,
     payload: {
       url: getArrivalPredictionForStopUrl(naptanId),
-      onSuccess: setPredictionsForStop
+      onSuccess: setPredictionsForStop,
+      transformResponse: predictionsForStopTransform
+    }
+  };
+};
+
+const fetchPredictionsForStops = stopIds => {
+  return {
+    type: actionTypes.API,
+    payload: {
+      url: stopIds.map(id => getArrivalPredictionForStopUrl(id)),
+      onSuccess: setPredictionsForStop,
+      transformResponse: predictionsForStopTransform
     }
   };
 };
@@ -107,6 +122,7 @@ const loadUserRoutes = () => {
 
 export {
   fetchPredictionsForStop,
+  fetchPredictionsForStops,
   fetchStopsByLocation,
   setStopMarkers,
   setStopSelected,

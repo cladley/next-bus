@@ -35,6 +35,9 @@ const localStorageMiddleware = ({ dispatch }) => next => action => {
     stopRoutes.stopName = stopName;
     stopRoutes.routes.push(route);
     userRoutes.routes.byNaptanId[naptanId] = stopRoutes;
+    const allIdsSet = new Set(userRoutes.routes.allIds);
+    allIdsSet.add(naptanId);
+    userRoutes.routes.allIds = [...allIdsSet];
 
     // save of to localstorage
     localStorage.setItem("user_routes", JSON.stringify(userRoutes));
@@ -48,6 +51,15 @@ const localStorageMiddleware = ({ dispatch }) => next => action => {
       userRoutes.routes.byNaptanId[naptanId].routes,
       r => r.line !== route.line
     );
+
+    if (userRoutes.routes.byNaptanId[naptanId].routes.length === 0) {
+      delete userRoutes.routes.byNaptanId[naptanId];
+      userRoutes.routes.allIds = remove(
+        userRoutes.routes.allIds,
+        r => r !== naptanId
+      );
+    }
+
     localStorage.setItem("user_routes", JSON.stringify(userRoutes));
 
     next(action);

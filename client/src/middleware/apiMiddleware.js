@@ -9,13 +9,26 @@ const apiMiddleware = ({ dispatch }) => next => action => {
 
   const { url, onSuccess, transformResponse } = action.payload;
 
-  fetch(url)
-    .then(response => {
-      return response.json();
-    })
-    .then(data => {
-      dispatch(onSuccess(transformResponse ? transformResponse(data) : data));
-    });
+  if (url instanceof Array) {
+    Promise.all(url.map(u => fetch(u)))
+      .then(responseArray => {
+        return Promise.all(responseArray.map(response => response.json()));
+      })
+      .then(dataArray => {
+        const data = transformResponse
+          ? dataArray.map(transformResponse)
+          : dataArray;
+        dispatch(onSuccess(data));
+      });
+  } else {
+    fetch(url)
+      .then(response => {
+        return response.json();
+      })
+      .then(data => {
+        dispatch(onSuccess(transformResponse ? transformResponse(data) : data));
+      });
+  }
 };
 
 export default apiMiddleware;
