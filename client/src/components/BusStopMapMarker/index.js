@@ -1,10 +1,10 @@
 import React from "react";
 
-function BusStopMapMarker({ id, onSelected }) {
+function BusStopMapMarker({ id, onSelected, isSelected }) {
   const styles = {
-    backgroundColor: "pink",
-    height: "10px",
-    width: "10px",
+    backgroundColor: isSelected ? "green" : "pink",
+    height: isSelected ? "20px" : "10px",
+    width: isSelected ? "20px" : "10px",
     borderRadius: "50%"
   };
 

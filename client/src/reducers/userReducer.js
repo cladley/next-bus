@@ -13,6 +13,7 @@ const addRoute = (currentRoutes, data) => {
   const { naptanId, route, stopName } = data;
   const copyOfCurrentRoutes = cloneDeep(currentRoutes);
 
+  // If we have a route at the current stop
   if (copyOfCurrentRoutes.byNaptanId[naptanId]) {
     copyOfCurrentRoutes.byNaptanId[naptanId].routes.push(route);
   } else {
@@ -27,7 +28,7 @@ const addRoute = (currentRoutes, data) => {
 
 // TODO: Refactor and make nicer
 const removeRoute = (currentRoutes, data) => {
-  const { naptanId, route, stopName } = data;
+  const { naptanId, route } = data;
   const copyOfCurrentRoutes = cloneDeep(currentRoutes);
 
   copyOfCurrentRoutes.byNaptanId[naptanId].routes = remove(
@@ -49,6 +50,9 @@ export default function(state = initialState, action) {
         ...state,
         routes: removeRoute(state.routes, action.payload.data)
       };
+    case actionTypes.SET_PREDICTIONS_FOR_STOP:
+      console.log(action.payload.data);
+      return state;
     default:
       return state;
   }

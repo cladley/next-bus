@@ -8,7 +8,6 @@ const initialState = {
 
 // Normalize the stop data herer.
 const createStopsObject = data => {
-  console.log(data);
   const stopsObject = {
     byNaptanId: {},
     allIds: []

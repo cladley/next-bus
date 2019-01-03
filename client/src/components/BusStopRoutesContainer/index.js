@@ -2,17 +2,9 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { cloneDeep } from "lodash";
 import BusStopRoutes from "../BusStopRoutes";
-import {
-  fetchRouteDetailsByStop,
-  addRoute,
-  removeRoute
-} from "../../actions/index";
+import { addRoute, removeRoute } from "../../actions/index";
 
 class BusStopRoutesContainer extends Component {
-  componentDidMount() {
-    this.props.dispatch(fetchRouteDetailsByStop(this.props.naptanId));
-  }
-
   handleToggleRoute = (route, isCurrentlySelectedByUser = false) => {
     const { naptanId, stopName } = this.props;
     if (!isCurrentlySelectedByUser) {
@@ -47,6 +39,7 @@ const getStopName = (stops, naptanId) => {
 
 const constructRoutes = (naptanId, stopRouteDetails, selectedUserRoutes) => {
   const userSelectedRoutesAtStop = selectedUserRoutes[naptanId];
+
   const routeDetails = cloneDeep(stopRouteDetails);
 
   if (userSelectedRoutesAtStop) {

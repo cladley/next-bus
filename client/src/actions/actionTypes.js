@@ -3,6 +3,7 @@ export const API = "API";
 export const SET_STOP_MARKERS = "SET_STOP_MARKERS";
 export const STOP_SELECTED = "STOP_SELECTED";
 export const SET_STOP_ROUTES = "SET_STOP_ROUTES";
+export const SET_PREDICTIONS_FOR_STOP = "SET_PREDICTIONS_FOR_STOP";
 
 export const ADD_ROUTE = "ADD_ROUTE";
 export const REMOVE_ROUTE = "REMOVE_ROUTE";

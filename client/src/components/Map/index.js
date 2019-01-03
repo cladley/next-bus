@@ -2,7 +2,11 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import GoogleMapReact from "google-map-react";
 import BusStopMapMarker from "../BusStopMapMarker";
-import { fetchStopsByLocation, setStopSelected } from "../../actions";
+import {
+  fetchStopsByLocation,
+  fetchRouteDetailsByStop,
+  setStopSelected
+} from "../../actions";
 
 class Map extends Component {
   state = {
@@ -41,6 +45,7 @@ class Map extends Component {
 
     var handleOnSelected = stopId => {
       if (stopId) {
+        this.props.dispatch(fetchRouteDetailsByStop(stopId));
         this.props.dispatch(setStopSelected(stopId));
       }
     };
@@ -62,6 +67,9 @@ class Map extends Component {
                 lat={marker.lat}
                 lng={marker.lon}
                 id={marker.id}
+                isSelected={
+                  marker.id === this.props.selectedStopId ? true : false
+                }
                 onSelected={handleOnSelected}
               />
             );
@@ -80,7 +88,8 @@ const getViewableStopsAsArray = (stops, viewableStops) => {
 
 const mapStateToProps = ({ stops, map }) => {
   return {
-    stopMarkers: getViewableStopsAsArray(stops.byNaptanId, map.viewableStops)
+    stopMarkers: getViewableStopsAsArray(stops.byNaptanId, map.viewableStops),
+    selectedStopId: map.selectedStopId
   };
 };
 
