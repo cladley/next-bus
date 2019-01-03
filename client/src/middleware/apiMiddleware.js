@@ -7,14 +7,14 @@ const apiMiddleware = ({ dispatch }) => next => action => {
     return;
   }
 
-  const { url, onSuccess } = action.payload;
+  const { url, onSuccess, transformResponse } = action.payload;
 
   fetch(url)
     .then(response => {
       return response.json();
     })
     .then(data => {
-      dispatch(onSuccess(data));
+      dispatch(onSuccess(transformResponse ? transformResponse(data) : data));
     });
 };
 

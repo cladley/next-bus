@@ -4,13 +4,15 @@ import {
   getRouteDetailsForStopUrl,
   getArrivalPredictionForStopUrl
 } from "../tfl-api";
+import { stopsByLocationTransform } from "../tfl-api/responseTransforms";
 
 const fetchStopsByLocation = (lat, lon) => {
   return {
     type: actionTypes.API,
     payload: {
       url: getStopsByLatLonUrl(lat, lon),
-      onSuccess: setStopMarkers
+      onSuccess: setStopMarkers,
+      transformResponse: stopsByLocationTransform
     }
   };
 };
@@ -57,7 +59,7 @@ const setStopMarkers = data => {
   return {
     type: actionTypes.SET_STOP_MARKERS,
     payload: {
-      data: data.stopPoints
+      data: data
     }
   };
 };
