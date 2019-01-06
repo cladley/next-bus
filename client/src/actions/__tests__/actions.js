@@ -1,5 +1,6 @@
 import { fetchStopsByLocation, setStopMarkers } from "../index";
 import * as actionTypes from "../actionTypes";
+import { stopsByLocationTransform } from "../../tfl-api/responseTransforms";
 
 describe("Action creators", () => {
   describe("fetchStopsByLocation()", () => {
@@ -17,6 +18,7 @@ describe("Action creators", () => {
           }&lon=${
             coordinates.lon
           }&stoptypes=NaptanPublicBusCoachTram&radius=300`,
+          transformResponse: stopsByLocationTransform,
           onSuccess: setStopMarkers
         }
       };
@@ -36,7 +38,7 @@ describe("Action creators", () => {
       const expectedObject = {
         type: actionTypes.SET_STOP_MARKERS,
         payload: {
-          data: data.stopPoints
+          data: data
         }
       };
 
