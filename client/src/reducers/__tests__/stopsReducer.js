@@ -28,7 +28,7 @@ describe("stopReducer()", () => {
     }
   ];
 
-  describe('Called with action type "SET_STOP_MARKERS"', () => {
+  describe("Called with action type 'SET_STOP_MARKERS'", () => {
     let newState;
     const action = {
       type: SET_STOP_MARKERS,
