@@ -4,7 +4,6 @@ import { fetchPredictionsForStops } from "../actions/index";
 
 class ArrivalsView extends React.Component {
   componentDidUpdate(prevProps, prevState, snapshot) {
-    console.log("Update called");
     this.fetchPredictions();
     this.timerId = setInterval(this.fetchPredictions.bind(this), 10000);
   }

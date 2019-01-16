@@ -85,12 +85,32 @@ class Drawer extends Component {
     this.drawerElement.current.style.transform = `translate3d(0, ${-amount}px, 0)`;
   }
 
+  getTransformToFullScreen() {
+    const { height, width } = this.frameElement.getBoundingClientRect();
+    const widthDiff = window.innerWidth - width;
+    const heightDiff = window.innerHeight - height;
+    const scaleX = 1 + widthDiff / width;
+    const scaleY = 1 + heightDiff / height;
+    return { scaleX, scaleY };
+  }
+
   render() {
-    const { isOpen, closeOnBackdropClick, hasBackdrop } = this.props;
+    let frameStyles = {};
+    const {
+      isOpen,
+      isExpanded,
+      closeOnBackdropClick,
+      hasBackdrop
+    } = this.props;
 
     let drawerClassNames = classNames(styles.drawer, {
       [styles.active]: isOpen
     });
+
+    if (isExpanded) {
+      const { scaleX, scaleY } = this.getTransformToFullScreen();
+      frameStyles.transform = `scale(${scaleX}, ${scaleY})`;
+    }
 
     return (
       <div className={drawerClassNames} ref={this.drawerElement}>
@@ -100,6 +120,15 @@ class Drawer extends Component {
             onClick={closeOnBackdropClick ? this.handleClickOnBackdrop : null}
           />
         )}
+
+        <div
+          className={styles.frame}
+          ref={element => (this.frameElement = element)}
+          style={frameStyles}
+        >
+          <button onClick={() => this.props.test()}>Expand</button>
+        </div>
+
         <div className={styles["component-panel"]}>
           <div
             className={styles.handle}
@@ -115,7 +144,8 @@ class Drawer extends Component {
 }
 
 Drawer.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
+  isOpen: PropTypes.bool,
+  isExpanded: PropTypes.bool,
   closeOnBackdropClick: PropTypes.bool,
   hasBackdrop: PropTypes.bool
 };

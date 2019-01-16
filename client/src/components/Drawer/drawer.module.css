@@ -1,5 +1,4 @@
 .drawer {
-  height: 100px;
   width: 100%;
   position: fixed;
   height: 65vh;
@@ -33,6 +32,11 @@
   transition: transform 0.42s cubic-bezier(0.55, 0, 0.1, 1);
 }
 
+.drawer.active .frame {
+  transform: translate3d(0, 0, 0);
+  transition: transform 0.42s cubic-bezier(0.55, 0, 0.1, 1);
+}
+
 .drawer.active .backdrop {
   opacity: 1;
   transition: opacity 0.3s ease;
@@ -41,13 +45,23 @@
 .component-panel {
   position: absolute;
   min-height: 65vh;
-  background-color: #fff;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  background-color: transparent;
   transition: transform 0.2s cubic-bezier(0.4, 0, 1, 1);
   transform: translate3d(0, 100%, 0);
+}
+
+.frame {
   border-top: 1px solid rgb(224, 224, 224);
+  position: absolute;
+  min-height: 65vh;
+  background-color: #fff;
+  bottom: 0;
+  left: 10px;
+  right: 10px;
+  border-radius: 4px;
+  transition: transform 0.2s cubic-bezier(0.4, 0, 1, 1);
+  transform: translate3d(0, 100%, 0);
+  transform-origin: bottom;
 }
 
 .backdrop {

@@ -1,0 +1,58 @@
+.panel {
+  width: 100vw;
+  height: 65vh;
+  position: fixed;
+  top: 100vh;
+  pointer-events: none;
+}
+
+.panel.closed {
+  top: 35vh;
+  pointer-events: none;
+}
+
+.panel.half {
+  top: 35vh;
+  pointer-events: all;
+}
+
+.panel.full {
+  top: 35vh;
+  pointer-events: all;
+}
+
+.frame {
+  border-top: 1px solid rgb(224, 224, 224);
+  position: absolute;
+  min-height: 65vh;
+  background-color: #fff;
+  bottom: 0;
+  left: 10px;
+  right: 10px;
+  border-radius: 4px;
+  transform-origin: bottom;
+  transition: transform 0.2s cubic-bezier(0.4, 0, 1, 1);
+  transform: translate3d(0, 100%, 0);
+}
+
+.panel.half .frame {
+  transform: translate3d(0, 0, 0);
+  transition: transform 0.3s cubic-bezier(0.55, 0, 0.1, 1);
+}
+
+.panel.full {
+}
+
+.component-container {
+  position: absolute;
+  left: 10px;
+  min-height: 65vh;
+  width: calc(100vw - 20px);
+}
+
+.component-container-full {
+  position: absolute;
+  left: 10px;
+  width: calc(100vw - 20px);
+  top: -35vh;
+}

@@ -88,6 +88,21 @@ const setStopSelected = stopId => {
   };
 };
 
+const selectRoute = route => {
+  return {
+    type: actionTypes.SELECT_ROUTE,
+    payload: {
+      data: route
+    }
+  };
+};
+
+const clearRoute = () => {
+  return {
+    type: actionTypes.CLEAR_ROUTE
+  };
+};
+
 const addRoute = (naptanId, route, stopName) => {
   return {
     type: actionTypes.ADD_ROUTE,
@@ -129,5 +144,7 @@ export {
   fetchRouteDetailsByStop,
   addRoute,
   removeRoute,
-  loadUserRoutes
+  loadUserRoutes,
+  selectRoute,
+  clearRoute
 };

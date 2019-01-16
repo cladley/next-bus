@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { cloneDeep } from "lodash";
 import BusStopRoutes from "../BusStopRoutes";
-import { addRoute, removeRoute } from "../../actions/index";
+import { addRoute, removeRoute, selectRoute } from "../../actions/index";
 
 class BusStopRoutesContainer extends Component {
   handleToggleRoute = (route, isCurrentlySelectedByUser = false) => {
@@ -12,6 +12,10 @@ class BusStopRoutesContainer extends Component {
     } else {
       this.props.dispatch(removeRoute(naptanId, route, stopName));
     }
+  };
+
+  handleShowRoute = route => {
+    this.props.dispatch(selectRoute(route));
   };
 
   render() {
@@ -26,6 +30,7 @@ class BusStopRoutesContainer extends Component {
             stopName={stopName}
             routes={routes}
             toggleRoute={this.handleToggleRoute}
+            showRoute={this.handleShowRoute}
           />
         )}
       </React.Fragment>

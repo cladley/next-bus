@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 
 class BusStopRoutes extends Component {
   componentDidMount() {}
@@ -16,7 +17,7 @@ class BusStopRoutes extends Component {
   }
 
   render() {
-    const { routes, toggleRoute } = this.props;
+    const { routes, toggleRoute, showRoute } = this.props;
     const dayTimeRoutes = this.getDayBusRoutes(routes);
     const nightTimeRoutes = this.getNightBusRoutes(routes);
 
@@ -26,12 +27,12 @@ class BusStopRoutes extends Component {
         <h4>Day Time Routes</h4>
         <ul>
           {dayTimeRoutes.map(route => (
-            <li
-              key={route.line}
-              onClick={() => toggleRoute(route, route.isSelectedByUser)}
-            >
-              {route.line} : {route.destination}{" "}
+            <li key={route.line}>
+              <span onClick={() => toggleRoute(route, route.isSelectedByUser)}>
+                {route.line} : {route.destination}{" "}
+              </span>
               {route.isSelectedByUser ? "SELECTED" : ""}
+              <button onClick={() => showRoute(route)}>Show route</button>
             </li>
           ))}
         </ul>
@@ -48,5 +49,9 @@ class BusStopRoutes extends Component {
     );
   }
 }
+
+BusStopRoutes.propTypes = {
+  showRoute: PropTypes.func
+};
 
 export default BusStopRoutes;
