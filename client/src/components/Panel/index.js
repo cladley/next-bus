@@ -69,6 +69,20 @@ class Panel extends React.Component {
     this.props.onChangeOpen(type);
   };
 
+  getHalfPanelLeaveTransition() {
+    const { isOpen } = this.props;
+    if (isOpen === appearances.full) {
+      return {
+        opacity: 0
+      };
+    } else {
+      return {
+        opacity: 0,
+        transform: "translate3d(0, 100%, 0)"
+      };
+    }
+  }
+
   getPanelChildren() {
     const { isOpen } = this.props;
 
@@ -80,7 +94,7 @@ class Panel extends React.Component {
             items={isOpen === appearances.half}
             from={{ opacity: 0, transform: "translate3d(0, 100%, 0)" }}
             enter={{ opacity: 1, transform: "translate3d(0, 0, 0)" }}
-            leave={{ opacity: 0 }}
+            leave={this.getHalfPanelLeaveTransition()}
           >
             {show =>
               show &&

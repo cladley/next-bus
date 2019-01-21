@@ -1,56 +1,37 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import classNames from "classnames";
-import { setStopSelected, clearRoute } from "../actions/index";
+import { setStopSelected, clearRoute, setPanelState } from "../actions/index";
 import Map from "../components/Map";
 import Panel, { appearances } from "../components/Panel";
-import Drawer from "../components/Drawer";
 import BusStopRoutesContainer from "../components/BusStopRoutesContainer";
+import LineStops from "../components/LineStops";
 import styles from "./mapview.module.css";
-import { ARRIVAL_PREDICTIONS_FOR_STOP } from "../tfl-api/urls";
 
 class MapView extends Component {
-  state = {
-    isExpanded: false,
-    appearance: appearances.closed
-  };
-
-  handleClosedDrawer = () => {
-    this.props.dispatch(setStopSelected(null));
-  };
-
-  handleTest = () => {
-    this.setState(prevState => {
-      return {
-        isExpanded: !prevState.isExpanded
-      };
-    });
-  };
-
   handleShowRoute = route => {
     console.log(route);
   };
 
   handlePanelChange = type => {
     if (type === appearances.full) {
-      this.props.dispatch(clearRoute());
+      this.props.dispatch(setPanelState(appearances.half));
+      setTimeout(() => {
+        this.props.dispatch(clearRoute());
+      }, 500);
     } else if (type === appearances.half) {
-      this.props.dispatch(setStopSelected(null));
+      this.props.dispatch(setPanelState(appearances.closed));
+      setTimeout(() => {
+        this.props.dispatch(setStopSelected(null));
+      }, 400);
     }
   };
 
   render() {
-    const { showDrawer, isStopSelected, selectedRoute, naptanId } = this.props;
-    let panelAppearance = appearances.closed;
-
-    if (!!selectedRoute) {
-      panelAppearance = appearances.full;
-    } else if (isStopSelected) {
-      panelAppearance = appearances.half;
-    }
+    const { isStopSelected, selectedRoute, naptanId, panelState } = this.props;
 
     let MapContainerClassNames = classNames(styles["map-container"], {
-      [styles.active]: showDrawer
+      [styles.active]: isStopSelected
     });
 
     return (
@@ -58,7 +39,7 @@ class MapView extends Component {
         <div className={MapContainerClassNames}>
           <Map />
         </div>
-        <Panel isOpen={panelAppearance} onChangeOpen={this.handlePanelChange}>
+        <Panel isOpen={panelState} onChangeOpen={this.handlePanelChange}>
           <Panel.Half>
             {isStopSelected && (
               <BusStopRoutesContainer
@@ -69,17 +50,14 @@ class MapView extends Component {
           </Panel.Half>
           <Panel.Full>
             <h2>This is the full panel</h2>
+            {selectedRoute && (
+              <LineStops
+                line={selectedRoute.line}
+                direction={selectedRoute.direction}
+              />
+            )}
           </Panel.Full>
         </Panel>
-        {/* <Drawer 
-          isOpen={this.props.showDrawer}
-          onDrawerClosed={this.handleClosedDrawer}
-          ref={drawer => (this.drawer = drawer)}
-          test={this.handleTest}
-          isExpanded={this.state.isExpanded}
-        >
-          {isStopSelected && <BusStopRoutesContainer naptanId={naptanId} />}
-        </Drawer> */}
       </React.Fragment>
     );
   }
@@ -88,9 +66,9 @@ class MapView extends Component {
 const mapStateToProps = ({ map, route }) => {
   return {
     selectedRoute: route.selectedRoute,
-    showDrawer: !!map.selectedStopId,
     isStopSelected: !!map.selectedStopId,
-    naptanId: map.selectedStopId
+    naptanId: map.selectedStopId,
+    panelState: map.panelState
   };
 };
 

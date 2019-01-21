@@ -21,6 +21,23 @@ export const getRouteDetailsForStopUrl = naptanId => {
     .replace("{{NAPTAN_ID}}", naptanId);
 };
 
+export const getStopsForLineUrl = (line, direction) => {
+  return urls.LINE_STOPS.replace("{{APP_ID}}", appId)
+    .replace("{{APP_KEY}}", appKey)
+    .replace("{{LINE}}", line)
+    .replace("{{DIRECTION}}", direction);
+};
+
+export const getStopsForLine = async lineId => {
+  try {
+    const response = await fetch(getStopsForLine(lineId));
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(`Error fetching stops for line: ${error}`);
+  }
+};
+
 export const getStopByLatLon = async (lat, lon, radius = 300) => {
   try {
     const response = await fetch(getStopsByLatLonUrl(lat, lon, radius));

@@ -2,7 +2,13 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { cloneDeep } from "lodash";
 import BusStopRoutes from "../BusStopRoutes";
-import { addRoute, removeRoute, selectRoute } from "../../actions/index";
+import {
+  addRoute,
+  removeRoute,
+  selectRoute,
+  setPanelState
+} from "../../actions/index";
+import { appearances } from "../Panel";
 
 class BusStopRoutesContainer extends Component {
   handleToggleRoute = (route, isCurrentlySelectedByUser = false) => {
@@ -15,6 +21,7 @@ class BusStopRoutesContainer extends Component {
   };
 
   handleShowRoute = route => {
+    this.props.dispatch(setPanelState(appearances.full));
     this.props.dispatch(selectRoute(route));
   };
 

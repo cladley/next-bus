@@ -2,7 +2,8 @@ import * as actionTypes from "./actionTypes";
 import {
   getStopsByLatLonUrl,
   getRouteDetailsForStopUrl,
-  getArrivalPredictionForStopUrl
+  getArrivalPredictionForStopUrl,
+  getStopsForLineUrl
 } from "../tfl-api";
 import {
   stopsByLocationTransform,
@@ -55,6 +56,34 @@ const fetchPredictionsForStops = stopIds => {
 const setPredictionsForStop = data => {
   return {
     type: actionTypes.SET_PREDICTIONS_FOR_STOP,
+    payload: {
+      data: data
+    }
+  };
+};
+
+const setPanelState = data => {
+  return {
+    type: actionTypes.SET_PANEL_STATE,
+    payload: {
+      data: data
+    }
+  };
+};
+
+const fetchStopsForLine = (line, direction) => {
+  return {
+    type: actionTypes.API,
+    payload: {
+      url: getStopsForLineUrl(line, direction),
+      onSuccess: setStopsForLine
+    }
+  };
+};
+
+const setStopsForLine = data => {
+  return {
+    type: actionTypes.SET_STOPS_FOR_LINE,
     payload: {
       data: data
     }
@@ -139,8 +168,11 @@ export {
   fetchPredictionsForStop,
   fetchPredictionsForStops,
   fetchStopsByLocation,
+  fetchStopsForLine,
   setStopMarkers,
   setStopSelected,
+  setPanelState,
+  setStopsForLine,
   fetchRouteDetailsByStop,
   addRoute,
   removeRoute,

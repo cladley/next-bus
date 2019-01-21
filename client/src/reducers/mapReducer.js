@@ -1,9 +1,11 @@
 import * as actionTypes from "../actions/actionTypes";
+import { appearances } from "../components/Panel";
 
 const initialState = {
   viewableStops: [],
   selectedStopId: null,
-  stopRouteDetails: []
+  stopRouteDetails: [],
+  panelState: appearances.closed
 };
 
 // Normalize the stop data herer.
@@ -50,6 +52,8 @@ export default function(state = initialState, action) {
         ...state,
         stopRouteDetails: cleanUpStopRouteDetails(action.payload.data)
       };
+    case actionTypes.SET_PANEL_STATE:
+      return { ...state, panelState: action.payload.data };
     default:
       return state;
   }

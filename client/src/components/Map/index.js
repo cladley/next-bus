@@ -2,10 +2,12 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import GoogleMapReact from "google-map-react";
 import BusStopMapMarker from "../BusStopMapMarker";
+import { appearances } from "../Panel";
 import {
   fetchStopsByLocation,
   fetchRouteDetailsByStop,
-  setStopSelected
+  setStopSelected,
+  setPanelState
 } from "../../actions";
 
 class Map extends Component {
@@ -47,6 +49,7 @@ class Map extends Component {
       if (stopId) {
         this.props.dispatch(fetchRouteDetailsByStop(stopId));
         this.props.dispatch(setStopSelected(stopId));
+        this.props.dispatch(setPanelState(appearances.half));
       }
     };
 
