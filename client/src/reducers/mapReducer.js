@@ -47,6 +47,13 @@ export default function(state = initialState, action) {
       };
     case actionTypes.STOP_SELECTED:
       return { ...state, selectedStopId: action.payload.data };
+
+    case actionTypes.CLEAR_STOP_SELECTED:
+      return {
+        ...state,
+        selectedStopId: null,
+        stopRouteDetails: []
+      };
     case actionTypes.SET_STOP_ROUTES:
       return {
         ...state,

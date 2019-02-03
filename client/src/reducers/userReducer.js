@@ -6,7 +6,8 @@ const initialState = {
     // This is the stop Id
     byNaptanId: {},
     allIds: []
-  }
+  },
+  predictions: {}
 };
 
 // user_predictions = {
@@ -67,23 +68,25 @@ const removeRoute = (currentRoutes, data) => {
 
 const extractPredictionDataForRoute = (userRoutes, data) => {
   let userPredictions = {};
+  if (data.length > 0) {
+    Object.keys(userRoutes).forEach(stopId => {
+      const routes = userRoutes[stopId].routes;
+      const predictionsForStop = find(data, stop => stop.naptanId === stopId);
+      userPredictions[stopId] = [];
 
-  Object.keys(userRoutes).forEach(stopId => {
-    const routes = userRoutes[stopId].routes;
-    const predictionsForStop = find(data, stop => stop.naptanId === stopId);
-
-    userPredictions[stopId] = {};
-
-    routes.forEach(route => {
-      userPredictions[stopId][
-        route.line
-      ] = predictionsForStop.predictions.filter(
-        pred => pred.lineId === route.line
-      );
+      routes.forEach(route => {
+        console.log("called");
+        userPredictions[stopId].push({
+          line: route.line,
+          arrivals: predictionsForStop.predictions.filter(
+            pred => pred.lineId === route.line
+          )
+        });
+      });
     });
-  });
+  }
 
-  console.log(userPredictions);
+  return userPredictions;
 };
 
 export default function(state = initialState, action) {
@@ -98,12 +101,13 @@ export default function(state = initialState, action) {
         routes: removeRoute(state.routes, action.payload.data)
       };
     case actionTypes.SET_PREDICTIONS_FOR_STOP:
-      extractPredictionDataForRoute(
-        state.routes.byNaptanId,
-        action.payload.data
-      );
-
-      return state;
+      return {
+        ...state,
+        predictions: extractPredictionDataForRoute(
+          state.routes.byNaptanId,
+          action.payload.data
+        )
+      };
     default:
       return state;
   }

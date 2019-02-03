@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import classNames from "classnames";
-import { setStopSelected, clearRoute, setPanelState } from "../actions/index";
+import { clearRoute, setPanelState, clearStopSelected } from "../actions/index";
 import Map from "../components/Map";
 import Panel, { appearances } from "../components/Panel";
 import BusStopRoutesContainer from "../components/BusStopRoutesContainer";
@@ -22,7 +22,7 @@ class MapView extends Component {
     } else if (type === appearances.half) {
       this.props.dispatch(setPanelState(appearances.closed));
       setTimeout(() => {
-        this.props.dispatch(setStopSelected(null));
+        this.props.dispatch(clearStopSelected());
       }, 400);
     }
   };
@@ -49,7 +49,6 @@ class MapView extends Component {
             )}
           </Panel.Half>
           <Panel.Full>
-            <h2>This is the full panel</h2>
             {selectedRoute && (
               <LineStops
                 line={selectedRoute.line}

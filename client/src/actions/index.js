@@ -117,6 +117,12 @@ const setStopSelected = stopId => {
   };
 };
 
+const clearStopSelected = () => {
+  return {
+    type: actionTypes.CLEAR_STOP_SELECTED
+  };
+};
+
 const selectRoute = route => {
   return {
     type: actionTypes.SELECT_ROUTE,
@@ -171,6 +177,7 @@ export {
   fetchStopsForLine,
   setStopMarkers,
   setStopSelected,
+  clearStopSelected,
   setPanelState,
   setStopsForLine,
   fetchRouteDetailsByStop,
