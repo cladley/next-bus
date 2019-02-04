@@ -56,5 +56,8 @@ section.route-section {
 
 .test {
   font-size: 40px;
-  color: blue;
+  width: 10px;
+  height: 10px;
+  background-color: black;
+  border-radius: 50%;
 }

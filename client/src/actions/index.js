@@ -10,14 +10,20 @@ import {
   predictionsForStopTransform
 } from "../tfl-api/responseTransforms";
 
-const fetchStopsByLocation = (lat, lon) => {
+const fetchStopsByLocation = (lat, lon, radius = 300) => {
   return {
     type: actionTypes.API,
     payload: {
-      url: getStopsByLatLonUrl(lat, lon),
+      url: getStopsByLatLonUrl(lat, lon, radius),
       onSuccess: setStopMarkers,
       transformResponse: stopsByLocationTransform
     }
+  };
+};
+
+const clearStopMarkers = () => {
+  return {
+    type: actionTypes.CLEAR_STOP_MARKERS
   };
 };
 
@@ -178,6 +184,7 @@ export {
   setStopMarkers,
   setStopSelected,
   clearStopSelected,
+  clearStopMarkers,
   setPanelState,
   setStopsForLine,
   fetchRouteDetailsByStop,

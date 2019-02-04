@@ -45,6 +45,13 @@ export default function(state = initialState, action) {
         ...state,
         viewableStops: createViewableStopsArray(action.payload.data)
       };
+
+    case actionTypes.CLEAR_STOP_MARKERS:
+      return {
+        ...state,
+        viewableStops: []
+      };
+
     case actionTypes.STOP_SELECTED:
       return { ...state, selectedStopId: action.payload.data };
 
