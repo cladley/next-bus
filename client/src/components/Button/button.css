@@ -1,0 +1,35 @@
+@value background-light, shadow from '../colors.css';
+
+.button {
+  background-color: background-light;
+  border: none;
+  padding: 0 15px;
+  line-height: 40px;
+  display: inline-block;
+  box-shadow: shadow;
+  border-radius: 5px;
+  height: 40px;
+}
+
+.button.circular {
+  border-radius: 50%;
+  width: 40px;
+  padding: 0;
+}
+
+.button.circular svg {
+  width: 24px;
+}
+
+.button:active {
+  transform: translateY(2px);
+}
+
+.button:focus {
+  outline: none;
+}
+
+.button svg {
+  width: auto;
+  height: 100%;
+}

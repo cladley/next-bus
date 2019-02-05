@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Transition, animated, Trail } from "react-spring";
 import GoogleMapReact from "google-map-react";
 import BusStopMapMarker from "../BusStopMapMarker";
 import { appearances } from "../Panel";
@@ -12,11 +11,7 @@ import {
   clearStopMarkers
 } from "../../actions";
 
-import { dot } from "./map.module.css";
-
-const CenterDot = () => {
-  return <div className={dot} />;
-};
+const EARTH_RADIUS_IN_KM = 6377.83;
 
 class Map extends Component {
   state = {
@@ -64,21 +59,19 @@ class Map extends Component {
         fillOpacity: 0.1,
         map: this.map,
         center: center,
-        radius: Math.floor(radius * 0.7)
+        radius: Math.floor(radius * 0.6)
       });
     }
 
     this.props.dispatch(clearStopMarkers());
     this.props.dispatch(
-      fetchStopsByLocation(center.lat, center.lng, Math.floor(radius * 0.7))
+      fetchStopsByLocation(center.lat, center.lng, Math.floor(radius * 0.6))
     );
   }
 
   getRadiusInMetres() {
     if (!this.map) return;
 
-    // r = radius of the earth in statute km
-    const r = 6377.83;
     const bounds = this.map.getBounds();
     const center = bounds.getCenter();
     const ne = bounds.getNorthEast();
@@ -91,7 +84,7 @@ class Map extends Component {
 
     // distance = circle radius from center to Northeast corner of bounds
     const dis =
-      r *
+      EARTH_RADIUS_IN_KM *
       Math.acos(
         Math.sin(lat1) * Math.sin(lat2) +
           Math.cos(lat1) * Math.cos(lat2) * Math.cos(lon2 - lon1)
@@ -136,15 +129,6 @@ class Map extends Component {
       fullscreenControl: false
     };
 
-    var onClick = ({ x, y, lat, lng, event }) => {
-      // this.setState({
-      //   center: {
-      //     lat: lat,
-      //     lng: lng
-      //   }
-      // });
-    };
-
     const StopMarkers = this.createMarkers();
 
     return (
@@ -155,7 +139,6 @@ class Map extends Component {
           defaultCenter={this.props.center}
           center={this.state.center}
           defaultZoom={this.props.zoom}
-          onClick={onClick}
           onBoundsChange={this.onBoundsChange}
           yesIWantToUseGoogleMapApiInternals
           onGoogleApiLoaded={this.handleApiLoaded}
