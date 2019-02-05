@@ -6,7 +6,6 @@ import Map from "../components/Map";
 import Panel, { appearances } from "../components/Panel";
 import BusStopRoutesContainer from "../components/BusStopRoutesContainer";
 import LineStops from "../components/LineStops";
-import Button from "../components/Button";
 
 import styles from "./mapview.module.css";
 
@@ -38,7 +37,6 @@ class MapView extends Component {
 
     return (
       <React.Fragment>
-        <Button>Heloer</Button>
         <div className={MapContainerClassNames}>
           <Map />
         </div>
