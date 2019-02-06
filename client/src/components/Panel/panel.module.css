@@ -4,6 +4,7 @@
   position: fixed;
   top: 100vh;
   pointer-events: none;
+  z-index: 1;
 }
 
 .panel.closed {

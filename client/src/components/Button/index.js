@@ -4,9 +4,15 @@ import "./button.css";
 
 class Button extends React.Component {
   render() {
-    const { circular } = this.props;
-    const buttonClassNames = classNames("button", { circular: circular });
-    return <button className={buttonClassNames}>{this.props.children}</button>;
+    const { circular, className, onClick } = this.props;
+    const buttonClassNames = classNames("button", className, {
+      circular: circular
+    });
+    return (
+      <button className={buttonClassNames} onClick={onClick}>
+        {this.props.children}
+      </button>
+    );
   }
 }
 

@@ -1,15 +1,29 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import classNames from "classnames";
-import { clearRoute, setPanelState, clearStopSelected } from "../actions/index";
+
+import {
+  clearRoute,
+  setPanelState,
+  clearStopSelected,
+  getGeoLocation
+} from "../actions/index";
 import Map from "../components/Map";
 import Panel, { appearances } from "../components/Panel";
 import BusStopRoutesContainer from "../components/BusStopRoutesContainer";
 import LineStops from "../components/LineStops";
+import Button from "../components/Button";
+import GeoLocation from "../components/GeoLocation";
+import { ReactComponent as LocationIcon } from "../icons/location.svg";
 
 import styles from "./mapview.module.css";
 
 class MapView extends Component {
+  state = {
+    triggerGeoLocation: false,
+    geoPosition: null
+  };
+
   handleShowRoute = route => {
     console.log(route);
   };
@@ -28,6 +42,10 @@ class MapView extends Component {
     }
   };
 
+  handleGeoButtonClick = () => {
+    this.props.dispatch(getGeoLocation());
+  };
+
   render() {
     const { isStopSelected, selectedRoute, naptanId, panelState } = this.props;
 
@@ -37,6 +55,14 @@ class MapView extends Component {
 
     return (
       <React.Fragment>
+        <Button
+          circular
+          className={styles["geo-button"]}
+          onClick={this.handleGeoButtonClick}
+        >
+          <LocationIcon />
+        </Button>
+
         <div className={MapContainerClassNames}>
           <Map />
         </div>

@@ -176,6 +176,30 @@ const loadUserRoutes = () => {
   };
 };
 
+const getGeoLocation = () => {
+  return {
+    type: actionTypes.GET_GEO_LOCATION
+  };
+};
+
+const geoLocationSuccess = position => {
+  return {
+    type: actionTypes.GEO_LOCATION_SUCCESS,
+    payload: {
+      data: position
+    }
+  };
+};
+
+const geoLocationError = error => {
+  return {
+    type: actionTypes.GEO_LOCATION_ERROR,
+    payload: {
+      data: error
+    }
+  };
+};
+
 export {
   fetchPredictionsForStop,
   fetchPredictionsForStops,
@@ -192,5 +216,8 @@ export {
   removeRoute,
   loadUserRoutes,
   selectRoute,
-  clearRoute
+  clearRoute,
+  getGeoLocation,
+  geoLocationSuccess,
+  geoLocationError
 };

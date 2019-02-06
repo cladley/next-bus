@@ -5,7 +5,8 @@ const initialState = {
   viewableStops: [],
   selectedStopId: null,
   stopRouteDetails: [],
-  panelState: appearances.closed
+  panelState: appearances.closed,
+  geoLocation: null
 };
 
 // Normalize the stop data herer.
@@ -68,6 +69,15 @@ export default function(state = initialState, action) {
       };
     case actionTypes.SET_PANEL_STATE:
       return { ...state, panelState: action.payload.data };
+    case actionTypes.GEO_LOCATION_SUCCESS:
+      const { coords } = action.payload.data;
+      return {
+        ...state,
+        geoLocation: {
+          lat: coords.longitude,
+          lng: coords.latitude
+        }
+      };
     default:
       return state;
   }
