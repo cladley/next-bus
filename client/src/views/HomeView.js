@@ -1,13 +1,27 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 import Container from "../components/Layout/Container";
 import Button from "../components/Button";
 import { ReactComponent as LocationIcon } from "../icons/location.svg";
+
+const Msg = ({ closeToast }) => {
+  return (
+    <div>
+      lorem ipsum
+      <button onClick={closeToast}>close</button>
+    </div>
+  );
+};
 
 class HomeView extends React.Component {
   state = {
     toggle: false
   };
+
+  showToast() {
+    toast(<Msg />);
+  }
 
   render() {
     return (
@@ -17,7 +31,8 @@ class HomeView extends React.Component {
         <br />
         <br />
         <br />
-        <Button circular>
+
+        <Button circular onClick={this.showToast}>
           <LocationIcon />
         </Button>
 

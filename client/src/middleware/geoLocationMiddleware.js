@@ -12,7 +12,7 @@ const geoLocationMiddleware = ({ dispatch }) => next => action => {
   navigator.geolocation.getCurrentPosition(
     position => {
       dispatch(geoLocationSuccess(position));
-      onSuccess();
+      onSuccess(position);
     },
     error => {
       dispatch(geoLocationError(error));

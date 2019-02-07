@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { connect } from "react-redux";
+import { ToastContainer } from "react-toastify";
 import { loadUserRoutes } from "./actions";
 import styles from "./app.module.css";
+import "react-toastify/dist/ReactToastify.min.css";
 import MapView from "./views/MapView";
 import HomeView from "./views/HomeView";
 import ArrivalsView from "./views/ArrivalsView";
-import { TransitionGroup, CSSTransition } from "react-transition-group";
 
 class App extends Component {
   componentDidMount() {
@@ -22,6 +23,7 @@ class App extends Component {
             <Route path="/map" component={MapView} />
             <Route path="/arrivals" component={ArrivalsView} />
           </Switch>
+          <ToastContainer position="bottom-right" hideProgressBar={true} />
         </div>
       </Router>
     );

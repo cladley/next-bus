@@ -2,19 +2,12 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import classNames from "classnames";
 
-import {
-  clearRoute,
-  setPanelState,
-  clearStopSelected,
-  getGeoLocation
-} from "../actions/index";
+import { clearRoute, setPanelState, clearStopSelected } from "../actions/index";
 import Map from "../components/Map";
 import Panel, { appearances } from "../components/Panel";
 import BusStopRoutesContainer from "../components/BusStopRoutesContainer";
 import LineStops from "../components/LineStops";
-import Button from "../components/Button";
-import { ReactComponent as LocationIcon } from "../icons/location.svg";
-
+import GeoLocationButton from "../components/GeoLocationButton";
 import styles from "./mapview.module.css";
 
 class MapView extends Component {
@@ -42,15 +35,8 @@ class MapView extends Component {
     }
   };
 
-  handleGeoButtonClick = () => {
-    this.props.dispatch(
-      getGeoLocation(() => {
-        console.log("DONE");
-        this.setState({
-          center: this.props.userGeoLocation
-        });
-      })
-    );
+  handleGeoLocationChange = position => {
+    console.log(position);
   };
 
   render() {
@@ -62,14 +48,7 @@ class MapView extends Component {
 
     return (
       <React.Fragment>
-        <Button
-          circular
-          className={styles["geo-button"]}
-          onClick={this.handleGeoButtonClick}
-        >
-          <LocationIcon />
-        </Button>
-
+        <GeoLocationButton onChange={this.handleGeoLocationChange} />
         <div className={MapContainerClassNames}>
           <Map center={this.state.center} />
         </div>
