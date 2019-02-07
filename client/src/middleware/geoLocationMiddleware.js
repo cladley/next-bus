@@ -7,10 +7,12 @@ const geoLocationMiddleware = ({ dispatch }) => next => action => {
   if (action.type !== GET_GEO_LOCATION) {
     return;
   }
+  const { onSuccess } = action.payload;
 
   navigator.geolocation.getCurrentPosition(
     position => {
       dispatch(geoLocationSuccess(position));
+      onSuccess();
     },
     error => {
       dispatch(geoLocationError(error));

@@ -74,8 +74,8 @@ export default function(state = initialState, action) {
       return {
         ...state,
         geoLocation: {
-          lat: coords.longitude,
-          lng: coords.latitude
+          lat: coords.latitude,
+          lng: coords.longitude
         }
       };
     default:

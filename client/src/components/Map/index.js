@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import GoogleMapReact from "google-map-react";
+
 import BusStopMapMarker from "../BusStopMapMarker";
 import { appearances } from "../Panel";
+import UserGeoPoint from "../UserGeoPoint";
 import {
   fetchStopsByLocation,
   fetchRouteDetailsByStop,
@@ -16,10 +18,6 @@ const EARTH_RADIUS_IN_KM = 6377.83;
 class Map extends Component {
   state = {
     center: {
-      lat: 51.560913,
-      lng: -0.120881
-    },
-    dotCenter: {
       lat: 51.560913,
       lng: -0.120881
     }
@@ -124,6 +122,8 @@ class Map extends Component {
   };
 
   render() {
+    const { userGeoLocation } = this.props;
+
     const options = {
       zoomControl: false,
       fullscreenControl: false
@@ -136,14 +136,17 @@ class Map extends Component {
         <GoogleMapReact
           bootstrapURLKeys={{ key: "AIzaSyD1CH8asyfnJVmRS5B0hB6k1MUqJ_c-He0" }}
           options={options}
-          defaultCenter={this.props.center}
-          center={this.state.center}
           defaultZoom={this.props.zoom}
+          center={this.props.center}
           onBoundsChange={this.onBoundsChange}
           yesIWantToUseGoogleMapApiInternals
           onGoogleApiLoaded={this.handleApiLoaded}
         >
           {StopMarkers}
+
+          {userGeoLocation ? (
+            <UserGeoPoint lat={userGeoLocation.lat} lng={userGeoLocation.lng} />
+          ) : null}
         </GoogleMapReact>
       </div>
     );
@@ -159,7 +162,8 @@ const getViewableStopsAsArray = (stops, viewableStops) => {
 const mapStateToProps = ({ stops, map }) => {
   return {
     stopMarkers: getViewableStopsAsArray(stops.byNaptanId, map.viewableStops),
-    selectedStopId: map.selectedStopId
+    selectedStopId: map.selectedStopId,
+    userGeoLocation: map.geoLocation
   };
 };
 

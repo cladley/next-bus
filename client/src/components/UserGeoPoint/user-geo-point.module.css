@@ -1,0 +1,29 @@
+.user {
+  width: 20px;
+  height: 20px;
+  background-color: yellow;
+  display: block;
+  border-radius: 50%;
+  box-shadow: inset 0px 0px 40px -20px rgba(0, 0, 0, 0.66);
+  position: absolute;
+  left: 50%;
+  top: 50%;
+}
+
+.user:after {
+  content: "";
+  display: block;
+  height: 20px;
+  width: 20px;
+  background-color: yellow;
+  border-radius: 50%;
+  animation: pulseAnimation 2s ease infinite;
+  box-shadow: inset 0px 0px 40px -20px rgba(0, 0, 0, 0.66);
+}
+
+@keyframes pulseAnimation {
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}

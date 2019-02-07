@@ -1,5 +1,5 @@
 import React from "react";
-import { Transition, Spring } from "react-spring";
+import { Transition, Spring, animated } from "react-spring";
 
 function BusStopMapMarker({ id, onSelected, isSelected, index }) {
   const styles = {
@@ -13,12 +13,17 @@ function BusStopMapMarker({ id, onSelected, isSelected, index }) {
 
   return (
     <Spring
+      native
       from={{ opacity: 0, transform: "translate3d(0,-200px,0) scale(0)" }}
       to={{ opacity: 1, transform: "translate3d(0,0,0) scale(1)" }}
       delay={delay}
     >
       {props => (
-        <div style={props} className="test" onClick={() => onSelected(id)} />
+        <animated.div
+          style={props}
+          className="test"
+          onClick={() => onSelected(id)}
+        />
       )}
     </Spring>
   );

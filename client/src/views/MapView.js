@@ -13,7 +13,6 @@ import Panel, { appearances } from "../components/Panel";
 import BusStopRoutesContainer from "../components/BusStopRoutesContainer";
 import LineStops from "../components/LineStops";
 import Button from "../components/Button";
-import GeoLocation from "../components/GeoLocation";
 import { ReactComponent as LocationIcon } from "../icons/location.svg";
 
 import styles from "./mapview.module.css";
@@ -21,7 +20,8 @@ import styles from "./mapview.module.css";
 class MapView extends Component {
   state = {
     triggerGeoLocation: false,
-    geoPosition: null
+    geoPosition: null,
+    center: { lat: 51.560913, lng: -0.120881 }
   };
 
   handleShowRoute = route => {
@@ -43,7 +43,14 @@ class MapView extends Component {
   };
 
   handleGeoButtonClick = () => {
-    this.props.dispatch(getGeoLocation());
+    this.props.dispatch(
+      getGeoLocation(() => {
+        console.log("DONE");
+        this.setState({
+          center: this.props.userGeoLocation
+        });
+      })
+    );
   };
 
   render() {
@@ -64,7 +71,7 @@ class MapView extends Component {
         </Button>
 
         <div className={MapContainerClassNames}>
-          <Map />
+          <Map center={this.state.center} />
         </div>
         <Panel isOpen={panelState} onChangeOpen={this.handlePanelChange}>
           <Panel.Half>
@@ -94,7 +101,8 @@ const mapStateToProps = ({ map, route }) => {
     selectedRoute: route.selectedRoute,
     isStopSelected: !!map.selectedStopId,
     naptanId: map.selectedStopId,
-    panelState: map.panelState
+    panelState: map.panelState,
+    userGeoLocation: map.geoLocation
   };
 };
 

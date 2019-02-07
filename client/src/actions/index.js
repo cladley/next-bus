@@ -176,9 +176,12 @@ const loadUserRoutes = () => {
   };
 };
 
-const getGeoLocation = () => {
+const getGeoLocation = (onSuccess = () => {}) => {
   return {
-    type: actionTypes.GET_GEO_LOCATION
+    type: actionTypes.GET_GEO_LOCATION,
+    payload: {
+      onSuccess
+    }
   };
 };
 
