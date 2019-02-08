@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import GoogleMapReact from "google-map-react";
+import { isEqual } from "lodash";
 
 import BusStopMapMarker from "../BusStopMapMarker";
 import { appearances } from "../Panel";
@@ -37,7 +38,20 @@ class Map extends Component {
     this.map = null;
   }
 
-  onBoundsChange = center => {
+  componentDidUpdate(prevProps) {
+    if (this.props.userLocation) {
+      if (!isEqual(prevProps.userLocation, this.props.userLocation)) {
+        const {
+          userLocation: { lat },
+          userLocation: { lng }
+        } = this.props;
+        const center = new this.mapsApi.LatLng(lat, lng);
+        this.map.panTo(center);
+      }
+    }
+  }
+
+  onBoundsChange = ({ center }) => {
     if (!this.mapsApi) return;
     this.initialiseMarkersForCurrentLocation(center);
   };
@@ -61,7 +75,7 @@ class Map extends Component {
       });
     }
 
-    this.props.dispatch(clearStopMarkers());
+    // this.props.dispatch(clearStopMarkers());
     this.props.dispatch(
       fetchStopsByLocation(center.lat, center.lng, Math.floor(radius * 0.6))
     );
@@ -122,7 +136,7 @@ class Map extends Component {
   };
 
   render() {
-    const { userGeoLocation } = this.props;
+    const { userLocation } = this.props;
 
     const options = {
       zoomControl: false,
@@ -138,14 +152,13 @@ class Map extends Component {
           options={options}
           defaultZoom={this.props.zoom}
           center={this.props.center}
-          onBoundsChange={this.onBoundsChange}
+          onChange={this.onBoundsChange}
           yesIWantToUseGoogleMapApiInternals
           onGoogleApiLoaded={this.handleApiLoaded}
         >
           {StopMarkers}
-
-          {userGeoLocation ? (
-            <UserGeoPoint lat={userGeoLocation.lat} lng={userGeoLocation.lng} />
+          {userLocation ? (
+            <UserGeoPoint lat={userLocation.lat} lng={userLocation.lng} />
           ) : null}
         </GoogleMapReact>
       </div>
@@ -153,15 +166,9 @@ class Map extends Component {
   }
 }
 
-const getViewableStopsAsArray = (stops, viewableStops) => {
-  return viewableStops.map(naptanId => {
-    return stops[naptanId];
-  });
-};
-
 const mapStateToProps = ({ stops, map }) => {
   return {
-    stopMarkers: getViewableStopsAsArray(stops.byNaptanId, map.viewableStops),
+    stopMarkers: Object.values(map.viewableStops),
     selectedStopId: map.selectedStopId,
     userGeoLocation: map.geoLocation
   };

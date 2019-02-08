@@ -2,7 +2,7 @@ import * as actionTypes from "../actions/actionTypes";
 import { appearances } from "../components/Panel";
 
 const initialState = {
-  viewableStops: [],
+  viewableStops: {},
   selectedStopId: null,
   stopRouteDetails: [],
   panelState: appearances.closed,
@@ -33,10 +33,12 @@ const cleanUpStopRouteDetails = data => {
   });
 };
 
-const createViewableStopsArray = data => {
-  return data.map(stop => {
-    return stop.naptanId;
+const createViewableStopsMap = (currentStops, data) => {
+  const stops = { ...currentStops };
+  data.map(stop => {
+    return (stops[stop.naptanId] = stop);
   });
+  return stops;
 };
 
 export default function(state = initialState, action) {
@@ -44,7 +46,10 @@ export default function(state = initialState, action) {
     case actionTypes.SET_STOP_MARKERS:
       return {
         ...state,
-        viewableStops: createViewableStopsArray(action.payload.data)
+        viewableStops: createViewableStopsMap(
+          state.viewableStops,
+          action.payload.data
+        )
       };
 
     case actionTypes.CLEAR_STOP_MARKERS:
@@ -69,15 +74,6 @@ export default function(state = initialState, action) {
       };
     case actionTypes.SET_PANEL_STATE:
       return { ...state, panelState: action.payload.data };
-    case actionTypes.GEO_LOCATION_SUCCESS:
-      const { coords } = action.payload.data;
-      return {
-        ...state,
-        geoLocation: {
-          lat: coords.latitude,
-          lng: coords.longitude
-        }
-      };
     default:
       return state;
   }

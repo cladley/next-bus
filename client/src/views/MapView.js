@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { toast } from "react-toastify";
 import classNames from "classnames";
 
 import { clearRoute, setPanelState, clearStopSelected } from "../actions/index";
@@ -11,11 +12,14 @@ import GeoLocationButton from "../components/GeoLocationButton";
 import styles from "./mapview.module.css";
 
 class MapView extends Component {
-  state = {
-    triggerGeoLocation: false,
-    geoPosition: null,
-    center: { lat: 51.560913, lng: -0.120881 }
-  };
+  constructor(props) {
+    super(props);
+    this.toastId = null;
+    this.state = {
+      center: { lat: 51.560913, lng: -0.120881 },
+      userGeoLocation: null
+    };
+  }
 
   handleShowRoute = route => {
     console.log(route);
@@ -35,8 +39,18 @@ class MapView extends Component {
     }
   };
 
-  handleGeoLocationChange = position => {
-    console.log(position);
+  handleGeoLocationChange = coords => {
+    this.setState({
+      userGeoLocation: coords
+    });
+  };
+
+  handleGeoLocationError = error => {
+    if (!toast.isActive(this.toastId)) {
+      this.toastId = toast(
+        "Unable to get user location data. Please enable location services and try again"
+      );
+    }
   };
 
   render() {
@@ -48,9 +62,15 @@ class MapView extends Component {
 
     return (
       <React.Fragment>
-        <GeoLocationButton onChange={this.handleGeoLocationChange} />
+        <GeoLocationButton
+          onChange={this.handleGeoLocationChange}
+          onError={this.handleGeoLocationError}
+        />
         <div className={MapContainerClassNames}>
-          <Map center={this.state.center} />
+          <Map
+            center={this.state.center}
+            userLocation={this.state.userGeoLocation}
+          />
         </div>
         <Panel isOpen={panelState} onChangeOpen={this.handlePanelChange}>
           <Panel.Half>
