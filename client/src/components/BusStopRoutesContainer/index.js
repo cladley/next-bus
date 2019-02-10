@@ -26,7 +26,7 @@ class BusStopRoutesContainer extends Component {
   };
 
   render() {
-    const { routes, naptanId, stopName } = this.props;
+    const { routes, naptanId, stopName, isQuickView } = this.props;
 
     return (
       <React.Fragment>
@@ -38,6 +38,7 @@ class BusStopRoutesContainer extends Component {
             routes={routes}
             toggleRoute={this.handleToggleRoute}
             showRoute={this.handleShowRoute}
+            isQuickView={isQuickView}
           />
         )}
       </React.Fragment>

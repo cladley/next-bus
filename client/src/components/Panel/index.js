@@ -5,15 +5,19 @@ import classNames from "classnames";
 import styles from "./panel.module.css";
 
 export const appearances = {
+  short: "short",
   half: "half",
   full: "full",
   closed: "closed"
 };
 
-const Half = ({ children, closePanel }) => {
+const Half = ({ children, closePanel, expandPanel }) => {
   return (
     <div>
       {children}
+      <button className={styles["button-expand"]} onClick={expandPanel}>
+        expand
+      </button>
       <button onClick={closePanel}>close</button>
     </div>
   );
@@ -23,7 +27,7 @@ const Full = ({ children, closePanel, ...props }) => {
   return (
     <div {...props}>
       {children}
-      <button onClick={closePanel}>close</button>
+      <button onClick={closePanel}>clse</button>
     </div>
   );
 };
@@ -44,7 +48,9 @@ class Panel extends React.Component {
   getFrameStyle() {
     const frameStyles = {};
     const { isOpen } = this.props;
-    if (isOpen === appearances.full) {
+
+    if (isOpen === appearances.short) {
+    } else if (isOpen === appearances.full) {
       const { scaleX, scaleY } = this.getTransformValuesToFullScreen();
       frameStyles.transform = `scale(${scaleX}, ${scaleY})`;
     }
@@ -55,7 +61,9 @@ class Panel extends React.Component {
   getPanelClasses() {
     const { isOpen } = this.props;
     let className = "";
-    if (isOpen === appearances.half) {
+    if (isOpen === appearances.short) {
+      className = styles.short;
+    } else if (isOpen === appearances.half) {
       className = styles.half;
     } else if (isOpen === appearances.full) {
       className = styles.full;
@@ -67,6 +75,10 @@ class Panel extends React.Component {
 
   closePanel = type => {
     this.props.onChangeOpen(type);
+  };
+
+  expandPanel = () => {
+    this.props.onChangeOpen(appearances.short);
   };
 
   getHalfPanelLeaveTransition() {
@@ -91,8 +103,8 @@ class Panel extends React.Component {
         return (
           <Transition
             native
-            items={isOpen === appearances.half}
-            from={{ opacity: 0, transform: "translate3d(0, 100%, 0)" }}
+            items={isOpen === appearances.short || isOpen === appearances.half}
+            from={{ opacity: 0, transform: "translate3d(0, 70px, 0)" }}
             enter={{ opacity: 1, transform: "translate3d(0, 0, 0)" }}
             leave={this.getHalfPanelLeaveTransition()}
           >
@@ -104,7 +116,8 @@ class Panel extends React.Component {
                   style={props}
                 >
                   {React.cloneElement(child, {
-                    closePanel: () => this.closePanel("half")
+                    closePanel: () => this.closePanel("half"),
+                    expandPanel: () => this.expandPanel()
                   })}
                 </animated.div>
               ))

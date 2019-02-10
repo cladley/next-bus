@@ -5,20 +5,32 @@
   top: 100vh;
   pointer-events: none;
   z-index: 1;
+  backface-visibility: hidden;
 }
 
 .panel.closed {
-  top: 35vh;
+  top: 100vh;
+  transform: translate3d(0, 0, 0);
+  transition: transform 0.2s cubic-bezier(0.4, 0, 1, 1);
   pointer-events: none;
 }
 
+.panel.short {
+  transform: translate3d(0, -100px, 0);
+  transition: transform 0.2s cubic-bezier(0.4, 0, 1, 1);
+  will-change: transform;
+  pointer-events: all;
+}
+
 .panel.half {
-  top: 35vh;
+  transform: translate3d(0, -100%, 0);
+  transition: transform 0.3s ease;
+  will-change: transform;
   pointer-events: all;
 }
 
 .panel.full {
-  top: 35vh;
+  transform: translate3d(0, -100%, 0);
   pointer-events: all;
 }
 
@@ -33,15 +45,12 @@
   border-radius: 4px;
   transform-origin: bottom;
   transition: transform 0.2s cubic-bezier(0.4, 0, 1, 1);
-  transform: translate3d(0, 100%, 0);
 }
 
-.panel.half .frame {
-  transform: translate3d(0, 0, 0);
-  transition: transform 0.3s cubic-bezier(0.55, 0, 0.1, 1);
-}
-
-.panel.full {
+.button-expand {
+  position: absolute;
+  right: 10px;
+  top: 10px;
 }
 
 .component-container {

@@ -75,7 +75,6 @@ class Map extends Component {
       });
     }
 
-    // this.props.dispatch(clearStopMarkers());
     this.props.dispatch(
       fetchStopsByLocation(center.lat, center.lng, Math.floor(radius * 0.6))
     );
@@ -131,7 +130,8 @@ class Map extends Component {
     if (stopId) {
       this.props.dispatch(fetchRouteDetailsByStop(stopId));
       this.props.dispatch(setStopSelected(stopId));
-      this.props.dispatch(setPanelState(appearances.half));
+      this.props.dispatch(setPanelState(appearances.short));
+      // this.props.dispatch(setPanelState(appearances.half));
     }
   };
 

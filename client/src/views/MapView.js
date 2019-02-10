@@ -26,7 +26,9 @@ class MapView extends Component {
   };
 
   handlePanelChange = type => {
-    if (type === appearances.full) {
+    if (type === appearances.short) {
+      this.props.dispatch(setPanelState(appearances.half));
+    } else if (type === appearances.full) {
       this.props.dispatch(setPanelState(appearances.half));
       setTimeout(() => {
         this.props.dispatch(clearRoute());
@@ -60,6 +62,8 @@ class MapView extends Component {
       [styles.active]: isStopSelected
     });
 
+    const isQuickView = panelState === appearances.short;
+
     return (
       <React.Fragment>
         <GeoLocationButton
@@ -78,6 +82,7 @@ class MapView extends Component {
               <BusStopRoutesContainer
                 naptanId={naptanId}
                 showRoute={this.handleShowRoute}
+                isQuickView={isQuickView}
               />
             )}
           </Panel.Half>
