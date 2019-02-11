@@ -1,5 +1,5 @@
 import { createStore, applyMiddleware } from "redux";
-import { composeWithDevTools } from "redux-devtools-extension";
+import { composeWithDevTools } from "redux-devtools-extension/logOnlyInProduction";
 import apiMiddleware from "../middleware/apiMiddleware";
 import localStorageMiddleware from "../middleware/localStorageMiddleware";
 import reducer from "../reducers";
