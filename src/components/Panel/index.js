@@ -3,6 +3,7 @@ import { Transition, animated } from "react-spring";
 import PropTypes from "prop-types";
 import classNames from "classnames";
 import styles from "./panel.module.css";
+import { ReactComponent as DetailsIcon } from "../../icons/details.svg";
 
 export const appearances = {
   short: "short",
@@ -16,9 +17,9 @@ const Half = ({ children, closePanel, expandPanel }) => {
     <div>
       {children}
       <button className={styles["button-expand"]} onClick={expandPanel}>
-        expand
+        <DetailsIcon />
       </button>
-      <button onClick={closePanel}>close</button>
+      {/* <button onClick={closePanel}>close</button> */}
     </div>
   );
 };

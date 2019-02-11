@@ -1,3 +1,24 @@
+.header {
+  padding: 14px;
+  background-color: red;
+}
+
 .title {
-  font-size: 18px;
+  font-size: 14px;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+  color: #fff;
+}
+
+.quick-routes {
+  padding: 10px 14px 0;
+}
+
+.quick-routes p {
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+.quick-routes span {
+  font-weight: 700;
 }

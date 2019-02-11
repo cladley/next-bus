@@ -19,11 +19,18 @@ class BusStopRoutes extends Component {
     });
   }
 
+  getAllRoutesLine(routes) {
+    return [...new Set(routes.map(r => r.line))].join(", ");
+  }
+
   createRoutesContent() {
     const { routes, toggleRoute, showRoute, isQuickView } = this.props;
 
     const dayTimeRoutes = this.getDayBusRoutes(routes);
     const nightTimeRoutes = this.getNightBusRoutes(routes);
+    const allRoutesSet = this.getAllRoutesLine(routes);
+
+    console.log(allRoutesSet);
 
     return (
       <Transition
@@ -67,14 +74,21 @@ class BusStopRoutes extends Component {
   }
 
   render() {
+    const { routes } = this.props;
+    const allRoutesSet = this.getAllRoutesLine(routes);
     return (
-      <Container>
-        <header>
-          <h1 className={styles.title}>{this.props.stopName}</h1>
+      <React.Fragment>
+        <header className={styles.header}>
+          <h3 className={styles.title}>{this.props.stopName}</h3>
         </header>
+        <div className={styles["quick-routes"]}>
+          <p>
+            Serves: <span>{allRoutesSet}</span>
+          </p>
+        </div>
 
         {this.createRoutesContent()}
-      </Container>
+      </React.Fragment>
     );
   }
 }
