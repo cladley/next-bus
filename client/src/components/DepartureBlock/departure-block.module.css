@@ -1,0 +1,25 @@
+.container {
+  background: #fff;
+  border-radius: 2px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+.container + .container {
+  margin-top: 16px;
+}
+
+.header {
+  padding: 12px 15px;
+  background: red;
+}
+
+.stop-name {
+  font-size: 14px;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.departures-container {
+  border-top: 0.4px solid #ccc;
+  padding: 12px 15px;
+}

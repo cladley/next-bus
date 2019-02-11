@@ -75,10 +75,9 @@ const extractPredictionDataForRoute = (userRoutes, data) => {
       userPredictions[stopId] = [];
 
       routes.forEach(route => {
-        console.log("called");
         userPredictions[stopId].push({
           line: route.line,
-          arrivals: predictionsForStop.predictions.filter(
+          departures: predictionsForStop.predictions.filter(
             pred => pred.lineId === route.line
           )
         });

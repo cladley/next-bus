@@ -7,7 +7,7 @@ import styles from "./app.module.css";
 import "react-toastify/dist/ReactToastify.min.css";
 import MapView from "./views/MapView";
 import HomeView from "./views/HomeView";
-import ArrivalsView from "./views/ArrivalsView";
+import DeparturesView from "./views/DeparturesView";
 
 class App extends Component {
   componentDidMount() {
@@ -21,7 +21,7 @@ class App extends Component {
           <Switch>
             <Route exact path="/" component={HomeView} />
             <Route path="/map" component={MapView} />
-            <Route path="/arrivals" component={ArrivalsView} />
+            <Route path="/departures" component={DeparturesView} />
           </Switch>
           <ToastContainer position="bottom-right" hideProgressBar={true} />
         </div>
