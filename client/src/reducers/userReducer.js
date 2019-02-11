@@ -10,20 +10,6 @@ const initialState = {
   predictions: {}
 };
 
-// user_predictions = {
-//   [
-//     {stopId: 'asdasd', stopName: 'asdasd', preditcions: [
-//       {
-//         line: 17,
-//         mins: 2mins,
-//         direction: 'To Highgate'
-//       }, {
-
-//       }
-//     ]}
-//   ]
-// }
-
 // TODO: Refactor and make nicer
 const addRoute = (currentRoutes, data) => {
   const { naptanId, route, stopName } = data;
