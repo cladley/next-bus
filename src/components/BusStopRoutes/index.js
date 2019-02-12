@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Transition, animated } from "react-spring";
 import Container from "../Layout/Container";
+import BusRoutes from "../BusRoutes";
 import styles from "./bus-stop-routes.module.css";
 
 class BusStopRoutes extends Component {
@@ -28,9 +29,6 @@ class BusStopRoutes extends Component {
 
     const dayTimeRoutes = this.getDayBusRoutes(routes);
     const nightTimeRoutes = this.getNightBusRoutes(routes);
-    const allRoutesSet = this.getAllRoutesLine(routes);
-
-    console.log(allRoutesSet);
 
     return (
       <Transition
@@ -43,29 +41,19 @@ class BusStopRoutes extends Component {
           show &&
           (props => (
             <animated.div style={props}>
-              <h4>Day Time Routes</h4>
-              <ul>
-                {dayTimeRoutes.map(route => (
-                  <li key={route.line}>
-                    <span
-                      onClick={() => toggleRoute(route, route.isSelectedByUser)}
-                    >
-                      {route.line} : {route.destination}{" "}
-                    </span>
-                    {route.isSelectedByUser ? "SELECTED" : ""}
-                    <button onClick={() => showRoute(route)}>Show route</button>
-                  </li>
-                ))}
-              </ul>
+              <BusRoutes
+                title="Day Routes"
+                routes={dayTimeRoutes}
+                onToggleRoute={toggleRoute}
+                onShowRoute={showRoute}
+              />
 
-              <h4>Night Time Routes</h4>
-              <ul>
-                {nightTimeRoutes.map(route => (
-                  <li key={route.line}>
-                    {route.line} : {route.destination}
-                  </li>
-                ))}
-              </ul>
+              <BusRoutes
+                title="Night Routes"
+                routes={nightTimeRoutes}
+                onToggleRoute={toggleRoute}
+                onShowRoute={showRoute}
+              />
             </animated.div>
           ))
         }
@@ -74,18 +62,21 @@ class BusStopRoutes extends Component {
   }
 
   render() {
-    const { routes } = this.props;
+    const { routes, isQuickView } = this.props;
     const allRoutesSet = this.getAllRoutesLine(routes);
     return (
       <React.Fragment>
         <header className={styles.header}>
           <h3 className={styles.title}>{this.props.stopName}</h3>
         </header>
-        <div className={styles["quick-routes"]}>
-          <p>
-            Serves: <span>{allRoutesSet}</span>
-          </p>
-        </div>
+
+        {isQuickView ? (
+          <div className={styles["quick-routes"]}>
+            <p>
+              Serves: <span>{allRoutesSet}</span>
+            </p>
+          </div>
+        ) : null}
 
         {this.createRoutesContent()}
       </React.Fragment>

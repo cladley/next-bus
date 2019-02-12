@@ -14,13 +14,13 @@ export const appearances = {
 
 const Half = ({ children, closePanel, expandPanel }) => {
   return (
-    <div>
+    <React.Fragment>
       {children}
       <button className={styles["button-expand"]} onClick={expandPanel}>
         <DetailsIcon />
       </button>
       {/* <button onClick={closePanel}>close</button> */}
-    </div>
+    </React.Fragment>
   );
 };
 

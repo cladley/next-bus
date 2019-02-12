@@ -1,0 +1,44 @@
+.container {
+  padding: 14px;
+}
+
+.title {
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 12px;
+  margin-bottom: 4px;
+}
+
+.route-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.route-list li {
+  display: flex;
+  height: 36px;
+  align-items: center;
+}
+
+.route-list li:not(:last-child) {
+  border-bottom: 0.4px solid #ccc;
+}
+
+.show-route-button {
+  width: 20px;
+  background-color: transparent;
+  border: 0;
+  margin-left: auto;
+}
+
+.line {
+  font-weight: 700;
+  font-size: 16px;
+  display: inline-block;
+  width: 36px;
+}
+
+.destination {
+  font-size: 12px;
+}
