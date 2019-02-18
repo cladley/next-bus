@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import Container from "../components/Layout/Container";
 import Button from "../components/Button";
 import { ReactComponent as LocationIcon } from "../icons/location.svg";
+import SlideTabs from "../components/SlideTabs";
 
 const Msg = ({ closeToast }) => {
   return (
@@ -19,27 +20,16 @@ class HomeView extends React.Component {
     toggle: false
   };
 
-  showToast() {
-    toast(<Msg />);
-  }
-
   render() {
     return (
       <Container>
-        <h1 onClick={this.onClick}>nextBus</h1>
-        <Link to="/map">Select Bus</Link>
-        <br />
-        <br />
-        <br />
-
-        <Button circular onClick={this.showToast}>
-          <LocationIcon />
-        </Button>
-
-        <br />
-        <br />
-        <br />
-        <Button>aslsda</Button>
+        <SlideTabs>
+          <SlideTabs.Tab title="Tab 1" color="blue">
+            This is Slide 1
+          </SlideTabs.Tab>
+          <SlideTabs.Tab title="Tab 2">This is Slide 2</SlideTabs.Tab>
+          <SlideTabs.Tab title="Tab 3">This is Slide 3</SlideTabs.Tab>
+        </SlideTabs>
       </Container>
     );
   }

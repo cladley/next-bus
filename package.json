@@ -16,10 +16,11 @@
     "react-spring": "^7.2.8",
     "react-toastify": "^4.5.2",
     "react-transition-group": "^2.5.0",
+    "react-with-gesture": "^4.0.4",
     "redux": "^4.0.1",
-    "redux-thunk": "^2.3.0",
     "redux-devtools-extension": "^2.13.5",
-    "redux-immutable-state-invariant": "^2.1.0"
+    "redux-immutable-state-invariant": "^2.1.0",
+    "redux-thunk": "^2.3.0"
   },
   "scripts": {
     "start": "react-scripts start",
