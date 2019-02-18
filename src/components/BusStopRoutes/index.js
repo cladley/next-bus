@@ -4,6 +4,7 @@ import { Transition, animated } from "react-spring";
 import Container from "../Layout/Container";
 import BusRoutes from "../BusRoutes";
 import styles from "./bus-stop-routes.module.css";
+import SlideTabs from "../SlideTabs";
 
 class BusStopRoutes extends Component {
   componentDidMount() {}
@@ -41,19 +42,24 @@ class BusStopRoutes extends Component {
           show &&
           (props => (
             <animated.div style={props}>
-              <BusRoutes
-                title="Day Routes"
-                routes={dayTimeRoutes}
-                onToggleRoute={toggleRoute}
-                onShowRoute={showRoute}
-              />
-
-              <BusRoutes
-                title="Night Routes"
-                routes={nightTimeRoutes}
-                onToggleRoute={toggleRoute}
-                onShowRoute={showRoute}
-              />
+              <SlideTabs>
+                <SlideTabs.Tab title="Day Routes">
+                  <BusRoutes
+                    title="Day Routes"
+                    routes={dayTimeRoutes}
+                    onToggleRoute={toggleRoute}
+                    onShowRoute={showRoute}
+                  />
+                </SlideTabs.Tab>
+                <SlideTabs.Tab title="Night Routes">
+                  <BusRoutes
+                    title="Night Routes"
+                    routes={nightTimeRoutes}
+                    onToggleRoute={toggleRoute}
+                    onShowRoute={showRoute}
+                  />
+                </SlideTabs.Tab>
+              </SlideTabs>
             </animated.div>
           ))
         }

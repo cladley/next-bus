@@ -42,7 +42,6 @@ class SlideTabs extends React.Component {
     drag: false
   };
 
-  deltaAmount = 0;
   componentWidth = null;
 
   componentDidMount() {
@@ -79,12 +78,11 @@ class SlideTabs extends React.Component {
   handleTouchMove = event => {
     if (this.state.drag) {
       const { currentIndex } = this.state;
-
       this.currentPosition = this.getPosition(event);
-      this.deltaAmount = this.currentPosition - this.previousPosition;
+      const deltaAmount = this.currentPosition - this.previousPosition;
 
-      if (Math.abs(this.deltaAmount) > 150) {
-        if (this.deltaAmount > 0) {
+      if (Math.abs(deltaAmount) > 150) {
+        if (deltaAmount > 0) {
           this.setState({
             drag: false,
             delta: 0,
@@ -102,7 +100,7 @@ class SlideTabs extends React.Component {
         }
       } else {
         this.setState({
-          delta: this.deltaAmount
+          delta: deltaAmount
         });
       }
     }

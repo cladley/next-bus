@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { cloneDeep } from "lodash";
 import BusStopRoutes from "../BusStopRoutes";
+import SlideTabs from "../SlideTabs";
 import {
   addRoute,
   removeRoute,

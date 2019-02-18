@@ -2,11 +2,9 @@ import React from "react";
 import styles from "./bus-routes.module.css";
 import { ReactComponent as EyeIcon } from "../../icons/eye.svg";
 
-const BusRoutes = ({ title, routes, onShowRoute, onToggleRoute }) => {
+const BusRoutes = ({ routes, onShowRoute, onToggleRoute }) => {
   return (
     <div className={styles.container}>
-      <h4 className={styles.title}>{title}</h4>
-
       <ul className={styles["route-list"]}>
         {routes.map(route => (
           <li key={route.line}>

@@ -21,6 +21,11 @@
   align-items: center;
 }
 
+.route-list li > div {
+  display: flex;
+  align-items: center;
+}
+
 .route-list li:not(:last-child) {
   border-bottom: 0.4px solid #ccc;
 }
@@ -30,6 +35,8 @@
   background-color: transparent;
   border: 0;
   margin-left: auto;
+  position: relative;
+  top: -5px;
 }
 
 .line {
@@ -37,6 +44,7 @@
   font-size: 16px;
   display: inline-block;
   width: 36px;
+  text-transform: uppercase;
 }
 
 .destination {
