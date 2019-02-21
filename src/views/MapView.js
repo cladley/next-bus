@@ -7,7 +7,7 @@ import { clearRoute, setPanelState, clearStopSelected } from "../actions/index";
 import Map from "../components/Map";
 import Panel, { appearances } from "../components/Panel";
 import BusStopRoutesContainer from "../components/BusStopRoutesContainer";
-import LineStops from "../components/LineStops";
+import RouteStops from "../components/RouteStops";
 import GeoLocationButton from "../components/GeoLocationButton";
 import styles from "./mapview.module.css";
 
@@ -88,7 +88,7 @@ class MapView extends Component {
           </Panel.Half>
           <Panel.Full>
             {selectedRoute && (
-              <LineStops
+              <RouteStops
                 line={selectedRoute.line}
                 direction={selectedRoute.direction}
               />

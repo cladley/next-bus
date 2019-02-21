@@ -28,7 +28,12 @@ const Full = ({ children, closePanel, ...props }) => {
   return (
     <div {...props}>
       {children}
-      <button onClick={closePanel}>clse</button>
+      <button
+        onClick={closePanel}
+        style={{ position: "absolute", right: "0", top: "0" }}
+      >
+        clse
+      </button>
     </div>
   );
 };

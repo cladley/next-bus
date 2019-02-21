@@ -1,5 +1,6 @@
 .container {
   padding: 14px;
+  height: 100%;
 }
 
 .title {
@@ -49,4 +50,8 @@
 
 .destination {
   font-size: 12px;
+}
+
+.night {
+  background-color: #2e4482;
 }

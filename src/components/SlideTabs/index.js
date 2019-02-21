@@ -1,14 +1,10 @@
 import React from "react";
 import styles from "./slide-tabs.module.css";
 import { withGesture } from "react-with-gesture";
-import { Transition, animated, Spring } from "react-spring";
+import { animated, Spring } from "react-spring";
 
-const Tab = ({ title, color, children }) => {
-  return (
-    <div style={{ background: color }} className={styles["tab-panel"]}>
-      {children}
-    </div>
-  );
+const Tab = ({ title, children }) => {
+  return <div className={styles["tab-panel"]}>{children}</div>;
 };
 
 const TabButton = ({ title, onClick }) => {

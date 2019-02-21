@@ -57,6 +57,7 @@ class BusStopRoutes extends Component {
                     routes={nightTimeRoutes}
                     onToggleRoute={toggleRoute}
                     onShowRoute={showRoute}
+                    isNight="true"
                   />
                 </SlideTabs.Tab>
               </SlideTabs>
