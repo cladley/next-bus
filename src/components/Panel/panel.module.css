@@ -55,6 +55,31 @@
   width: 24px;
   background-color: transparent;
   border: none;
+  transition: opacity 0.3s ease;
+}
+
+.panel.half .button-expand,
+.panel.full .button-expand {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.button-close {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  width: 24px;
+  background-color: transparent;
+  border: none;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.panel.half .button-close,
+.panel.full .button-close {
+  opacity: 1;
+  pointer-events: all;
 }
 
 .component-container {

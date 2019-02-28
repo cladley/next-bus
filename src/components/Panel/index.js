@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import classNames from "classnames";
 import styles from "./panel.module.css";
 import { ReactComponent as DetailsIcon } from "../../icons/details.svg";
+import { ReactComponent as CloseIcon } from "../../icons/close.svg";
 
 export const appearances = {
   short: "short",
@@ -19,7 +20,9 @@ const Half = ({ children, closePanel, expandPanel }) => {
       <button className={styles["button-expand"]} onClick={expandPanel}>
         <DetailsIcon />
       </button>
-      {/* <button onClick={closePanel}>close</button> */}
+      <button className={styles["button-close"]} onClick={closePanel}>
+        <CloseIcon />
+      </button>
     </React.Fragment>
   );
 };
@@ -171,7 +174,6 @@ class Panel extends React.Component {
           ref={element => (this.frameElement = element)}
           style={frameStyles}
         />
-
         <div>{children}</div>
       </div>
     );

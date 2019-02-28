@@ -24,6 +24,7 @@ class RouteStops extends React.Component {
         keys={stop => stop.name}
         from={{ transform: "translate3d(-100%, 0, 0)" }}
         to={{ transform: "translate3d(0, 0, 0)" }}
+        key={stop => stop.name}
       >
         {stop => props => <animated.li style={props}>{stop.name}</animated.li>}
       </Trail>
@@ -33,7 +34,7 @@ class RouteStops extends React.Component {
   }
 
   renderRemainingStop(stops) {
-    return stops.map(s => <li>{s.name}</li>);
+    return stops.map(s => <li key={s.name}>{s.name}</li>);
   }
 
   render() {
