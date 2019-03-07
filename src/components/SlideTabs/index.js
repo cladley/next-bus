@@ -1,7 +1,29 @@
 import React from "react";
-import styles from "./slide-tabs.module.css";
-import { withGesture } from "react-with-gesture";
 import { animated, Spring } from "react-spring";
+import styles from "./slide-tabs.module.css";
+import DragGesture from "../DragGesture";
+
+const SlideTabTrack = React.forwardRef(
+  ({ children, x, deltaX, onBoundsExceeded }, ref) => {
+    console.log(Math.abs(deltaX.getValue()));
+    if (Math.abs(deltaX.getValue()) > 60) {
+      const direction = deltaX.getValue() < 0 ? "left" : "right";
+      onBoundsExceeded(direction);
+    }
+
+    return (
+      <animated.div
+        style={{
+          transform: x.interpolate(x => `translate3d(${x}px, 0, 0)`)
+        }}
+        className={styles["tabs-slide"]}
+        ref={ref}
+      >
+        {children}
+      </animated.div>
+    );
+  }
+);
 
 const Tab = ({ title, children }) => {
   return <div className={styles["tab-panel"]}>{children}</div>;
@@ -28,26 +50,32 @@ const TabLineMarker = ({ currentIndex, count }) => {
   );
 };
 
-class SlideTabs extends React.Component {
+class SlideTabs extends React.PureComponent {
   static Tab = Tab;
 
   state = {
     currentIndex: 0,
     currentPosition: 0,
     delta: 0,
-    drag: false
+    drag: false,
+    suspendDragging: false
   };
 
-  componentWidth = null;
+  constructor(props) {
+    super(props);
+    this.componentWidth = null;
+    this.element = React.createRef();
+    this.isAnimating = false;
+  }
 
   componentDidMount() {
-    this.componentWidth = this.element.getBoundingClientRect().width;
+    this.componentWidth = this.element.current.getBoundingClientRect().width;
     this.slidePanels = React.Children.map(this.props.children, child => {
       return React.cloneElement(child, {});
     });
 
     window.addEventListener("resize", () => {
-      this.componentWidth = this.element.getBoundingClientRect().width;
+      this.componentWidth = this.element.current.getBoundingClientRect().width;
     });
   }
 
@@ -131,14 +159,29 @@ class SlideTabs extends React.Component {
     return -(width * this.state.currentIndex);
   }
 
+  handleOnBoundsExceeded = nextIndex => {};
+
+  goToNext(direction) {
+    if (!this.isAnimating) {
+      this.isAnimating = true;
+      const { currentIndex } = this.state;
+      let nextIndex;
+      const childCount = React.Children.count(this.props.children);
+
+      if (direction === "left") {
+        nextIndex =
+          currentIndex < childCount - 1 ? currentIndex + 1 : currentIndex;
+      } else {
+        nextIndex = currentIndex > 0 ? currentIndex - 1 : 0;
+      }
+
+      this.setState({
+        currentIndex: nextIndex
+      });
+    }
+  }
+
   render() {
-    const { delta } = this.state;
-    const x = delta + this.getCurrentPostion();
-
-    const to = {
-      x: x
-    };
-
     return (
       <div className={styles["tabs-container"]}>
         <nav>
@@ -149,28 +192,34 @@ class SlideTabs extends React.Component {
           />
         </nav>
 
-        <div
-          className={styles["tabs-panels-container"]}
-          onTouchStart={this.handleTouchStart}
-          onTouchMove={this.handleTouchMove}
-          onTouchEnd={this.handleTouchEnd}
-        >
-          <Spring native to={to}>
-            {props => (
-              <animated.div
-                style={{
-                  transform: props.x.interpolate(
-                    x => `translate3d(${x}px, 0, 0)`
-                  )
+        <DragGesture>
+          {({ dragProps, cancel }) => (
+            <div className={styles["tabs-panels-container"]}>
+              <Spring
+                native
+                to={{
+                  x: dragProps.delta.x + this.getCurrentPostion(),
+                  deltaX: dragProps.delta.x
                 }}
-                className={styles["tabs-slide"]}
-                ref={element => (this.element = element)}
+                onRest={() => (this.isAnimating = false)}
               >
-                {this.props.children}
-              </animated.div>
-            )}
-          </Spring>
-        </div>
+                {props => (
+                  <SlideTabTrack
+                    x={props.x}
+                    deltaX={props.deltaX}
+                    ref={this.element}
+                    onBoundsExceeded={direction => {
+                      cancel();
+                      this.goToNext(direction);
+                    }}
+                  >
+                    {this.props.children}
+                  </SlideTabTrack>
+                )}
+              </Spring>
+            </div>
+          )}
+        </DragGesture>
       </div>
     );
   }

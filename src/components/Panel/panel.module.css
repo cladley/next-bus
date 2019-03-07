@@ -82,6 +82,20 @@
   pointer-events: all;
 }
 
+.handle {
+  background: #dc4040;
+  box-shadow: inset 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+  height: 10px;
+  width: 100px;
+  height: 10px;
+  width: 80px;
+  z-index: 1;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 12px;
+}
+
 .component-container {
   position: absolute;
   left: 10px;
