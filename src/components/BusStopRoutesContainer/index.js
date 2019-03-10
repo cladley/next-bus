@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { cloneDeep } from "lodash";
+import { toast } from "react-toastify";
 import BusStopRoutes from "../BusStopRoutes";
 import SlideTabs from "../SlideTabs";
 import {
@@ -10,12 +11,17 @@ import {
   setPanelState
 } from "../../actions/index";
 import { appearances } from "../Panel";
+import styles from "../BusStopRoutes/bus-stop-routes.module.css";
 
 class BusStopRoutesContainer extends Component {
   handleToggleRoute = (route, isCurrentlySelectedByUser = false) => {
     const { naptanId, stopName } = this.props;
     if (!isCurrentlySelectedByUser) {
       this.props.dispatch(addRoute(naptanId, route, stopName));
+      toast.info(`${route.line} - ${stopName} added`, {
+        className: styles.toast,
+        closeButton: false
+      });
     } else {
       this.props.dispatch(removeRoute(naptanId, route, stopName));
     }

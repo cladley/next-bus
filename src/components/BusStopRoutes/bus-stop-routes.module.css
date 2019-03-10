@@ -22,3 +22,9 @@
 .quick-routes span {
   font-weight: 700;
 }
+
+.toast {
+  background-color: #404f58;
+  padding-left: 20px;
+  padding-right: 20px;
+}

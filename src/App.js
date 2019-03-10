@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { connect } from "react-redux";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, Slide } from "react-toastify";
 import { loadUserRoutes } from "./actions";
 import styles from "./app.module.css";
 import "react-toastify/dist/ReactToastify.min.css";
@@ -23,7 +23,12 @@ class App extends Component {
             <Route path="/map" component={MapView} />
             <Route path="/departures" component={DeparturesView} />
           </Switch>
-          <ToastContainer position="bottom-right" hideProgressBar={true} />
+          <ToastContainer
+            transition={Slide}
+            position="bottom-center"
+            hideProgressBar={true}
+            autoClose={3000}
+          />
         </div>
       </Router>
     );

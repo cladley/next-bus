@@ -40,6 +40,27 @@
   top: -5px;
 }
 
+.toggle-route-button {
+  width: 30px;
+  height: 100%;
+  background-color: transparent;
+  border: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: auto;
+  opacity: 0.2;
+}
+
+.is-active {
+  opacity: 1;
+  fill: orange;
+}
+
+.toggle-route-button svg {
+  flex: 1;
+}
+
 .line {
   font-weight: 700;
   font-size: 16px;
@@ -49,7 +70,7 @@
 }
 
 .destination {
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .night {
