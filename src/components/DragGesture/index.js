@@ -1,5 +1,6 @@
 import React from "react";
 import { clamp } from "lodash";
+import Velocity from "./Velocity";
 
 class DragGesture extends React.PureComponent {
   state = {
@@ -13,10 +14,6 @@ class DragGesture extends React.PureComponent {
       y: 0
     }
   };
-
-  // shouldComponentUpdate(nextProps, nextState) {
-  //   return true;
-  // }
 
   getPosition(event) {
     let x;
@@ -45,24 +42,16 @@ class DragGesture extends React.PureComponent {
     const deltaX = currentPosition.x - this.startPosition.x;
     const deltaY = currentPosition.y - this.startPosition.y;
 
-    const velocityVector = {
+    const diffVector = {
       x: 0,
       y: 0
     };
 
-    velocityVector.x = this.prevPosition.x - currentPosition.x;
-    velocityVector.y = this.prevPosition.y - currentPosition.y;
+    diffVector.x = this.prevPosition.x - currentPosition.x;
+    diffVector.y = this.prevPosition.y - currentPosition.y;
 
     this.prevPosition = currentPosition;
-
-    var unitVelocity = this.normalizeVector(velocityVector);
-    var speed = this.getLengthOfVector(velocityVector);
-    speed = this.calculateSpeed(speed);
-
-    var velocity = {
-      x: unitVelocity.x * speed,
-      y: unitVelocity.y * speed
-    };
+    const velocity = Velocity.calculate(diffVector);
 
     this.setState({
       down: true,
