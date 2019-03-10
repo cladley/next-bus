@@ -168,6 +168,7 @@ class SlideTabs extends React.PureComponent {
                   <SlideTabTrack
                     x={props.x}
                     deltaX={props.deltaX}
+                    velocity={dragProps.velocity}
                     down={dragProps.down}
                     ref={this.element}
                     onBoundsExceeded={direction => {

@@ -3,8 +3,11 @@ import { animated } from "react-spring";
 import styles from "./slide-tabs.module.css";
 
 const SlideTabTrack = React.forwardRef(
-  ({ children, x, deltaX, down, onBoundsExceeded }, ref) => {
-    if (Math.abs(deltaX.getValue()) > window.innerWidth / 2 && down) {
+  ({ children, x, deltaX, velocity, down, onBoundsExceeded }, ref) => {
+    if (Math.abs(velocity.x) > 60) {
+      const direction = deltaX.getValue() < 0 ? "left" : "right";
+      onBoundsExceeded(direction);
+    } else if (Math.abs(deltaX.getValue()) > window.innerWidth / 2 && down) {
       const direction = deltaX.getValue() < 0 ? "left" : "right";
       onBoundsExceeded(direction);
     }
