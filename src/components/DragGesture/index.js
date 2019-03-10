@@ -2,7 +2,7 @@ import React from "react";
 
 class DragGesture extends React.Component {
   state = {
-    isDragging: false,
+    down: false,
     delta: {
       x: 0,
       y: 0
@@ -31,13 +31,12 @@ class DragGesture extends React.Component {
   };
 
   handleTouchMove = event => {
-    console.log("MOUSE MVE CALLLED");
     var currentPosition = this.getPosition(event);
     const deltaX = currentPosition.x - this.startPosition.x;
     const deltaY = currentPosition.y - this.startPosition.y;
 
     this.setState({
-      isDragging: true,
+      down: true,
       delta: {
         x: deltaX,
         y: deltaY
@@ -47,7 +46,7 @@ class DragGesture extends React.Component {
 
   handleTouchEnd = event => {
     this.setState({
-      isDragging: false,
+      down: false,
       delta: { x: 0, y: 0 }
     });
   };
@@ -58,7 +57,8 @@ class DragGesture extends React.Component {
 
     if (this.state.delta.x !== 0 && this.state.delta.y !== 0) {
       this.setState({
-        delta: { x: 0, y: 0 }
+        delta: { x: 0, y: 0 },
+        down: false
       });
     }
   };

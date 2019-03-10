@@ -1,29 +1,9 @@
 import React from "react";
-import { animated, Spring } from "react-spring";
+import { Spring } from "react-spring";
 import styles from "./slide-tabs.module.css";
+import SlideTabTrack from "./SlideTabsTrack";
+import TabLineMarker from "./TabLineMarker";
 import DragGesture from "../DragGesture";
-
-const SlideTabTrack = React.forwardRef(
-  ({ children, x, deltaX, onBoundsExceeded }, ref) => {
-    console.log(Math.abs(deltaX.getValue()));
-    if (Math.abs(deltaX.getValue()) > 60) {
-      const direction = deltaX.getValue() < 0 ? "left" : "right";
-      onBoundsExceeded(direction);
-    }
-
-    return (
-      <animated.div
-        style={{
-          transform: x.interpolate(x => `translate3d(${x}px, 0, 0)`)
-        }}
-        className={styles["tabs-slide"]}
-        ref={ref}
-      >
-        {children}
-      </animated.div>
-    );
-  }
-);
 
 const Tab = ({ title, children }) => {
   return <div className={styles["tab-panel"]}>{children}</div>;
@@ -34,19 +14,6 @@ const TabButton = ({ title, onClick }) => {
     <button className={styles["tab-button"]} onClick={onClick}>
       {title}
     </button>
-  );
-};
-
-const TabLineMarker = ({ currentIndex, count }) => {
-  const linePositionSyles = {
-    transform: `translateX(${100 * currentIndex}%)`,
-    width: `${100 / count}%`
-  };
-
-  return (
-    <div className={styles["tab-line-marker"]}>
-      <span className={styles["line"]} style={linePositionSyles} />
-    </div>
   );
 };
 
@@ -159,27 +126,22 @@ class SlideTabs extends React.PureComponent {
     return -(width * this.state.currentIndex);
   }
 
-  handleOnBoundsExceeded = nextIndex => {};
+  handleOnBoundsExceeded = direction => {
+    const { currentIndex } = this.state;
+    const childCount = React.Children.count(this.props.children);
+    let nextIndex;
 
-  goToNext(direction) {
-    if (!this.isAnimating) {
-      this.isAnimating = true;
-      const { currentIndex } = this.state;
-      let nextIndex;
-      const childCount = React.Children.count(this.props.children);
-
-      if (direction === "left") {
-        nextIndex =
-          currentIndex < childCount - 1 ? currentIndex + 1 : currentIndex;
-      } else {
-        nextIndex = currentIndex > 0 ? currentIndex - 1 : 0;
-      }
-
-      this.setState({
-        currentIndex: nextIndex
-      });
+    if (direction === "left") {
+      nextIndex =
+        currentIndex < childCount - 1 ? currentIndex + 1 : currentIndex;
+    } else {
+      nextIndex = currentIndex > 0 ? currentIndex - 1 : 0;
     }
-  }
+
+    this.setState({
+      currentIndex: nextIndex
+    });
+  };
 
   render() {
     return (
@@ -201,16 +163,16 @@ class SlideTabs extends React.PureComponent {
                   x: dragProps.delta.x + this.getCurrentPostion(),
                   deltaX: dragProps.delta.x
                 }}
-                onRest={() => (this.isAnimating = false)}
               >
                 {props => (
                   <SlideTabTrack
                     x={props.x}
                     deltaX={props.deltaX}
+                    down={dragProps.down}
                     ref={this.element}
                     onBoundsExceeded={direction => {
                       cancel();
-                      this.goToNext(direction);
+                      this.handleOnBoundsExceeded(direction);
                     }}
                   >
                     {this.props.children}
