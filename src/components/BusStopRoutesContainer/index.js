@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import { cloneDeep } from "lodash";
 import { toast } from "react-toastify";
 import BusStopRoutes from "../BusStopRoutes";
@@ -13,15 +14,33 @@ import {
 import { appearances } from "../Panel";
 import styles from "../BusStopRoutes/bus-stop-routes.module.css";
 
+const AddedStopToast = ({ line, stopName }) => {
+  return (
+    <div className={styles["toast-container"]}>
+      <div className={styles["toast-content"]}>
+        <span className={styles.line}>{line}</span> <span>{stopName}</span>
+      </div>
+      <Link to="/departures" className={styles.link}>
+        View
+      </Link>
+    </div>
+  );
+};
+
 class BusStopRoutesContainer extends Component {
   handleToggleRoute = (route, isCurrentlySelectedByUser = false) => {
     const { naptanId, stopName } = this.props;
     if (!isCurrentlySelectedByUser) {
       this.props.dispatch(addRoute(naptanId, route, stopName));
-      toast.info(`${route.line} - ${stopName} added`, {
+      toast(<AddedStopToast line={route.line} stopName={stopName} />, {
         className: styles.toast,
         closeButton: false
       });
+
+      // toast.info(`${route.line} - ${stopName} added`, {
+      //   className: styles.toast,
+      //   closeButton: false
+      // });
     } else {
       this.props.dispatch(removeRoute(naptanId, route, stopName));
     }

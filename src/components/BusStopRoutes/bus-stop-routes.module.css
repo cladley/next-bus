@@ -27,4 +27,25 @@
   background-color: #404f58;
   padding-left: 20px;
   padding-right: 20px;
+  font-size: 14px;
+}
+
+.toast-container {
+  display: flex;
+}
+
+.toast-content {
+  margin: auto auto auto 0;
+}
+
+.link {
+  background-color: white;
+  color: black;
+  line-height: 32px;
+  padding: 0 14px;
+  border-radius: 5px;
+  font-weight: 300;
+  font-size: 12px;
+  text-decoration: none;
+  text-transform: uppercase;
 }

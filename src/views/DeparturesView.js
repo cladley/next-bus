@@ -5,6 +5,13 @@ import DeparturesBlock from "../components/DepartureBlock";
 import Departure from "../components/Departure";
 
 class DeparturesView extends React.Component {
+  componentDidMount() {
+    const { allUserRoutesIds } = this.props;
+    if (allUserRoutesIds.length > 0) {
+      this.fetchPredictions();
+    }
+  }
+
   componentDidUpdate(prevProps) {
     if (
       prevProps.allUserRoutesIds.length === 0 &&

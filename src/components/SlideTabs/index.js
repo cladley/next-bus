@@ -160,7 +160,9 @@ class SlideTabs extends React.PureComponent {
               <Spring
                 native
                 to={{
-                  x: dragProps.delta.x + this.getCurrentPostion(),
+                  x: dragProps.down
+                    ? dragProps.delta.x + this.getCurrentPostion()
+                    : this.getCurrentPostion(),
                   deltaX: dragProps.delta.x
                 }}
               >

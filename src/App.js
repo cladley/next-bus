@@ -27,7 +27,7 @@ class App extends Component {
             transition={Slide}
             position="bottom-center"
             hideProgressBar={true}
-            autoClose={3000}
+            autoClose={4000000}
           />
         </div>
       </Router>
