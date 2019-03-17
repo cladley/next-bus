@@ -34,7 +34,7 @@ describe("<BusStopRoutes />", () => {
   });
 
   it("should pass", () => {
-    console.log(wrapper.debug());
+    // console.log(wrapper.debug());
     expect(true).toBe(true);
   });
 
