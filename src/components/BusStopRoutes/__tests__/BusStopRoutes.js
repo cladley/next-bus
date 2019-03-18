@@ -33,11 +33,6 @@ describe("<BusStopRoutes />", () => {
     wrapper = shallow(<BusStopRoutes routes={dummyRoutes} />);
   });
 
-  it("should pass", () => {
-    // console.log(wrapper.debug());
-    expect(true).toBe(true);
-  });
-
   it("instance method getDayBusRoutes() should return correct routes", () => {
     const busStopRoutesInstance = wrapper.instance();
     const dayTimeRoutes = busStopRoutesInstance.getDayBusRoutes(dummyRoutes);

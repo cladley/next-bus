@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import classNames from "classnames";
 import styles from "./bus-routes.module.css";
 import { ReactComponent as EyeIcon } from "../../icons/eye.svg";
@@ -37,6 +38,19 @@ const BusRoutes = ({ routes, onShowRoute, onToggleRoute, isNight }) => {
       </ul>
     </div>
   );
+};
+
+BusRoutes.propTypes = {
+  routes: PropTypes.arrayOf(
+    React.PropTypes.shape({
+      destination: PropTypes.string,
+      direction: PropTypes.string,
+      line: PropTypes.string,
+      routeSectionName: PropTypes.string
+    })
+  ),
+  isNight: PropTypes.bool,
+  onToggleRoute: PropTypes.func
 };
 
 export default BusRoutes;

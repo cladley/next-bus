@@ -36,11 +36,6 @@ class BusStopRoutesContainer extends Component {
         className: styles.toast,
         closeButton: false
       });
-
-      // toast.info(`${route.line} - ${stopName} added`, {
-      //   className: styles.toast,
-      //   closeButton: false
-      // });
     } else {
       this.props.dispatch(removeRoute(naptanId, route, stopName));
     }
