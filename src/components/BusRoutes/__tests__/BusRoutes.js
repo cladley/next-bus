@@ -69,5 +69,20 @@ describe("<BusRoutes />", () => {
       toggleButton.simulate("click");
       expect(callback.mock.calls[0][0]).toEqual(dummyRoutes[0]);
     });
+
+    test("toggle button does not have active class when route is not selected", () => {
+      const firstRoute = wrapper.find("li").first();
+      const toggleButton = firstRoute.find(".toggle-route-button");
+      expect(toggleButton.hasClass("is-active")).toBe(false);
+    });
+
+    test("toggle button has active class when route is selected", () => {
+      const dummyRoute = [dummyRoutes[0]];
+      dummyRoute[0].isSelectedByUser = true;
+      wrapper = setup({ routes: dummyRoute });
+      const firstRoute = wrapper.find("li").first();
+      const toggleButton = firstRoute.find(".toggle-route-button");
+      expect(toggleButton.hasClass("is-active")).toBe(true);
+    });
   });
 });

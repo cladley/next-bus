@@ -5,8 +5,6 @@ import { ReactComponent as EyeIcon } from "../../icons/eye.svg";
 import { ReactComponent as StarIcon } from "../../icons/star.svg";
 
 const BusRoutes = ({ routes, onShowRoute, onToggleRoute, isNight }) => {
-  console.log(routes);
-
   const nightStyles = isNight
     ? { background: "#2e4482", color: "white" }
     : null;
