@@ -42,7 +42,7 @@ const BusRoutes = ({ routes, onShowRoute, onToggleRoute, isNight }) => {
 
 BusRoutes.propTypes = {
   routes: PropTypes.arrayOf(
-    React.PropTypes.shape({
+    PropTypes.shape({
       destination: PropTypes.string,
       direction: PropTypes.string,
       line: PropTypes.string,
