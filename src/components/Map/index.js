@@ -112,7 +112,6 @@ class Map extends Component {
 
   createMarkers() {
     return this.props.stopMarkers.map((marker, index) => {
-      console.log(marker);
       return (
         <BusStopMapMarker
           key={marker.id}

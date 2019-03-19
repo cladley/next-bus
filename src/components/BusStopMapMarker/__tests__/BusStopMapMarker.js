@@ -37,13 +37,13 @@ describe("<BusStopMapMarker />", () => {
   });
 
   it("should call onSelected callback when clicked", () => {
-    const markerElement = wrapper.find('.marker').first();
+    const markerElement = wrapper.find('.test').first();
     markerElement.simulate('click');
     expect(callback.mock.calls.length).toBe(1);
   });
 
   it('should be call onSelected callback with correct id when clicked', () => {
-    const markerElement = wrapper.find('.marker').first();
+    const markerElement = wrapper.find('.test').first();
     markerElement.simulate('click');
     expect(callback.mock.calls[0][0]).toBe(dummyMarker.id);
   });
