@@ -21,7 +21,7 @@ function BusStopMapMarker({ id, onSelected, isSelected, index }) {
       {props => (
         <animated.div
           style={props}
-          className="test"
+          className="marker"
           onClick={() => onSelected(id)}
         />
       )}
