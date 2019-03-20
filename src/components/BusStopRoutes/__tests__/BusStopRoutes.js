@@ -1,9 +1,14 @@
 import React from "react";
-import Enzyme, { shallow } from "enzyme";
+import Enzyme, { shallow, mount } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import BusStopRoutes from "../index";
 
 Enzyme.configure({ adapter: new Adapter() });
+
+const setup = props => {
+  const wrapper = shallow(<BusStopRoutes {...props} />);
+  return wrapper;
+};
 
 describe("<BusStopRoutes />", () => {
   let wrapper;
@@ -30,7 +35,7 @@ describe("<BusStopRoutes />", () => {
   ];
 
   beforeEach(() => {
-    wrapper = shallow(<BusStopRoutes routes={dummyRoutes} />);
+    wrapper = setup({ routes: dummyRoutes });
   });
 
   it("instance method getDayBusRoutes() should return correct routes", () => {
@@ -48,5 +53,18 @@ describe("<BusStopRoutes />", () => {
     expect(nightTimeRoutes.length).toBe(2);
     expect(nightTimeRoutes[0].line).toBe("n17");
     expect(nightTimeRoutes[1].line).toBe("n41");
+  });
+
+  it("should not render quick route panel if isQuickRoute property is false", () => {
+    wrapper = mount(<BusStopRoutes routes={dummyRoutes} />);
+    const quickView = wrapper.find(".quick-routes");
+    console.log(wrapper.debug());
+    expect(quickView.length).toBe(0);
+  });
+
+  it("should render quick route panel if isQuickRoute property is true", () => {
+    wrapper = setup({ routes: dummyRoutes, isQuickView: true });
+    const quickView = wrapper.find(".quick-routes");
+    expect(quickView.text()).toEqual("Serves: 17, n17, n41");
   });
 });
