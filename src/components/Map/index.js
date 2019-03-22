@@ -2,10 +2,12 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import GoogleMapReact from "google-map-react";
 import { isEqual } from "lodash";
+import { Transition } from 'react-spring';
 
 import BusStopMapMarker from "../BusStopMapMarker";
 import { appearances } from "../Panel";
 import UserGeoPoint from "../UserGeoPoint";
+import FetchingIndicator from './FetchingIndicator';
 import {
   fetchStopsByLocation,
   fetchRouteDetailsByStop,
@@ -161,6 +163,14 @@ class Map extends Component {
             <UserGeoPoint lat={userLocation.lat} lng={userLocation.lng} />
           ) : null}
         </GoogleMapReact>
+            
+        <Transition
+          items={false}
+          from={{opacity: 0}}
+          enter={{opacity: 1}}
+          leave={{opacity: 0}}>
+          {show => show && (props => <FetchingIndicator style={props} />)}
+        </Transition>
       </div>
     );
   }

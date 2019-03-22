@@ -7,7 +7,9 @@ const apiMiddleware = ({ dispatch }) => next => action => {
     return;
   }
 
-  const { url, onSuccess, transformResponse } = action.payload;
+  const { url, onSuccess, onBefore, transformResponse } = action.payload;
+
+  if (onBefore) onBefore();
 
   if (url instanceof Array) {
     Promise.all(url.map(u => fetch(u)))

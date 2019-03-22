@@ -105,6 +105,12 @@ const setStopRoutes = data => {
   };
 };
 
+const loadStopMarkers = () => {
+  return {
+    type: actionTypes.LOAD_STOP_MARKERS,
+  };
+};
+
 const setStopMarkers = data => {
   return {
     type: actionTypes.SET_STOP_MARKERS,

@@ -6,7 +6,8 @@ const initialState = {
   selectedStopId: null,
   stopRouteDetails: [],
   panelState: appearances.closed,
-  geoLocation: null
+  geoLocation: null,
+  loadingStopMarkers: false
 };
 
 // Normalize the stop data herer.
