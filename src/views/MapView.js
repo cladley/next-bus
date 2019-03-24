@@ -33,12 +33,16 @@ class MapView extends Component {
       setTimeout(() => {
         this.props.dispatch(clearStopSelected());
       }, 400);
-    } else if (type === "what") {
+    } else if (to === appearances.short) {
       this.props.dispatch(setPanelState(appearances.short));
     }
 
     if (from === appearances.full) {
       setTimeout(this.props.dispatch(clearRoute()));
+    } else if (from === appearances.half) {
+      // setTimeout(() => {
+      //   this.props.dispatch(clearStopSelected());
+      // }, 400);
     }
   };
 
@@ -64,6 +68,8 @@ class MapView extends Component {
     });
 
     const isQuickView = panelState === appearances.short;
+
+    console.log(isQuickView);
 
     return (
       <React.Fragment>

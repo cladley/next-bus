@@ -74,7 +74,7 @@ class BusStopRoutes extends Component {
     const allRoutesSet = this.getAllRoutesLine(routes);
     return (
       <React.Fragment>
-        <header className={styles.header}>
+        <header className={styles.header} data-drag-handle>
           <h3 className={styles.title}>{this.props.stopName}</h3>
         </header>
 

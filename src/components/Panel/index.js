@@ -42,9 +42,15 @@ const Full = ({ children, closePanel, ...props }) => {
   );
 };
 
+const SHORT_HEIGHT = 85;
+
 class Panel extends React.Component {
   static Half = Half;
   static Full = Full;
+
+  componentDidMount() {
+    this.height = this.frameElement.getBoundingClientRect().height;
+  }
 
   getTransformValuesToFullScreen() {
     const { width, height } = this.frameElement.getBoundingClientRect();
@@ -166,12 +172,12 @@ class Panel extends React.Component {
     });
   }
 
-  getCurrentYPos() {
+  getCurrentYPos(y) {
     const { isOpen } = this.props;
     if (isOpen === appearances.short) {
-      return 85;
+      return y - SHORT_HEIGHT;
     } else {
-      return 530;
+      return Math.max(y - this.height, -530);
     }
   }
 
@@ -181,18 +187,17 @@ class Panel extends React.Component {
     const panelClassNames = this.getPanelClasses();
 
     return (
-      <DragGesture>
+      <DragGesture targetAttribute="data-drag-handle">
         {({ dragProps, cancel }) => {
           if (isOpen === appearances.short) {
             if (Math.abs(dragProps.delta.y) > 100) {
-              console.log("herer");
               cancel();
-              this.props.onChangeOpen(appearances.short);
+              this.props.onChangeOpen(appearances.half);
             }
           } else if (isOpen === appearances.half) {
             if (Math.abs(dragProps.delta.y > 100)) {
               cancel();
-              this.props.onChangeOpen("what");
+              this.props.onChangeOpen(appearances.closed);
             }
           }
 
@@ -207,8 +212,7 @@ class Panel extends React.Component {
                   style={{
                     transform: dragProps.down
                       ? props.y.interpolate(
-                          y =>
-                            `translate3d(0, ${y - this.getCurrentYPos()}px, 0)`
+                          y => `translate3d(0, ${this.getCurrentYPos(y)}px, 0)`
                         )
                       : "",
                     transition: dragProps.down ? "none" : ""

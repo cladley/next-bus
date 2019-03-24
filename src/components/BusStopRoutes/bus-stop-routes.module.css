@@ -8,6 +8,7 @@
   text-transform: uppercase;
   margin-bottom: 4px;
   color: #fff;
+  pointer-events: none;
 }
 
 .quick-routes {
