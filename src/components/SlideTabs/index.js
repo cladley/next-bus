@@ -42,7 +42,9 @@ class SlideTabs extends React.PureComponent {
     });
 
     window.addEventListener("resize", () => {
-      this.componentWidth = this.element.current.getBoundingClientRect().width;
+      if (this.element) {
+        this.componentWidth = this.element.current.getBoundingClientRect().width;
+      }
     });
   }
 

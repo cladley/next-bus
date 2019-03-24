@@ -3,6 +3,7 @@ import { appearances } from "../components/Panel";
 
 const initialState = {
   viewableStops: {},
+  loadingStops: false,
   selectedStopId: null,
   stopRouteDetails: [],
   panelState: appearances.closed,
@@ -43,9 +44,16 @@ const createViewableStopsMap = (currentStops, data) => {
 
 export default function(state = initialState, action) {
   switch (action.type) {
+    case actionTypes.LOADING_STOP_MARKERS:
+      return {
+        ...state,
+        loadingStops: true
+      };
+
     case actionTypes.SET_STOP_MARKERS:
       return {
         ...state,
+        loadingStops: false,
         viewableStops: createViewableStopsMap(
           state.viewableStops,
           action.payload.data

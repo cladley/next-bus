@@ -15,6 +15,7 @@ const fetchStopsByLocation = (lat, lon, radius = 300) => {
     type: actionTypes.API,
     payload: {
       url: getStopsByLatLonUrl(lat, lon, radius),
+      onBefore: loadingStopMarkers,
       onSuccess: setStopMarkers,
       transformResponse: stopsByLocationTransform
     }
@@ -114,6 +115,12 @@ const setStopMarkers = data => {
   };
 };
 
+const loadingStopMarkers = () => {
+  return {
+    type: actionTypes.LOADING_STOP_MARKERS
+  };
+};
+
 const setStopSelected = stopId => {
   return {
     type: actionTypes.STOP_SELECTED,
@@ -182,6 +189,7 @@ export {
   fetchStopsByLocation,
   fetchStopsForLine,
   setStopMarkers,
+  loadingStopMarkers,
   setStopSelected,
   clearStopSelected,
   clearStopMarkers,

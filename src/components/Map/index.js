@@ -63,16 +63,16 @@ class Map extends Component {
     if (this.mapsApi && radius) {
       if (this.mapZone) this.mapZone.setMap(null);
 
-      this.mapZone = new this.mapsApi.Circle({
-        strokeColor: "#FF0000",
-        strokeOpacity: 0.8,
-        strokeWeight: 2,
-        fillColor: "#FF0000",
-        fillOpacity: 0.1,
-        map: this.map,
-        center: center,
-        radius: Math.floor(radius * 0.6)
-      });
+      // this.mapZone = new this.mapsApi.Circle({
+      //   strokeColor: "#FF0000",
+      //   strokeOpacity: 0.8,
+      //   strokeWeight: 2,
+      //   fillColor: "#FF0000",
+      //   fillOpacity: 0.1,
+      //   map: this.map,
+      //   center: center,
+      //   radius: Math.floor(radius * 0.6)
+      // });
     }
 
     this.props.dispatch(
@@ -131,7 +131,6 @@ class Map extends Component {
       this.props.dispatch(fetchRouteDetailsByStop(stopId));
       this.props.dispatch(setStopSelected(stopId));
       this.props.dispatch(setPanelState(appearances.short));
-      // this.props.dispatch(setPanelState(appearances.half));
     }
   };
 

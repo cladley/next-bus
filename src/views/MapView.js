@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { toast } from "react-toastify";
+import { Transition, animated } from "react-spring";
 import classNames from "classnames";
 
 import { clearRoute, setPanelState, clearStopSelected } from "../actions/index";
@@ -9,6 +10,7 @@ import Panel, { appearances } from "../components/Panel";
 import BusStopRoutesContainer from "../components/BusStopRoutesContainer";
 import RouteStops from "../components/RouteStops";
 import GeoLocationButton from "../components/GeoLocationButton";
+import BusyIndicator from "../components/BusyIndicator";
 import styles from "./mapview.module.css";
 
 class MapView extends Component {
@@ -61,15 +63,19 @@ class MapView extends Component {
   };
 
   render() {
-    const { isStopSelected, selectedRoute, naptanId, panelState } = this.props;
+    const {
+      isStopSelected,
+      isLoadingStops,
+      selectedRoute,
+      naptanId,
+      panelState
+    } = this.props;
 
     let MapContainerClassNames = classNames(styles["map-container"], {
       [styles.active]: isStopSelected
     });
 
     const isQuickView = panelState === appearances.short;
-
-    console.log(isQuickView);
 
     return (
       <React.Fragment>
@@ -82,6 +88,24 @@ class MapView extends Component {
             center={this.state.center}
             userLocation={this.state.userGeoLocation}
           />
+
+          <Transition
+            native
+            unique
+            items={isLoadingStops}
+            from={{ opacity: 0 }}
+            enter={{ opacity: 1 }}
+            leave={{ opacity: 0 }}
+          >
+            {show =>
+              show &&
+              (props => (
+                <animated.div className={styles.cover} style={props}>
+                  <BusyIndicator />
+                </animated.div>
+              ))
+            }
+          </Transition>
         </div>
 
         <Panel isOpen={panelState} onChangeOpen={this.handlePanelChange}>
@@ -114,7 +138,8 @@ const mapStateToProps = ({ map, route }) => {
     isStopSelected: !!map.selectedStopId,
     naptanId: map.selectedStopId,
     panelState: map.panelState,
-    userGeoLocation: map.geoLocation
+    userGeoLocation: map.geoLocation,
+    isLoadingStops: map.loadingStops
   };
 };
 
