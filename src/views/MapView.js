@@ -25,19 +25,18 @@ class MapView extends Component {
     console.log(route);
   };
 
-  handlePanelChange = type => {
-    if (type === appearances.short) {
+  handlePanelChange = (to, from) => {
+    if (to === appearances.half) {
       this.props.dispatch(setPanelState(appearances.half));
-    } else if (type === appearances.full) {
-      this.props.dispatch(setPanelState(appearances.half));
-      setTimeout(() => {
-        this.props.dispatch(clearRoute());
-      }, 500);
-    } else if (type === appearances.half) {
+    } else if (to === appearances.closed) {
       this.props.dispatch(setPanelState(appearances.closed));
       setTimeout(() => {
         this.props.dispatch(clearStopSelected());
       }, 400);
+    }
+
+    if (from === appearances.full) {
+      setTimeout(this.props.dispatch(clearRoute()));
     }
   };
 

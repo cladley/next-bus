@@ -82,12 +82,12 @@ class Panel extends React.Component {
     return classNames(styles.panel, className);
   }
 
-  closePanel = type => {
-    this.props.onChangeOpen(type);
+  closePanel = (to, from) => {
+    this.props.onChangeOpen(to, from);
   };
 
   expandPanel = () => {
-    this.props.onChangeOpen(appearances.short);
+    this.props.onChangeOpen(appearances.half);
   };
 
   getHalfPanelLeaveTransition() {
@@ -125,7 +125,8 @@ class Panel extends React.Component {
                   style={props}
                 >
                   {React.cloneElement(child, {
-                    closePanel: () => this.closePanel("half"),
+                    closePanel: () =>
+                      this.closePanel(appearances.closed, appearances.half),
                     expandPanel: () => this.expandPanel()
                   })}
                 </animated.div>
@@ -150,7 +151,9 @@ class Panel extends React.Component {
                   style={props}
                 >
                   {React.cloneElement(child, {
-                    closePanel: () => this.closePanel("full")
+                    closePanel: () => {
+                      this.closePanel(appearances.half, appearances.full);
+                    }
                   })}
                 </animated.div>
               ))

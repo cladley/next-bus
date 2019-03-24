@@ -15,7 +15,7 @@ const BusRoutes = ({ routes, onShowRoute, onToggleRoute, isNight }) => {
       <ul className={styles["route-list"]}>
         {routes.map(route => (
           <li key={route.line}>
-            <div>
+            <div onClick={() => onShowRoute(route)}>
               <span className={styles.line}>{route.line}</span>{" "}
               <span className={styles.destination}>{route.destination}</span>
             </div>
@@ -27,12 +27,6 @@ const BusRoutes = ({ routes, onShowRoute, onToggleRoute, isNight }) => {
             >
               <StarIcon />
             </button>
-            {/* <button
-              className={styles["show-route-button"]}
-              onClick={() => onShowRoute(route)}
-            >
-              <EyeIcon fill={isNight ? "white" : "black"} />
-            </button> */}
           </li>
         ))}
       </ul>
