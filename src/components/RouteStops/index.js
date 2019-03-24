@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import Container from "../Layout/Container";
-import { Transition, Trail, animated, config } from "react-spring";
+import { Transition, animated } from "react-spring";
 import { fetchStopsForLine } from "../../actions";
 import classNames from "classnames";
 import styles from "./route-stops.module.css";
@@ -16,24 +16,7 @@ class RouteStops extends React.Component {
     dispatch(fetchStopsForLine(line, direction));
   }
 
-  renderStopsForAnimation(stops) {
-    return (
-      <Trail
-        native
-        items={stops}
-        keys={stop => stop.name}
-        from={{ transform: "translate3d(-100%, 0, 0)" }}
-        to={{ transform: "translate3d(0, 0, 0)" }}
-        key={stop => stop.name}
-      >
-        {stop => props => <animated.li style={props}>{stop.name}</animated.li>}
-      </Trail>
-    );
-
-    // return stops.map(s => <li>{s.name}</li>);
-  }
-
-  renderRemainingStop(stops) {
+  renderStops(stops) {
     return stops.map(s => <li key={s.name}>{s.name}</li>);
   }
 
@@ -59,10 +42,7 @@ class RouteStops extends React.Component {
           )}
         </Transition>
 
-        <ul className={listClassNames}>
-          {this.renderStopsForAnimation(stops.slice(0, 20))}
-          {this.renderRemainingStop(stops.slice(20))}
-        </ul>
+        <ul className={listClassNames}>{this.renderStops(stops)}</ul>
       </Container>
     ) : (
       <div>loading</div>

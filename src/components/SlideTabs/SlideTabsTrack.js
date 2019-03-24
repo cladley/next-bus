@@ -4,7 +4,6 @@ import styles from "./slide-tabs.module.css";
 
 const SlideTabTrack = React.forwardRef(
   ({ children, x, deltaX, velocity, down, onBoundsExceeded }, ref) => {
-    console.log(velocity);
     if (Math.abs(velocity.x) > 50) {
       const direction = deltaX.getValue() < 0 ? "left" : "right";
       onBoundsExceeded(direction);

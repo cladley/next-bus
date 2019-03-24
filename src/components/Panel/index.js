@@ -1,6 +1,7 @@
 import React from "react";
-import { Transition, animated } from "react-spring";
+import { Transition, animated, Spring } from "react-spring";
 import PropTypes from "prop-types";
+import DragGesture from "../DragGesture";
 import classNames from "classnames";
 import styles from "./panel.module.css";
 import { ReactComponent as DetailsIcon } from "../../icons/details.svg";
@@ -104,7 +105,7 @@ class Panel extends React.Component {
     }
   }
 
-  getPanelChildren() {
+  getPanelChildren(yDelta, down) {
     const { isOpen } = this.props;
 
     return React.Children.map(this.props.children, child => {
@@ -165,20 +166,67 @@ class Panel extends React.Component {
     });
   }
 
+  getCurrentYPos() {
+    const { isOpen } = this.props;
+    if (isOpen === appearances.short) {
+      return 85;
+    } else {
+      return 530;
+    }
+  }
+
   render() {
+    const { isOpen } = this.props;
     const frameStyles = this.getFrameStyle();
     const panelClassNames = this.getPanelClasses();
-    const children = this.getPanelChildren();
 
     return (
-      <div className={panelClassNames}>
-        <div
-          className={styles.frame}
-          ref={element => (this.frameElement = element)}
-          style={frameStyles}
-        />
-        <div>{children}</div>
-      </div>
+      <DragGesture>
+        {({ dragProps, cancel }) => {
+          if (isOpen === appearances.short) {
+            if (Math.abs(dragProps.delta.y) > 100) {
+              console.log("herer");
+              cancel();
+              this.props.onChangeOpen(appearances.short);
+            }
+          } else if (isOpen === appearances.half) {
+            if (Math.abs(dragProps.delta.y > 100)) {
+              cancel();
+              this.props.onChangeOpen("what");
+            }
+          }
+
+          return (
+            <Spring
+              native
+              to={{ y: dragProps.delta.y }}
+              config={{ tension: 0, friction: 2, precision: 0.4 }}
+            >
+              {props => (
+                <animated.div
+                  style={{
+                    transform: dragProps.down
+                      ? props.y.interpolate(
+                          y =>
+                            `translate3d(0, ${y - this.getCurrentYPos()}px, 0)`
+                        )
+                      : "",
+                    transition: dragProps.down ? "none" : ""
+                  }}
+                  className={panelClassNames}
+                >
+                  <div
+                    className={styles.frame}
+                    ref={element => (this.frameElement = element)}
+                    style={frameStyles}
+                  />
+                  <div>{this.getPanelChildren()}</div>
+                </animated.div>
+              )}
+            </Spring>
+          );
+        }}
+      </DragGesture>
     );
   }
 }

@@ -12,7 +12,8 @@ class DragGesture extends React.PureComponent {
     velocity: {
       x: 0,
       y: 0
-    }
+    },
+    target: null
   };
 
   getPosition(event) {
@@ -38,6 +39,7 @@ class DragGesture extends React.PureComponent {
   };
 
   handleTouchMove = event => {
+    console.log(event.target);
     var currentPosition = this.getPosition(event);
     const deltaX = currentPosition.x - this.startPosition.x;
     const deltaY = currentPosition.y - this.startPosition.y;
@@ -55,6 +57,7 @@ class DragGesture extends React.PureComponent {
 
     this.setState({
       down: true,
+      target: event.target,
       delta: {
         x: deltaX,
         y: deltaY

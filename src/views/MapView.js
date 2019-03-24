@@ -33,6 +33,8 @@ class MapView extends Component {
       setTimeout(() => {
         this.props.dispatch(clearStopSelected());
       }, 400);
+    } else if (type === "what") {
+      this.props.dispatch(setPanelState(appearances.short));
     }
 
     if (from === appearances.full) {
@@ -75,6 +77,7 @@ class MapView extends Component {
             userLocation={this.state.userGeoLocation}
           />
         </div>
+
         <Panel isOpen={panelState} onChangeOpen={this.handlePanelChange}>
           <Panel.Half>
             {isStopSelected && (

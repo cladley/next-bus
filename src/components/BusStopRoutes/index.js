@@ -30,13 +30,14 @@ class BusStopRoutes extends Component {
 
     const dayTimeRoutes = this.getDayBusRoutes(routes);
     const nightTimeRoutes = this.getNightBusRoutes(routes);
-
     return (
       <Transition
         native
+        unique
         items={isQuickView === false}
         from={{ opacity: 0, transform: "translate3d(0, 60px, 0)" }}
         enter={{ opacity: 1, transform: "translate3d(0, 0, 0)" }}
+        leave={{ opacity: 1, transform: "translate3d(0, 0, 0)" }}
       >
         {show =>
           show &&
