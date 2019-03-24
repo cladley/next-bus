@@ -41,12 +41,18 @@ class SlideTabs extends React.PureComponent {
       return React.cloneElement(child, {});
     });
 
-    window.addEventListener("resize", () => {
-      if (this.element) {
-        this.componentWidth = this.element.current.getBoundingClientRect().width;
-      }
-    });
+    window.addEventListener("resize", this.handleWindowResize);
   }
+
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.handleWindowResize);
+  }
+
+  handleWindowResize = () => {
+    if (this.element) {
+      this.componentWidth = this.element.current.getBoundingClientRect().width;
+    }
+  };
 
   getPosition(event) {
     let pos = 0;
