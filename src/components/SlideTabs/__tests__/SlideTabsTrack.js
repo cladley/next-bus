@@ -1,5 +1,5 @@
 import React from "react";
-import { shallow } from "enzyme";
+import { shallow, mount } from "enzyme";
 import SlideTabsTrack from "../SlideTabsTrack";
 
 describe("<SlideTabsTrack />", () => {
@@ -15,7 +15,7 @@ describe("<SlideTabsTrack />", () => {
     },
     down: false,
     onBoundsExceeded: onBoundsExceededCallback,
-    ref: {},
+    ref: React.createRef(),
     x: {
       interpolate(callback) {
         return callback();
@@ -25,7 +25,6 @@ describe("<SlideTabsTrack />", () => {
 
   it("should render without an issue", () => {
     wrapper = shallow(<SlideTabsTrack {...props} />);
-    console.log(wrapper.debug());
     expect(wrapper).toBeDefined();
   });
 
@@ -68,11 +67,15 @@ describe("<SlideTabsTrack />", () => {
         }
       };
 
-      wrapper = shallow(<SlideTabsTrack {...newProps} />);
+      wrapper = mount(<SlideTabsTrack {...newProps} />);
     });
 
     it("should call onBoundsExceeded with a direction of 'right'", () => {
       expect(onBoundsExceededCallback).toHaveBeenCalledWith("right");
+    });
+
+    it("should call onBoundsExceeded with a direction of 'left' when delta direction is less than 0", () => {
+      expect(onBoundsExceededCallback).toHaveBeenCalledWith("left");
     });
   });
 });
