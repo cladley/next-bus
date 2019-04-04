@@ -5,7 +5,8 @@ export const stopsByLocationTransform = data => {
       naptanId: stop.naptanId,
       lat: stop.lat,
       lon: stop.lon,
-      commonName: stop.commonName
+      commonName: stop.commonName,
+      stopLetter: stop.stopLetter
     };
   });
 };

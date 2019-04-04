@@ -1,0 +1,57 @@
+.list {
+  list-style: none;
+}
+
+.item {
+  height: 38px;
+  padding-left: 35px;
+  font-size: 14px;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.item:before {
+  content: "";
+  width: 4px;
+  height: 100%;
+  background-color: red;
+  position: absolute;
+  left: 12px;
+}
+
+.item:after {
+  content: "";
+  height: 4px;
+  width: 12px;
+  display: block;
+  position: absolute;
+  background-color: red;
+  top: 50%;
+  left: 15px;
+  border-radius: 3px;
+}
+
+.item:first-child:before {
+  height: 50%;
+  top: 50%;
+}
+
+.item:first-child:after {
+  width: 22px;
+  left: 3px;
+}
+
+.item:last-child:before {
+  height: 50%;
+  top: 0;
+}
+
+.item:last-child:after {
+  width: 22px;
+  left: 3px;
+}
+
+.name {
+  max-width: 80%;
+}

@@ -118,6 +118,7 @@ class Map extends Component {
           lat={marker.lat}
           lng={marker.lon}
           id={marker.id}
+          stopLetter={marker.stopLetter}
           index={index}
           isSelected={marker.id === this.props.selectedStopId ? true : false}
           onSelected={this.handleOnSelected}

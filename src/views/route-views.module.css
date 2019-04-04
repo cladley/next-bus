@@ -1,0 +1,17 @@
+.wrapper {
+  height: 100vh;
+}
+
+.map-wrapper {
+  height: 35vh;
+}
+
+.route-list-wrapper {
+  height: 65vh;
+}
+
+.scroll-container {
+  overflow-y: auto;
+  height: calc(65vh - 20px);
+  padding-bottom: 20px;
+}

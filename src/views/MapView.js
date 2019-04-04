@@ -5,6 +5,7 @@ import { Transition, animated } from "react-spring";
 import classNames from "classnames";
 
 import { clearRoute, setPanelState, clearStopSelected } from "../actions/index";
+import RouteView from "../views/RouteView";
 import Map from "../components/Map";
 import Panel, { appearances } from "../components/Panel";
 import BusStopRoutesContainer from "../components/BusStopRoutesContainer";
@@ -68,7 +69,8 @@ class MapView extends Component {
       isLoadingStops,
       selectedRoute,
       naptanId,
-      panelState
+      panelState,
+      stops
     } = this.props;
 
     let MapContainerClassNames = classNames(styles["map-container"], {
@@ -120,10 +122,11 @@ class MapView extends Component {
           </Panel.Half>
           <Panel.Full>
             {selectedRoute && (
-              <RouteStops
-                line={selectedRoute.line}
-                direction={selectedRoute.direction}
-              />
+              <RouteView route={selectedRoute} />
+              // <RouteStops
+              //   line={selectedRoute.line}
+              //   direction={selectedRoute.direction}
+              // />
             )}
           </Panel.Full>
         </Panel>

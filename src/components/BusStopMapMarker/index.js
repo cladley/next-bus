@@ -1,14 +1,9 @@
 import React from "react";
-import { Transition, Spring, animated } from "react-spring";
+import { Spring, animated } from "react-spring";
+import classNames from "classnames";
+import styles from "./bus-stop-map-marker.module.css";
 
-function BusStopMapMarker({ id, onSelected, isSelected, index }) {
-  const styles = {
-    backgroundColor: isSelected ? "green" : "black",
-    height: isSelected ? "20px" : "10px",
-    width: isSelected ? "20px" : "10px",
-    borderRadius: "50%"
-  };
-
+function BusStopMapMarker({ id, onSelected, isSelected, index, stopLetter }) {
   const delay = index * 50;
 
   return (
@@ -19,11 +14,15 @@ function BusStopMapMarker({ id, onSelected, isSelected, index }) {
       delay={delay}
     >
       {props => (
-        <animated.div
-          style={props}
-          className="test"
-          onClick={() => onSelected(id)}
-        />
+        <animated.div style={props} onClick={() => onSelected(id)}>
+          <span
+            className={classNames(styles["stop-marker"], {
+              [styles["is-active"]]: isSelected
+            })}
+          >
+            <span className={styles["stop-marker__inner"]}>{stopLetter}</span>
+          </span>
+        </animated.div>
       )}
     </Spring>
   );
