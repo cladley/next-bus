@@ -8,7 +8,8 @@ class RouteMap extends React.Component {
       lat: 51.560913,
       lng: -0.120881
     },
-    zoom: 16
+    zoom: 16,
+    onReady: () => {}
   };
 
   constructor(props) {
@@ -56,12 +57,13 @@ class RouteMap extends React.Component {
   };
 
   render() {
-    const { path } = this.props;
+    const { path, onReady } = this.props;
     console.log("RouteMap Rendered");
 
     if (path && this.map && !this.hasPathBeenRendered) {
       this.renderPathToMap();
       this.hasPathBeenRendered = true;
+      onReady();
     }
 
     const options = {
