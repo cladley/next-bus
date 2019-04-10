@@ -11,18 +11,19 @@ import {
 
 class RouteView extends React.Component {
   componentDidMount() {
-    const { route, stops, dispatch } = this.props;
+    const { route, dispatch } = this.props;
     const { line, direction } = route;
     dispatch(fetchStopsForLine(line, direction));
   }
 
   render() {
-    const { stops, route } = this.props;
+    const { stops, route, routePath } = this.props;
     const { routeSectionName } = route;
+
     return (
       <div className={styles.wrapper}>
         <div className={styles["map-wrapper"]}>
-          <RouteMap />;
+          <RouteMap path={routePath} />;
         </div>
         <div className={styles["route-list-wrapper"]}>
           <div className={styles["scroll-container"]}>
@@ -39,7 +40,8 @@ class RouteView extends React.Component {
 
 const mapStateToProps = ({ route }) => {
   return {
-    stops: route.routeStops
+    stops: route.routeStops,
+    routePath: route.routePath
   };
 };
 

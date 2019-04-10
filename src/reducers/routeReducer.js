@@ -21,7 +21,7 @@ export default function(state = initialState, action) {
       return {
         ...state,
         routeStops: action.payload.data.stations,
-        routePath: action.payload.data.lineStrings
+        routePath: JSON.parse(action.payload.data.lineStrings)[0]
       };
     default:
       return state;

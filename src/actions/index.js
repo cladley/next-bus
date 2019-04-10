@@ -89,7 +89,6 @@ const fetchStopsForLine = (line, direction) => {
 };
 
 const setStopsForLine = data => {
-  console.log(data);
   return {
     type: actionTypes.SET_STOPS_FOR_LINE,
     payload: {
