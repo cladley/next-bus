@@ -54,16 +54,29 @@ class RouteMap extends React.Component {
   handleApiLoaded = ({ map, maps }) => {
     this.mapsApi = maps;
     this.map = map;
+
+    setImmediate(() => {
+      if (this.checkIfShouldRenderPath()) {
+        this.renderPath();
+      }
+    });
   };
+
+  checkIfShouldRenderPath() {
+    return this.props.path && this.map && !this.hasPathBeenRendered;
+  }
+
+  renderPath() {
+    this.renderPathToMap();
+    this.hasPathBeenRendered = true;
+    this.props.onReady();
+  }
 
   render() {
     const { path, onReady } = this.props;
-    console.log("RouteMap Rendered");
 
-    if (path && this.map && !this.hasPathBeenRendered) {
-      this.renderPathToMap();
-      this.hasPathBeenRendered = true;
-      onReady();
+    if (this.checkIfShouldRenderPath()) {
+      this.renderPath();
     }
 
     const options = {

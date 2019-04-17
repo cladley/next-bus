@@ -32,6 +32,7 @@ class RouteView extends React.Component {
     const { stops, route, routePath } = this.props;
     const { isRouteMapReady } = this.state;
     const { routeSectionName } = route;
+    // TODO: use shouldShowComponents to animate in screens in.
     const shouldShowComponents = isRouteMapReady && !!stops;
 
     return (
