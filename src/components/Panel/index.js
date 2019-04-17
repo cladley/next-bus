@@ -48,8 +48,22 @@ class Panel extends React.Component {
   static Half = Half;
   static Full = Full;
 
+  constructor(props) {
+    super(props);
+    this.panelContainerRef = React.createRef();
+    this.panelHeight = null;
+  }
+
   componentDidMount() {
     this.height = this.frameElement.getBoundingClientRect().height;
+  }
+
+  componentDidUpdate() {
+    const { isOpen } = this.props;
+
+    if (isOpen === appearances.short && !this.panelHeight) {
+      this.panelHeight = this.panelContainerRef.current.getBoundingClientRect().height;
+    }
   }
 
   getTransformValuesToFullScreen() {
@@ -177,7 +191,7 @@ class Panel extends React.Component {
     if (isOpen === appearances.short) {
       return y - SHORT_HEIGHT;
     } else {
-      return Math.max(y - this.height, -530);
+      return Math.max(y - this.height, -this.panelHeight);
     }
   }
 
@@ -199,6 +213,8 @@ class Panel extends React.Component {
               cancel();
               this.props.onChangeOpen(appearances.closed);
             }
+          } else if (isOpen === appearances.full) {
+            cancel();
           }
 
           return (
@@ -209,6 +225,7 @@ class Panel extends React.Component {
             >
               {props => (
                 <animated.div
+                  ref={this.panelContainerRef}
                   style={{
                     transform: dragProps.down
                       ? props.y.interpolate(
