@@ -24,12 +24,11 @@ const Departure = ({ line, destination, departures }) => {
     return d1 - d2;
   });
 
-  console.log(orderedDepartures[0]);
-  const nextTime = calculateArrivalTime(orderedDepartures[0].arrival);
+  let nextTime = calculateArrivalTime(orderedDepartures[0].arrival);
+  nextTime = nextTime <= 0 ? "due" : nextTime;
   const nextBusDestination = orderedDepartures[0].destination;
-
   const afterNextTimes = getNextTimes(orderedDepartures.slice(1));
-  console.log(afterNextTimes);
+
   return (
     <div className={styles.container}>
       <div className={styles["bus-details"]}>
@@ -39,7 +38,7 @@ const Departure = ({ line, destination, departures }) => {
       <div className={styles["bus-times"]}>
         <span className={styles.next}>
           {nextTime}
-          <span className={styles.mins}>mins</span>
+          {nextTime !== "due" && <span className={styles.mins}>mins</span>}
         </span>
         <span className={styles.after}>then {afterNextTimes}</span>
       </div>

@@ -44,7 +44,6 @@ class DeparturesView extends React.Component {
       return (
         <DeparturesBlock stopName={stopName}>
           {stopPredictions.map(departure => {
-            console.log(departure);
             return (
               <Departure
                 line={departure.line}
