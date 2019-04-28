@@ -1,5 +1,8 @@
 .container {
   display: flex;
+  flex-shrink: 0;
+  width: calc(100% - 30px);
+  padding: 0 15px;
 }
 
 .container + .container {

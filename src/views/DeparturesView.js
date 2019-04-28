@@ -3,6 +3,10 @@ import { connect } from "react-redux";
 import { fetchPredictionsForStops } from "../actions/index";
 import DeparturesBlock from "../components/DepartureBlock";
 import Departure from "../components/Departure";
+import DragGesture from "../components/DragGesture";
+import { removeRoute } from "../actions/index";
+import styles from "./departures-view.module.css";
+import { Spring, animated } from "react-spring";
 
 class DeparturesView extends React.Component {
   componentDidMount() {
@@ -35,20 +39,53 @@ class DeparturesView extends React.Component {
   }
 
   renderArrivals() {
-    const { predictions } = this.props;
+    const { predictions, dispatch } = this.props;
 
     return Object.keys(predictions).map(naptanId => {
       const stopName = this.getStopNameFrom(naptanId);
       const stopPredictions = predictions[naptanId];
 
       return (
-        <DeparturesBlock stopName={stopName}>
+        <DeparturesBlock key={naptanId} stopName={stopName}>
           {stopPredictions.map(departure => {
             return (
-              <Departure
-                line={departure.line}
-                departures={departure.departures}
-              />
+              <DragGesture key={departure.line} className={styles.wrapper}>
+                {({ dragProps, cancel }) => {
+                  if (Math.abs(dragProps.delta.x) > 150) {
+                    console.log(departure);
+                    cancel();
+                    dispatch(removeRoute(naptanId, departure, stopName));
+                  }
+
+                  return (
+                    <Spring
+                      native
+                      to={{ x: Math.min(0, dragProps.delta.x) }}
+                      config={{ tension: 0, friction: 2, precision: 0.4 }}
+                    >
+                      {props => (
+                        <animated.div
+                          className={styles["slide-panel"]}
+                          style={{
+                            transform: dragProps.down
+                              ? props.x.interpolate(
+                                  x => `translate3d(${x}px, 0, 0)`
+                                )
+                              : "",
+                            transition: dragProps.down ? "none" : ""
+                          }}
+                        >
+                          <Departure
+                            line={departure.line}
+                            departures={departure.departures}
+                          />
+                          <div className={styles["delete-panel"]}>Delete</div>
+                        </animated.div>
+                      )}
+                    </Spring>
+                  );
+                }}
+              </DragGesture>
             );
           })}
         </DeparturesBlock>

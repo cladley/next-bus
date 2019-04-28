@@ -5,6 +5,7 @@
   border-radius: 2px;
   box-shadow: shadow;
   margin: 0 15px;
+  overflow: hidden;
 }
 
 .container + .container {
@@ -24,5 +25,5 @@
 
 .departures-container {
   border-top: 0.4px solid #ccc;
-  padding: 12px 15px;
+  padding: 12px 0;
 }

@@ -1,0 +1,17 @@
+.slide-panel {
+  display: flex;
+  transition: transform 0.3s ease;
+}
+
+.wrapper + .wrapper {
+  padding-top: 8px;
+  border-top: 0.4px solid #ccc;
+  margin-top: 16px;
+}
+
+.delete-panel {
+  background-color: red;
+  flex-shrink: 0;
+  width: 100%;
+  color: white;
+}

@@ -31,6 +31,12 @@ class DragGesture extends React.PureComponent {
     return { x, y };
   }
 
+  componentWillUnmount() {
+    console.log("COMPONENT WILL UNMOUNT");
+    this.element.removeEventListener("touchmove", this.handleTouchMove);
+    this.element.removeEventListener("touchend", this.handleTouchEnd);
+  }
+
   handleTouchStart = event => {
     const { targetAttribute } = this.props;
 
@@ -127,6 +133,7 @@ class DragGesture extends React.PureComponent {
   render() {
     return (
       <div
+        {...this.props}
         onTouchStart={this.handleTouchStart}
         ref={element => (this.element = element)}
       >

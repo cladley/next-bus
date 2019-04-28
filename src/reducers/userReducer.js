@@ -1,5 +1,5 @@
 import * as actionTypes from "../actions/actionTypes";
-import { cloneDeep, remove, find } from "lodash";
+import { cloneDeep, remove, find, omit } from "lodash";
 
 const initialState = {
   routes: {
@@ -74,6 +74,23 @@ const extractPredictionDataForRoute = (userRoutes, data) => {
   return userPredictions;
 };
 
+const removeRouteFromPredictions = (predictions, { naptanId, route }) => {
+  let activePredictionsForStop;
+  const busStop = predictions[naptanId];
+
+  if (busStop) {
+    activePredictionsForStop = busStop.filter(prediction => {
+      return prediction.line !== route.line;
+    });
+  }
+
+  if (activePredictionsForStop.length > 0) {
+    return { ...predictions, [naptanId]: activePredictionsForStop };
+  } else {
+    return omit(predictions, [naptanId]);
+  }
+};
+
 export default function(state = initialState, action) {
   switch (action.type) {
     case actionTypes.LOAD_USER_ROUTES:
@@ -83,7 +100,11 @@ export default function(state = initialState, action) {
     case actionTypes.REMOVE_ROUTE:
       return {
         ...state,
-        routes: removeRoute(state.routes, action.payload.data)
+        routes: removeRoute(state.routes, action.payload.data),
+        predictions: removeRouteFromPredictions(
+          state.predictions,
+          action.payload.data
+        )
       };
     case actionTypes.SET_PREDICTIONS_FOR_STOP:
       return {
