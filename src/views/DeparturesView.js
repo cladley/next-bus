@@ -6,7 +6,7 @@ import Departure from "../components/Departure";
 import DragGesture from "../components/DragGesture";
 import { removeRoute } from "../actions/index";
 import styles from "./departures-view.module.css";
-import { Spring, animated } from "react-spring";
+import { Spring, Transition, animated } from "react-spring";
 
 class DeparturesView extends React.Component {
   componentDidMount() {
@@ -47,14 +47,73 @@ class DeparturesView extends React.Component {
 
       return (
         <DeparturesBlock key={naptanId} stopName={stopName}>
-          {stopPredictions.map(departure => {
+          <Transition
+            items={stopPredictions}
+            keys={p => p.line}
+            leave={{
+              opacity: 0
+            }}
+            enter={{
+              opacity: 1
+            }}
+            from={{ opacity: 0 }}
+          >
+            {departure => props => (
+              <DragGesture
+                key={departure.line}
+                className={styles.wrapper}
+                style={props}
+              >
+                {({ dragProps, cancel }) => {
+                  // TODO: Need to figure out the width at
+                  // which we will remove the item. I've hard coded
+                  // 210 here.
+                  if (Math.abs(dragProps.delta.x) > 210) {
+                    dispatch(removeRoute(naptanId, departure, stopName));
+                    cancel();
+                  }
+
+                  return (
+                    <Spring
+                      native
+                      to={{ x: Math.min(0, dragProps.delta.x) }}
+                      config={{ tension: 0, friction: 2, precision: 0.4 }}
+                    >
+                      {props => (
+                        <animated.div
+                          className={styles["slide-panel"]}
+                          style={{
+                            transform: dragProps.down
+                              ? props.x.interpolate(
+                                  x => `translate3d(${x}px, 0, 0)`
+                                )
+                              : "",
+                            transition: dragProps.down ? "none" : ""
+                          }}
+                        >
+                          <Departure
+                            line={departure.line}
+                            departures={departure.departures}
+                          />
+                          <div className={styles["delete-panel"]}>Delete</div>
+                        </animated.div>
+                      )}
+                    </Spring>
+                  );
+                }}
+              </DragGesture>
+            )}
+          </Transition>
+
+          {/* {stopPredictions.map(departure => {
+            console.log(departure);
+
             return (
               <DragGesture key={departure.line} className={styles.wrapper}>
                 {({ dragProps, cancel }) => {
-                  if (Math.abs(dragProps.delta.x) > 150) {
-                    console.log(departure);
+                  if (Math.abs(dragProps.delta.x) > 210) {
                     cancel();
-                    dispatch(removeRoute(naptanId, departure, stopName));
+                    // dispatch(removeRoute(naptanId, departure, stopName));
                   }
 
                   return (
@@ -87,7 +146,7 @@ class DeparturesView extends React.Component {
                 }}
               </DragGesture>
             );
-          })}
+          })} */}
         </DeparturesBlock>
       );
     });
@@ -95,7 +154,6 @@ class DeparturesView extends React.Component {
 
   render() {
     const { predictions } = this.props;
-
     return <div>{predictions ? this.renderArrivals() : "loading"}</div>;
   }
 }
