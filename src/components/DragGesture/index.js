@@ -32,7 +32,6 @@ class DragGesture extends React.PureComponent {
   }
 
   componentWillUnmount() {
-    console.log("COMPONENT WILL UNMOUNT");
     this.element.removeEventListener("touchmove", this.handleTouchMove);
     this.element.removeEventListener("touchend", this.handleTouchEnd);
   }
@@ -46,11 +45,14 @@ class DragGesture extends React.PureComponent {
 
     this.startPosition = this.getPosition(event);
     this.prevPosition = this.startPosition;
-    this.element.addEventListener("touchmove", this.handleTouchMove);
+    this.element.addEventListener("touchmove", this.handleTouchMove, {
+      passive: true
+    });
     this.element.addEventListener("touchend", this.handleTouchEnd);
   };
 
   handleTouchMove = event => {
+    console.log("toucn moved called");
     var currentPosition = this.getPosition(event);
     const deltaX = currentPosition.x - this.startPosition.x;
     const deltaY = currentPosition.y - this.startPosition.y;
@@ -130,6 +132,10 @@ class DragGesture extends React.PureComponent {
     }
   };
 
+  pause = () => {
+    this.element.removeEventListener("touchmove", this.handleTouchMove);
+  };
+
   render() {
     return (
       <div
@@ -137,7 +143,11 @@ class DragGesture extends React.PureComponent {
         onTouchStart={this.handleTouchStart}
         ref={element => (this.element = element)}
       >
-        {this.props.children({ dragProps: this.state, cancel: this.cancel })}
+        {this.props.children({
+          dragProps: this.state,
+          cancel: this.cancel,
+          pause: this.pause
+        })}
       </div>
     );
   }

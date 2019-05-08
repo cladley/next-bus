@@ -1,0 +1,19 @@
+.delete-panel {
+  background-color: red;
+  flex-shrink: 0;
+  width: 100%;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 5px;
+  padding-left: 10px;
+  line-height: 24px;
+  color: white;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+}
+
+.slide-panel {
+  display: flex;
+  transition: transform 0.3s ease;
+}
