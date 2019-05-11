@@ -24,10 +24,16 @@ const Departure = ({ line, destination, departures }) => {
     return d1 - d2;
   });
 
-  let nextTime = calculateArrivalTime(orderedDepartures[0].arrival);
-  nextTime = nextTime <= 0 ? "due" : nextTime;
-  const nextBusDestination = orderedDepartures[0].destination;
-  const afterNextTimes = getNextTimes(orderedDepartures.slice(1));
+  let nextTime = "no data";
+  let nextBusDestination = "no data";
+  let afterNextTimes = "no data";
+
+  if (orderedDepartures.length > 0) {
+    nextTime = calculateArrivalTime(orderedDepartures[0].arrival);
+    nextTime = nextTime <= 0 ? "due" : nextTime;
+    nextBusDestination = orderedDepartures[0].destination;
+    afterNextTimes = getNextTimes(orderedDepartures.slice(1));
+  }
 
   return (
     <div className={styles.container}>

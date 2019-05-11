@@ -95,17 +95,16 @@ class DragGesture extends React.PureComponent {
   };
 
   calculateSpeed = speed => {
-    var accel_threshold = 1000;
-    var accel_limit = 2000;
-    var accel_factor = 1.5;
-    var speed_limit = 2000;
+    var accelThreshold = 1000;
+    var accelLimit = 2000;
+    var accelFactor = 1.5;
+    var speedLimit = 2000;
 
-    speed = Math.min(speed, speed_limit);
+    speed = Math.min(speed, speedLimit);
 
-    var accel_range =
-      clamp(speed, accel_threshold, accel_limit) /
-      (accel_limit - accel_threshold);
-    var accel = accel_range * accel_factor;
+    var accelRange =
+      clamp(speed, accelThreshold, accelLimit) / (accelLimit - accelThreshold);
+    var accel = accelRange * accelFactor;
     speed = speed * accel;
 
     return speed;

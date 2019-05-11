@@ -5,11 +5,30 @@ import styles from "./departure-strip.module.css";
 
 class DepartureStrip extends React.Component {
   isDeleting = false;
+  stripElement = null;
+  stripWidth = null;
+  previousX = 0;
+
+  componentDidMount() {
+    this.stripWidth = this.stripElement.getBoundingClientRect().width;
+  }
+
+  getTransformValue = x => {
+    if (this.isDeleting) {
+      return `translate3d(${this.previousX}, 0, 0)`;
+      // return x.interpolate(x => `translate3d(${x}px, 0, 0)`);
+    } else if (this.props.isDown) {
+      this.previousX = x.getValue();
+      return x.interpolate(x => `translate3d(${x}px, 0, 0)`);
+    } else {
+      return "";
+    }
+  };
 
   render() {
     const { x, isDown, line, departures, onDelete } = this.props;
 
-    if (Math.abs(x) > 210) {
+    if (this.stripWidth && Math.abs(x) > this.stripWidth / 2) {
       if (!this.isDeleting) {
         onDelete();
         this.isDeleting = true;
@@ -24,11 +43,10 @@ class DepartureStrip extends React.Component {
       >
         {props => (
           <animated.div
+            ref={element => (this.stripElement = element)}
             className={styles["slide-panel"]}
             style={{
-              transform: isDown
-                ? props.x.interpolate(x => `translate3d(${x}px, 0, 0)`)
-                : "",
+              transform: this.getTransformValue(props.x),
               transition: isDown ? "none" : ""
             }}
           >
