@@ -52,7 +52,6 @@ class DragGesture extends React.PureComponent {
   };
 
   handleTouchMove = event => {
-    console.log("toucn moved called");
     var currentPosition = this.getPosition(event);
     const deltaX = currentPosition.x - this.startPosition.x;
     const deltaY = currentPosition.y - this.startPosition.y;

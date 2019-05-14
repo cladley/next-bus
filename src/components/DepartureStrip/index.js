@@ -16,7 +16,6 @@ class DepartureStrip extends React.Component {
   getTransformValue = x => {
     if (this.isDeleting) {
       return `translate3d(${this.previousX}, 0, 0)`;
-      // return x.interpolate(x => `translate3d(${x}px, 0, 0)`);
     } else if (this.props.isDown) {
       this.previousX = x.getValue();
       return x.interpolate(x => `translate3d(${x}px, 0, 0)`);
@@ -28,7 +27,7 @@ class DepartureStrip extends React.Component {
   render() {
     const { x, isDown, line, departures, onDelete } = this.props;
 
-    if (this.stripWidth && Math.abs(x) > this.stripWidth / 2) {
+    if (this.stripWidth && Math.abs(x) > this.stripWidth / 1.2) {
       if (!this.isDeleting) {
         onDelete();
         this.isDeleting = true;
