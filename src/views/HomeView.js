@@ -17,19 +17,7 @@ class HomeView extends React.Component {
       border: "1px solid black"
     };
 
-    return (
-      <Container>
-        <RouteStops />
-
-        <DragGesture>
-          {props => (
-            <div style={styles}>
-              dragging {props.isDragging ? props.delta.x : "false"}
-            </div>
-          )}
-        </DragGesture>
-      </Container>
-    );
+    return <Container />;
   }
 }
 

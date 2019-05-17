@@ -1,3 +1,11 @@
+@value header-height: from '../variables.css';
+
 .wrapper + .wrapper {
   border-top: 0.4px solid #ccc;
+}
+
+.container {
+  padding: 30px 0;
+  height: calc(100vh - header-height - 60px);
+  overflow-y: auto;
 }

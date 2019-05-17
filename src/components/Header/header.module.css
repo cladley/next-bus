@@ -1,0 +1,68 @@
+@value header-box-shadow, header-bg-color, header-back-button-bg-color: from '../colors.css';
+@value header-height: from '../../variables.css';
+
+.wrapper {
+  height: header-height;
+  display: flex;
+  align-items: center;
+  background-color: header-bg-color;
+  box-shadow: header-box-shadow;
+  position: relative;
+  z-index: 1;
+}
+
+.wrapper ul {
+  margin: 0;
+  padding: 0;
+}
+
+.wrapper li {
+  display: inline-block;
+  margin-left: 20px;
+}
+
+.wrapper a {
+  text-decoration: none;
+  font-size: 13px;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 3px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.map-link {
+  position: relative;
+  padding: 0 24px 0 10px;
+}
+
+.map-link:after {
+  content: "";
+  height: 15px;
+  width: 1px;
+  display: block;
+  background-color: white;
+  position: absolute;
+  right: 12px;
+  top: 0;
+}
+
+.wrapper .selected {
+  color: white;
+}
+
+.back {
+  height: 100%;
+  padding: 0 20px;
+  border: none;
+  background-color: header-bg-color;
+}
+
+.back:active,
+.back:hover {
+  background-color: header-back-button-bg-color;
+}
+
+.back svg {
+  width: 22px;
+  fill: white;
+}

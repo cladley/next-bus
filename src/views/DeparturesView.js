@@ -89,7 +89,11 @@ class DeparturesView extends React.Component {
 
   render() {
     const { predictions } = this.props;
-    return <div>{predictions ? this.renderArrivals() : "loading"}</div>;
+    return (
+      <div className={styles.container}>
+        {predictions ? this.renderArrivals() : "loading"}
+      </div>
+    );
   }
 }
 

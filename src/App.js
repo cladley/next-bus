@@ -3,11 +3,13 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { connect } from "react-redux";
 import { ToastContainer, Slide } from "react-toastify";
 import { loadUserRoutes } from "./actions";
-import styles from "./app.module.css";
-import "react-toastify/dist/ReactToastify.min.css";
 import MapView from "./views/MapView";
 import HomeView from "./views/HomeView";
 import DeparturesView from "./views/DeparturesView";
+import Header from "./components/Header";
+import "react-toastify/dist/ReactToastify.min.css";
+
+import styles from "./app.module.css";
 
 class App extends Component {
   componentDidMount() {
@@ -18,6 +20,7 @@ class App extends Component {
     return (
       <Router>
         <div className={styles["main-container"]}>
+          <Header />
           <Switch>
             <Route exact path="/" component={HomeView} />
             <Route path="/map" component={MapView} />
