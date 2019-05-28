@@ -42,6 +42,7 @@ class RouteView extends React.Component {
           <Delayed waitBeforeShow={1000}>
             <RouteMap
               path={routePath}
+              stops={stops}
               onReady={this.handleRouteMapComponentReady}
             />
           </Delayed>

@@ -1,6 +1,14 @@
 import React from "react";
 import GoogleMapReact from "google-map-react";
-import styles from "./route-map.module.css";
+import styles from "../BusStopMapMarker//bus-stop-map-marker.module.css";
+
+const RouteMapStop = () => {
+  return (
+    <span className={styles["stop-marker"]}>
+      <span className={styles["stop-marker__inner"]}>F</span>
+    </span>
+  );
+};
 
 class RouteMap extends React.Component {
   static defaultProps = {
@@ -73,7 +81,9 @@ class RouteMap extends React.Component {
   }
 
   render() {
-    const { path, onReady } = this.props;
+    const { path, onReady, stops } = this.props;
+
+    console.log(stops);
 
     if (this.checkIfShouldRenderPath()) {
       this.renderPath();
@@ -93,7 +103,12 @@ class RouteMap extends React.Component {
           center={this.props.center}
           yesIWantToUseGoogleMapApiInternals
           onGoogleApiLoaded={this.handleApiLoaded}
-        />
+        >
+          {stops.map(stop => {
+            return <RouteMapStop lat={stop.lat} lng={stop.lon} />;
+          })}
+          
+        </GoogleMapReact>
       </div>
     );
   }

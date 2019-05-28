@@ -1,0 +1,7 @@
+.stop {
+  width: 10px;
+  height: 10px;
+  background-color: green;
+  display: block;
+  transform: translate(-50%, -50%);
+}

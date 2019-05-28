@@ -22,9 +22,11 @@ class RouteList extends React.Component {
   selectedStopRef = React.createRef();
 
   componentDidMount() {
-    this.selectedStopRef.current.scrollIntoView({
-      behavior: 'smooth'
-    });
+    setTimeout(() => {
+      this.selectedStopRef.current.scrollIntoView({
+        behavior: 'smooth'
+      });
+    }, 100);
   }
   
   render() {
