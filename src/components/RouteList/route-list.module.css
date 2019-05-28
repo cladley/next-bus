@@ -1,5 +1,10 @@
+@value header-height: from '../../variables.css';
+
 .list {
   list-style: none;
+  padding: 0 15px;
+  height: calc(55vh - header-height - 48px);
+  overflow-y: scroll;
 }
 
 .item {
@@ -54,4 +59,8 @@
 
 .name {
   max-width: 80%;
+}
+
+.current {
+  background: green;
 }

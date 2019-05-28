@@ -114,7 +114,7 @@
 
 .component-container-full {
   position: absolute;
-  left: 10px;
-  width: calc(100vw - 20px);
+  left: 0;
+  width: 100vw;
   top: -35vh;
 }
