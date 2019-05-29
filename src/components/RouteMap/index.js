@@ -56,7 +56,7 @@ class RouteMap extends React.Component {
       bounds.extend(latLng);
     });
 
-    this.map.fitBounds(bounds);
+    this.map.fitBounds(bounds, 0);
   }
 
   handleApiLoaded = ({ map, maps }) => {
