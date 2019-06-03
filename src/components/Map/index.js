@@ -13,7 +13,9 @@ import {
   setPanelState,
   clearStopMarkers
 } from "../../actions";
+import getKeys from "../keys";
 
+const GOOGLE_MAP_API_KEY = getKeys().GOOGLE_MAP_API_KEY;
 const EARTH_RADIUS_IN_KM = 6377.83;
 
 class Map extends Component {
@@ -148,7 +150,7 @@ class Map extends Component {
     return (
       <div style={{ height: "100%", width: "100%" }}>
         <GoogleMapReact
-          bootstrapURLKeys={{ key: "AIzaSyD1CH8asyfnJVmRS5B0hB6k1MUqJ_c-He0" }}
+          bootstrapURLKeys={{ key: GOOGLE_MAP_API_KEY }}
           options={options}
           defaultZoom={this.props.zoom}
           center={this.props.center}

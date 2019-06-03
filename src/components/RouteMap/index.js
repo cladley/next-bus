@@ -1,6 +1,9 @@
 import React from "react";
 import GoogleMapReact from "google-map-react";
 import styles from "../BusStopMapMarker//bus-stop-map-marker.module.css";
+import getKeys from "../keys";
+
+const GOOGLE_MAP_API_KEY = getKeys().GOOGLE_MAP_API_KEY;
 
 const RouteMapStop = () => {
   return (
@@ -97,7 +100,7 @@ class RouteMap extends React.Component {
     return (
       <div style={{ height: "100%", width: "100%" }}>
         <GoogleMapReact
-          bootstrapURLKeys={{ key: "AIzaSyD1CH8asyfnJVmRS5B0hB6k1MUqJ_c-He0" }}
+          bootstrapURLKeys={{ key: GOOGLE_MAP_API_KEY }}
           options={options}
           defaultZoom={this.props.zoom}
           center={this.props.center}
@@ -107,7 +110,6 @@ class RouteMap extends React.Component {
           {stops.map(stop => {
             return <RouteMapStop lat={stop.lat} lng={stop.lon} />;
           })}
-          
         </GoogleMapReact>
       </div>
     );
