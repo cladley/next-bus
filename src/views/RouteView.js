@@ -40,11 +40,13 @@ class RouteView extends React.Component {
         {!isRouteMapReady && <BusyIndicator />}
         <div className={styles["map-wrapper"]}>
           <Delayed waitBeforeShow={1000}>
-            <RouteMap
-              path={routePath}
-              stops={stops}
-              onReady={this.handleRouteMapComponentReady}
-            />
+            {!!stops && (
+              <RouteMap
+                path={routePath}
+                stops={stops}
+                onReady={this.handleRouteMapComponentReady}
+              />
+            )}
           </Delayed>
         </div>
         <div className={styles["route-list-wrapper"]}>

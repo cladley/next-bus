@@ -108,7 +108,7 @@ class RouteMap extends React.Component {
           onGoogleApiLoaded={this.handleApiLoaded}
         >
           {stops.map(stop => {
-            return <RouteMapStop lat={stop.lat} lng={stop.lon} />;
+            return <RouteMapStop id={stop.id} lat={stop.lat} lng={stop.lon} />;
           })}
         </GoogleMapReact>
       </div>
