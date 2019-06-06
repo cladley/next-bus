@@ -1,13 +1,22 @@
 import React from "react";
 import GoogleMapReact from "google-map-react";
-import styles from "../BusStopMapMarker//bus-stop-map-marker.module.css";
+import styles from "../BusStopMapMarker/bus-stop-map-marker.module.css";
 import getKeys from "../keys";
+import classNames from "classnames";
 
 const GOOGLE_MAP_API_KEY = getKeys().GOOGLE_MAP_API_KEY;
 
-const RouteMapStop = () => {
+const RouteMapStop = ({ isSelected }) => {
+  // const itemClassNames = classNames(styles.item, {
+  //   [styles.current]: isCurrent
+  // });
+
+  const className = isSelected
+    ? styles["stop-marker"]
+    : styles["stop-marker-mini"];
+
   return (
-    <span className={styles["stop-marker"]}>
+    <span className={className}>
       <span className={styles["stop-marker__inner"]}>F</span>
     </span>
   );
@@ -84,9 +93,16 @@ class RouteMap extends React.Component {
   }
 
   render() {
-    const { path, onReady, stops } = this.props;
+    const {
+      path,
+      onReady,
+      stops,
+      selectedStopId,
+      selectedStopStationId,
+      selectedStop
+    } = this.props;
 
-    console.log(stops);
+    console.log(selectedStop);
 
     if (this.checkIfShouldRenderPath()) {
       this.renderPath();
@@ -108,7 +124,14 @@ class RouteMap extends React.Component {
           onGoogleApiLoaded={this.handleApiLoaded}
         >
           {stops.map(stop => {
-            return <RouteMapStop id={stop.id} lat={stop.lat} lng={stop.lon} />;
+            return (
+              <RouteMapStop
+                isSelected={stop.id === selectedStop.stationNaptanId}
+                id={stop.id}
+                lat={stop.lat}
+                lng={stop.lon}
+              />
+            );
           })}
         </GoogleMapReact>
       </div>

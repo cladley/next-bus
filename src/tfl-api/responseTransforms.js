@@ -3,6 +3,7 @@ export const stopsByLocationTransform = data => {
     return {
       id: stop.id,
       naptanId: stop.naptanId,
+      stationNaptanId: stop.stationNaptan,
       lat: stop.lat,
       lon: stop.lon,
       commonName: stop.commonName,

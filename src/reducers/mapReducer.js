@@ -5,6 +5,7 @@ const initialState = {
   viewableStops: {},
   loadingStops: false,
   selectedStopId: null,
+  selectedStopStationId: null,
   stopRouteDetails: [],
   panelState: appearances.closed,
   geoLocation: null
@@ -67,12 +68,17 @@ export default function(state = initialState, action) {
       };
 
     case actionTypes.STOP_SELECTED:
-      return { ...state, selectedStopId: action.payload.data };
+      const selectedStopId = action.payload.data;
+      const selectedStopStationId =
+        state.viewableStops[selectedStopId].stationNaptanId;
+
+      return { ...state, selectedStopId, selectedStopStationId };
 
     case actionTypes.CLEAR_STOP_SELECTED:
       return {
         ...state,
         selectedStopId: null,
+        selectedStopStationId: null,
         stopRouteDetails: []
       };
     case actionTypes.SET_STOP_ROUTES:

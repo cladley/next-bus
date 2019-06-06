@@ -6,6 +6,20 @@
   width: 22px;
 }
 
+.stop-marker-mini {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.stop-marker-mini .stop-marker__inner {
+  width: 10px;
+  height: 10px;
+  font-size: 6px;
+  opacity: 0.4;
+  background-color: black;
+}
+
 .stop-marker.is-active .stop-marker__inner {
   background-color: #18e818;
   color: black;
