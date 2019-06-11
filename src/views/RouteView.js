@@ -29,14 +29,7 @@ class RouteView extends React.Component {
   };
 
   render() {
-    const {
-      stops,
-      route,
-      routePath,
-      selectedStopId,
-      selectedStopStationId,
-      selectedStop
-    } = this.props;
+    const { stops, route, routePath, selectedStop } = this.props;
 
     console.log(selectedStop);
     const { isRouteMapReady } = this.state;
@@ -55,9 +48,6 @@ class RouteView extends React.Component {
                 stops={stops}
                 onReady={this.handleRouteMapComponentReady}
                 selectedStop={selectedStop}
-                selectedStopId={selectedStopId}
-                selectedStopStationId={selectedStopStationId}
-                selectedStopLetter={selectedStop.stopLetter}
               />
             )}
           </Delayed>
@@ -81,8 +71,6 @@ const mapStateToProps = ({ route, map }) => {
   return {
     stops: route.routeStops,
     routePath: route.routePath,
-    selectedStopId: map.selectedStopId,
-    selectedStopStationId: map.selectedStopStationId,
     selectedStop: map.viewableStops[map.selectedStopId]
   };
 };

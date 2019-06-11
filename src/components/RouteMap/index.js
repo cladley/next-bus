@@ -6,20 +6,16 @@ import classNames from "classnames";
 
 const GOOGLE_MAP_API_KEY = getKeys().GOOGLE_MAP_API_KEY;
 
-const RouteMapStop = ({ isSelected }) => {
-  // const itemClassNames = classNames(styles.item, {
-  //   [styles.current]: isCurrent
-  // });
-
-  const className = isSelected
-    ? styles["stop-marker"]
-    : styles["stop-marker-mini"];
-
+const SelectedStopMarker = ({ letter }) => {
   return (
-    <span className={className}>
-      <span className={styles["stop-marker__inner"]}>F</span>
+    <span className={styles["stop-marker"]}>
+      <span className={styles["stop-marker__inner"]}>{letter}</span>
     </span>
   );
+};
+
+const MiniMarker = () => {
+  return <span className={styles["stop-marker-mini"]} />;
 };
 
 class RouteMap extends React.Component {
@@ -93,16 +89,7 @@ class RouteMap extends React.Component {
   }
 
   render() {
-    const {
-      path,
-      onReady,
-      stops,
-      selectedStopId,
-      selectedStopStationId,
-      selectedStop
-    } = this.props;
-
-    console.log(selectedStop);
+    const { stops, selectedStop } = this.props;
 
     if (this.checkIfShouldRenderPath()) {
       this.renderPath();
@@ -124,14 +111,18 @@ class RouteMap extends React.Component {
           onGoogleApiLoaded={this.handleApiLoaded}
         >
           {stops.map(stop => {
-            return (
-              <RouteMapStop
-                isSelected={stop.id === selectedStop.stationNaptanId}
-                id={stop.id}
-                lat={stop.lat}
-                lng={stop.lon}
-              />
-            );
+            console.log(stop);
+            if (stop.stationId === selectedStop.stationNaptanId) {
+              return (
+                <SelectedStopMarker
+                  lat={stop.lat}
+                  lng={stop.lon}
+                  letter={stop.stopLetter}
+                />
+              );
+            } else {
+              return <MiniMarker lat={stop.lat} lng={stop.lon} />;
+            }
           })}
         </GoogleMapReact>
       </div>

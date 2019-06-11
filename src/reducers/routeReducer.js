@@ -20,7 +20,7 @@ export default function(state = initialState, action) {
     case actionTypes.SET_STOPS_FOR_LINE:
       return {
         ...state,
-        routeStops: action.payload.data.stations,
+        routeStops: action.payload.data.stopPointSequences[0].stopPoint,
         routePath: JSON.parse(action.payload.data.lineStrings)[0]
       };
     default:
