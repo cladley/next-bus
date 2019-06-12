@@ -13,7 +13,8 @@ import {
 
 class RouteView extends React.Component {
   state = {
-    isRouteMapReady: false
+    isRouteMapReady: false,
+    selectedStop: null
   };
 
   componentDidMount() {
@@ -28,11 +29,16 @@ class RouteView extends React.Component {
     });
   };
 
-  render() {
-    const { stops, route, routePath, selectedStop } = this.props;
+  handleOnStopSelected = stop => {
+    this.setState({
+      selectedStop: stop
+    });
+  };
 
-    console.log(selectedStop);
-    const { isRouteMapReady } = this.state;
+  render() {
+    const { stops, route, routePath, targetStop } = this.props;
+    const { isRouteMapReady, selectedStop } = this.state;
+    // console.log(selectedStop);
     const { routeSectionName } = route;
     // TODO: use shouldShowComponents to animate in screens in.
     const shouldShowComponents = isRouteMapReady && !!stops;
@@ -47,6 +53,7 @@ class RouteView extends React.Component {
                 path={routePath}
                 stops={stops}
                 onReady={this.handleRouteMapComponentReady}
+                targetStop={targetStop}
                 selectedStop={selectedStop}
               />
             )}
@@ -58,7 +65,12 @@ class RouteView extends React.Component {
               <header className={header}>
                 <h3 className={title}>{routeSectionName}</h3>
               </header>
-              {!!stops && <RouteList stops={stops} />}
+              {!!stops && (
+                <RouteList
+                  stops={stops}
+                  onStopSelected={this.handleOnStopSelected}
+                />
+              )}
             </Delayed>
           </div>
         </div>
@@ -71,7 +83,7 @@ const mapStateToProps = ({ route, map }) => {
   return {
     stops: route.routeStops,
     routePath: route.routePath,
-    selectedStop: map.viewableStops[map.selectedStopId]
+    targetStop: map.viewableStops[map.selectedStopId]
   };
 };
 

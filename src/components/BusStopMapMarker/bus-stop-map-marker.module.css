@@ -15,18 +15,22 @@
   transform: translate(-50%, -50%);
 }
 
-.stop-marker-mini .stop-marker__inner {
-  width: 10px;
-  height: 10px;
-  font-size: 6px;
-  opacity: 0.4;
-  background-color: black;
-}
-
 .stop-marker.is-active .stop-marker__inner {
   background-color: #18e818;
   color: black;
   transform: translate(-50%, -50%) scale(1.3);
+}
+
+.stop-marker.is-selected .stop-marker__inner {
+  background-color: #18e818;
+  color: black;
+  transform: translate(-50%, -50%) scale(1.3);
+}
+
+.stop-marker.is-small .stop-marker__inner {
+  transform: translate(-50%, -50%) scale(0.3);
+  color: black;
+  background: black;
 }
 
 .stop-marker__inner {

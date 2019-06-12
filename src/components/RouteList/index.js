@@ -1,22 +1,19 @@
 import React from "react";
 import styles from "./route-list.module.css";
-import {connect} from 'react-redux';
+import { connect } from "react-redux";
 import classNames from "classnames";
 
-
-const RouteListItem = React.forwardRef(({name, isCurrent}, ref) => {
-
+const RouteListItem = React.forwardRef(({ name, isCurrent, onClick }, ref) => {
   const itemClassNames = classNames(styles.item, {
     [styles.current]: isCurrent
   });
-  
+
   return (
-    <li className={itemClassNames} ref={ref}>
+    <li className={itemClassNames} ref={ref} onClick={onClick}>
       <span className={styles.name}>{name}</span>
     </li>
   );
 });
-
 
 class RouteList extends React.Component {
   selectedStopRef = React.createRef();
@@ -24,21 +21,36 @@ class RouteList extends React.Component {
   componentDidMount() {
     setTimeout(() => {
       this.selectedStopRef.current.scrollIntoView({
-        behavior: 'smooth'
+        behavior: "smooth"
       });
     }, 100);
   }
-  
+
   render() {
-    const { stops, selectedStop } = this.props;
+    const { stops, targetStop, onStopSelected } = this.props;
     return (
       <div className={styles["scroll-container"]}>
         <ul className={styles.list}>
           {stops.map(stop => {
-            if (stop.name === selectedStop.commonName) {
-              return <RouteListItem key={stop.id} name={stop.name} isCurrent={true} ref={this.selectedStopRef} />
+            if (stop.name === targetStop.commonName) {
+              return (
+                <RouteListItem
+                  key={stop.id}
+                  name={stop.name}
+                  isCurrent={true}
+                  ref={this.selectedStopRef}
+                  onClick={() => onStopSelected(stop)}
+                />
+              );
             } else {
-              return <RouteListItem key={stop.id} name={stop.name} isCurrent={stop.name === selectedStop.commonName} />
+              return (
+                <RouteListItem
+                  key={stop.id}
+                  name={stop.name}
+                  isCurrent={stop.name === targetStop.commonName}
+                  onClick={() => onStopSelected(stop)}
+                />
+              );
             }
           })}
         </ul>
@@ -47,10 +59,13 @@ class RouteList extends React.Component {
   }
 }
 
-const mapStateToProps = ({map, stops}) => {
+const mapStateToProps = ({ map, stops }) => {
   return {
-    selectedStop: stops.byNaptanId[map.selectedStopId]
+    targetStop: stops.byNaptanId[map.selectedStopId]
   };
 };
 
-export default connect(mapStateToProps, null)(RouteList);
+export default connect(
+  mapStateToProps,
+  null
+)(RouteList);

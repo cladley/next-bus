@@ -6,16 +6,20 @@ import classNames from "classnames";
 
 const GOOGLE_MAP_API_KEY = getKeys().GOOGLE_MAP_API_KEY;
 
-const SelectedStopMarker = ({ letter }) => {
+const StopMarker = ({ letter, type }) => {
+  let markerClassNames = "";
+
+  if (type === "selected") {
+    markerClassNames = classNames(styles["stop-marker"], styles["is-selected"]);
+  } else if (type === "small") {
+    markerClassNames = classNames(styles["stop-marker"], styles["is-small"]);
+  }
+
   return (
-    <span className={styles["stop-marker"]}>
+    <span className={markerClassNames}>
       <span className={styles["stop-marker__inner"]}>{letter}</span>
     </span>
   );
-};
-
-const MiniMarker = () => {
-  return <span className={styles["stop-marker-mini"]} />;
 };
 
 class RouteMap extends React.Component {
@@ -89,7 +93,8 @@ class RouteMap extends React.Component {
   }
 
   render() {
-    const { stops, selectedStop } = this.props;
+    const { stops, targetStop, selectedStop } = this.props;
+    console.log(selectedStop);
 
     if (this.checkIfShouldRenderPath()) {
       this.renderPath();
@@ -111,17 +116,37 @@ class RouteMap extends React.Component {
           onGoogleApiLoaded={this.handleApiLoaded}
         >
           {stops.map(stop => {
-            console.log(stop);
-            if (stop.stationId === selectedStop.stationNaptanId) {
+            if (stop.stationId === targetStop.stationNaptanId) {
               return (
-                <SelectedStopMarker
+                <StopMarker
                   lat={stop.lat}
                   lng={stop.lon}
                   letter={stop.stopLetter}
+                  type="selected"
+                />
+              );
+            } else if (
+              selectedStop &&
+              stop.stationId === selectedStop.stationId
+            ) {
+              return (
+                <StopMarker
+                  lat={stop.lat}
+                  lng={stop.lon}
+                  letter={stop.stopLetter}
+                  onClick={() => console.log(stop)}
                 />
               );
             } else {
-              return <MiniMarker lat={stop.lat} lng={stop.lon} />;
+              return (
+                <StopMarker
+                  lat={stop.lat}
+                  lng={stop.lon}
+                  letter={stop.stopLetter}
+                  type="small"
+                  onClick={() => console.log(stop)}
+                />
+              );
             }
           })}
         </GoogleMapReact>
