@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import Container from "../components/Layout/Container";
 import { ReactComponent as LocationIcon } from "../icons/location.svg";
 import RouteStops from "../components/RouteStops";
@@ -11,13 +12,13 @@ class HomeView extends React.Component {
   };
 
   render() {
-    const styles = {
-      height: "100vh",
-      width: "100vw",
-      border: "1px solid black"
-    };
-
-    return <Container />;
+    return (
+      <Container>
+        <Link to="/map">Map</Link>
+        <br />
+        <Link to="/departures">Departures</Link>
+      </Container>
+    );
   }
 }
 

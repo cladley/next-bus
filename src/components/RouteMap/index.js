@@ -1,7 +1,7 @@
 import React from "react";
 import GoogleMapReact from "google-map-react";
 import styles from "../BusStopMapMarker/bus-stop-map-marker.module.css";
-import getKeys from "../keys";
+import getKeys from "../../keys";
 import classNames from "classnames";
 
 const GOOGLE_MAP_API_KEY = getKeys().GOOGLE_MAP_API_KEY;

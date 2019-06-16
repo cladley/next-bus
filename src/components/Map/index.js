@@ -13,7 +13,7 @@ import {
   setPanelState,
   clearStopMarkers
 } from "../../actions";
-import getKeys from "../keys";
+import getKeys from "../../keys";
 
 const GOOGLE_MAP_API_KEY = getKeys().GOOGLE_MAP_API_KEY;
 const EARTH_RADIUS_IN_KM = 6377.83;
@@ -38,6 +38,8 @@ class Map extends Component {
     super(props);
     this.mapsApi = null;
     this.map = null;
+
+    console.log(getKeys().GOOGLE_MAP_API_KEY);
   }
 
   componentDidUpdate(prevProps) {
