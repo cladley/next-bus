@@ -14,7 +14,8 @@ import {
 class RouteView extends React.Component {
   state = {
     isRouteMapReady: false,
-    selectedStop: null
+    selectedStop: null,
+    shouldListItemScrollIntoView: false
   };
 
   componentDidMount() {
@@ -29,9 +30,10 @@ class RouteView extends React.Component {
     });
   };
 
-  handleOnStopSelected = stop => {
+  handleOnStopSelected = (stop, shouldScrollItem) => {
     this.setState({
-      selectedStop: stop
+      selectedStop: stop,
+      shouldListItemScrollIntoView: shouldScrollItem
     });
   };
 
@@ -55,6 +57,7 @@ class RouteView extends React.Component {
                 onReady={this.handleRouteMapComponentReady}
                 targetStop={targetStop}
                 selectedStop={selectedStop}
+                onStopSelected={this.handleOnStopSelected}
               />
             )}
           </Delayed>
@@ -68,7 +71,11 @@ class RouteView extends React.Component {
               {!!stops && (
                 <RouteList
                   stops={stops}
+                  selectedStop={selectedStop}
                   onStopSelected={this.handleOnStopSelected}
+                  shouldListItemScrollIntoView={
+                    this.state.shouldListItemScrollIntoView
+                  }
                 />
               )}
             </Delayed>

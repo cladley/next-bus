@@ -12,6 +12,7 @@
   margin-bottom: 4px;
   color: #fff;
   pointer-events: none;
+  white-space: nowrap;
 }
 
 .quick-routes {

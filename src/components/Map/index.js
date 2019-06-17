@@ -38,8 +38,6 @@ class Map extends Component {
     super(props);
     this.mapsApi = null;
     this.map = null;
-
-    console.log(getKeys().GOOGLE_MAP_API_KEY);
   }
 
   componentDidUpdate(prevProps) {

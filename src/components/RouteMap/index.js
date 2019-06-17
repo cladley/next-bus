@@ -6,7 +6,7 @@ import classNames from "classnames";
 
 const GOOGLE_MAP_API_KEY = getKeys().GOOGLE_MAP_API_KEY;
 
-const StopMarker = ({ letter, type }) => {
+const StopMarker = ({ letter, type, onClick }) => {
   let markerClassNames = "";
 
   if (type === "selected") {
@@ -16,7 +16,7 @@ const StopMarker = ({ letter, type }) => {
   }
 
   return (
-    <span className={markerClassNames}>
+    <span className={markerClassNames} onClick={onClick}>
       <span className={styles["stop-marker__inner"]}>{letter}</span>
     </span>
   );
@@ -86,6 +86,10 @@ class RouteMap extends React.Component {
     return this.props.path && this.map && !this.hasPathBeenRendered;
   }
 
+  handleStopMarkerClick(stop) {
+    this.props.onStopSelected(stop, true);
+  }
+
   renderPath() {
     this.renderPathToMap();
     this.hasPathBeenRendered = true;
@@ -94,7 +98,6 @@ class RouteMap extends React.Component {
 
   render() {
     const { stops, targetStop, selectedStop } = this.props;
-    console.log(selectedStop);
 
     if (this.checkIfShouldRenderPath()) {
       this.renderPath();
@@ -134,7 +137,7 @@ class RouteMap extends React.Component {
                   lat={stop.lat}
                   lng={stop.lon}
                   letter={stop.stopLetter}
-                  onClick={() => console.log(stop)}
+                  onClick={() => this.handleStopMarkerClick(stop)}
                 />
               );
             } else {
@@ -144,7 +147,7 @@ class RouteMap extends React.Component {
                   lng={stop.lon}
                   letter={stop.stopLetter}
                   type="small"
-                  onClick={() => console.log(stop)}
+                  onClick={() => this.handleStopMarkerClick(stop)}
                 />
               );
             }
