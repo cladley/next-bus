@@ -8,11 +8,12 @@ const GOOGLE_MAP_API_KEY = getKeys().GOOGLE_MAP_API_KEY;
 
 const StopMarker = ({ letter, type, onClick }) => {
   let markerClassNames = "";
-
   if (type === "selected") {
     markerClassNames = classNames(styles["stop-marker"], styles["is-selected"]);
   } else if (type === "small") {
     markerClassNames = classNames(styles["stop-marker"], styles["is-small"]);
+  } else {
+    markerClassNames = classNames(styles["stop-marker"], styles["is-active"]);
   }
 
   return (
