@@ -70,12 +70,24 @@ class BusStopRoutes extends Component {
   }
 
   render() {
-    const { routes, isQuickView } = this.props;
+    const { routes, isQuickView, stopName } = this.props;
     const allRoutesSet = this.getAllRoutesLine(routes);
     return (
       <React.Fragment>
         <header className={styles.header} data-drag-handle>
-          <h3 className={styles.title}>{this.props.stopName}</h3>
+          <Transition
+            items={stopName}
+            from={{ transform: "translate3d(0,-40px,0)" }}
+            enter={{ transform: "translate3d(0,0px,0)" }}
+            leave={{ transform: "translate3d(0, 40px, 0)" }}
+          >
+            {item => props => (
+              <animated.h3 style={props} className={styles.title}>
+                {item}
+              </animated.h3>
+            )}
+          </Transition>
+          {/* <h3 className={styles.title}>{stopName}</h3> */}
         </header>
 
         {isQuickView ? (

@@ -13,6 +13,7 @@ import {
   setPanelState,
   clearStopMarkers
 } from "../../actions";
+import fromLatLngToPoint from "./helper";
 import getKeys from "../../keys";
 
 const GOOGLE_MAP_API_KEY = getKeys().GOOGLE_MAP_API_KEY;
@@ -123,13 +124,58 @@ class Map extends Component {
           stopLetter={marker.stopLetter}
           index={index}
           isSelected={marker.id === this.props.selectedStopId ? true : false}
-          onSelected={this.handleOnSelected}
+          onSelected={stopId =>
+            this.handleOnSelected(stopId, marker.lat, marker.lon)
+          }
         />
       );
     });
   }
 
-  handleOnSelected = stopId => {
+  //   How to offset the center point in Google maps api V3
+  offsetCenter(latlng, offsetx, offsety) {
+    // latlng is the apparent centre-point
+    // offsetx is the distance you want that point to move to the right, in pixels
+    // offsety is the distance you want that point to move upwards, in pixels
+    // offset can be negative
+    // offsetx and offsety are both optional
+
+    var scale = Math.pow(2, this.map.getZoom());
+    var nw = new this.mapsApi.LatLng(
+      this.map
+        .getBounds()
+        .getNorthEast()
+        .lat(),
+      this.map
+        .getBounds()
+        .getSouthWest()
+        .lng()
+    );
+
+    var worldCoordinateCenter = this.map
+      .getProjection()
+      .fromLatLngToPoint(latlng);
+    var pixelOffset = new this.mapsApi.Point(
+      offsetx / scale || 0,
+      offsety / scale || 0
+    );
+
+    var worldCoordinateNewCenter = new this.mapsApi.Point(
+      worldCoordinateCenter.x - pixelOffset.x,
+      worldCoordinateCenter.y + pixelOffset.y
+    );
+
+    var newCenter = this.map
+      .getProjection()
+      .fromPointToLatLng(worldCoordinateNewCenter);
+
+    this.map.setCenter(newCenter);
+  }
+
+  handleOnSelected = (stopId, lat, lon) => {
+    // const latLng = new this.mapsApi.LatLng(lat, lon);
+    // this.offsetCenter(latLng, 0, 160);
+
     if (stopId) {
       this.props.dispatch(fetchRouteDetailsByStop(stopId));
       this.props.dispatch(setStopSelected(stopId));
