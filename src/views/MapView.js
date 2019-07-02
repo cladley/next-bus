@@ -30,7 +30,10 @@ class MapView extends Component {
 
   handlePanelChange = (to, from) => {
     if (to === appearances.half) {
+      // console.log("here we are");
       this.props.dispatch(setPanelState(appearances.half));
+
+      // console.log(from);
     } else if (to === appearances.closed) {
       this.props.dispatch(setPanelState(appearances.closed));
       setTimeout(() => {

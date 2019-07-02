@@ -10,10 +10,8 @@ import {
   fetchStopsByLocation,
   fetchRouteDetailsByStop,
   setStopSelected,
-  setPanelState,
-  clearStopMarkers
+  setPanelState
 } from "../../actions";
-import fromLatLngToPoint from "./helper";
 import getKeys from "../../keys";
 
 const GOOGLE_MAP_API_KEY = getKeys().GOOGLE_MAP_API_KEY;
@@ -52,6 +50,21 @@ class Map extends Component {
         this.map.panTo(center);
       }
     }
+
+    if (this.props.panelState !== prevProps.panelState) {
+      if (
+        prevProps.panelState === appearances.short &&
+        this.props.panelState === appearances.half
+      ) {
+        const s = this.props.viewableStops[this.props.selectedStopId];
+        this.moveMapCenterToOffsetStopLocation(s.lat, s.lon);
+      }
+    }
+  }
+
+  moveMapCenterToOffsetStopLocation(lat, lon) {
+    const latLng = new this.mapsApi.LatLng(lat, lon);
+    this.offsetCenter(latLng, 0, 190);
   }
 
   onBoundsChange = ({ center }) => {
@@ -141,16 +154,6 @@ class Map extends Component {
     // offsetx and offsety are both optional
 
     var scale = Math.pow(2, this.map.getZoom());
-    var nw = new this.mapsApi.LatLng(
-      this.map
-        .getBounds()
-        .getNorthEast()
-        .lat(),
-      this.map
-        .getBounds()
-        .getSouthWest()
-        .lng()
-    );
 
     var worldCoordinateCenter = this.map
       .getProjection()
@@ -173,9 +176,6 @@ class Map extends Component {
   }
 
   handleOnSelected = (stopId, lat, lon) => {
-    // const latLng = new this.mapsApi.LatLng(lat, lon);
-    // this.offsetCenter(latLng, 0, 160);
-
     if (stopId) {
       this.props.dispatch(fetchRouteDetailsByStop(stopId));
       this.props.dispatch(setStopSelected(stopId));
@@ -214,11 +214,13 @@ class Map extends Component {
   }
 }
 
-const mapStateToProps = ({ stops, map }) => {
+const mapStateToProps = ({ map }) => {
   return {
+    viewableStops: map.viewableStops,
     stopMarkers: Object.values(map.viewableStops),
     selectedStopId: map.selectedStopId,
-    userGeoLocation: map.geoLocation
+    userGeoLocation: map.geoLocation,
+    panelState: map.panelState
   };
 };
 
