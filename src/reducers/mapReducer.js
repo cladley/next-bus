@@ -71,7 +71,6 @@ export default function(state = initialState, action) {
       const selectedStopId = action.payload.data;
       const selectedStopStationId =
         state.viewableStops[selectedStopId].stationNaptanId;
-
       return { ...state, selectedStopId, selectedStopStationId };
 
     case actionTypes.CLEAR_STOP_SELECTED:
